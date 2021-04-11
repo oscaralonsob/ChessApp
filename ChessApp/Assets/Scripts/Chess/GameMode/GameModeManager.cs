@@ -28,9 +28,9 @@ namespace Chess.GameMode
                 return; 
             }
 
-            foreach (KeyValuePair<Vector2, Tuple<Type, PlayerColor>> pair in GameMode.PiecePlacement())
+            foreach (KeyValuePair<Vector2Int, Tuple<Type, PlayerColor>> pair in GameMode.PiecePlacement())
             {
-                Cell cell = Board.Cells[(int) pair.Key.x, (int) pair.Key.y];
+                Cell cell = Board.Cells[pair.Key.x, pair.Key.y];
                 Object[] args = {pair.Value.Item2, cell};
                 Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
                 Pieces.Add(piece);

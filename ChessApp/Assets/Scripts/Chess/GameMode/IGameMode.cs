@@ -6,6 +6,6 @@ namespace Chess.GameMode
 {
     public interface IGameMode
     {
-        Dictionary<Vector2, Tuple<Type, PlayerColor>> PiecePlacement();
+        Dictionary<Vector2Int, Tuple<Type, PlayerColor>> PiecePlacement();
     }
 }
