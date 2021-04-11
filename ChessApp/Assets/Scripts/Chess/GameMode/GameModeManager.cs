@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Chess.Pieces;
+using UnityEngine;
+using Object = System.Object;
 
 namespace Chess.GameMode
 {
@@ -26,21 +28,13 @@ namespace Chess.GameMode
                 return; 
             }
 
-            foreach (KeyValuePair<Tuple<int, int>, Type> pair in GameMode.PiecePlacement())
+            foreach (KeyValuePair<Vector2, Tuple<Type, PlayerColor>> pair in GameMode.PiecePlacement())
             {
-                Cell cell = Board.Cells[pair.Key.Item1, pair.Key.Item2];
-                Object[] args = {PlayerColor.White, cell};
-                Piece piece = (Piece) Activator.CreateInstance(pair.Value, args);
+                Cell cell = Board.Cells[(int) pair.Key.x, (int) pair.Key.y];
+                Object[] args = {pair.Value.Item2, cell};
+                Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
                 Pieces.Add(piece);
             }
-            
-            /*foreach (KeyValuePair<Tuple<int, int>, Type>  pair in GameMode.PiecePlacement())
-            {
-                Cell cell = Board.Cells[pair.Key.Item1, pair.Key.Item2];
-                Object[] args = {PlayerColor.Black, cell};
-                Piece piece = (Piece) Activator.CreateInstance(pair.Value, args);
-                Pieces.Add(piece);
-            }*/
         }
     }
 }
