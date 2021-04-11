@@ -1,4 +1,6 @@
-﻿namespace Chess.Pieces
+﻿using UnityEngine;
+
+namespace Chess.Pieces
 {
     public class Piece
     {
@@ -9,6 +11,11 @@
         {
             Color = playerColor;
             CurrentCell = currentCell;
+        }
+        
+        public string GetSpriteName()
+        {
+            return "Chess" + GetType().Name + Color;
         }
     }
 }
