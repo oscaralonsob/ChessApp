@@ -10,17 +10,13 @@ namespace Controller
         private GameModeManager GameModeManager { set; get; }
         
         public GameObject boardPrefab;
-        
-        public GameObject piecePrefab;
-        
-        
+
+
         // Start is called before the first frame update
         void Start()
         {
             GameMode = new NormalGameMode();
             GameModeManager = new GameModeManager(GameMode);
-            
-            GameModeManager.Setup();
 
             Print();
         }
@@ -32,16 +28,6 @@ namespace Controller
 
             boardController.Board = GameModeManager.Board;
             boardController.Print();
-
-            foreach (Piece piece in GameModeManager.Pieces)
-            {
-                GameObject pieceObject = Instantiate(piecePrefab, boardObject.transform);
-                PieceController pieceController = pieceObject.GetComponent<PieceController>();
-
-                pieceController.Piece = piece;
-                pieceController.Print();
-            }
-
         }
     }
 }

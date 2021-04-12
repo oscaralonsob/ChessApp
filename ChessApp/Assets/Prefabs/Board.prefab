@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 484424045537057750}
   - component: {fileID: 8444150257762190188}
   - component: {fileID: 5849916833416699845}
+  - component: {fileID: 817132735549591373}
   m_Layer: 5
   m_Name: Board
   m_TagString: Untagged
@@ -71,3 +72,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 5852455201928098411, guid: 83f0292928adaf012b8cedfb70bc99ee, type: 3}
+  piecePrefab: {fileID: 6384114222692952992, guid: b9844b65120faa2d5b72d796d49728ea, type: 3}
+--- !u!114 &817132735549591373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9037406108617680383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chess.Pieces
 {
-    public class Piece
+    public abstract class Piece
     {
         public PlayerColor Color { get; }
         public Cell CurrentCell { get; }
@@ -17,5 +18,7 @@ namespace Chess.Pieces
         {
             return "Chess" + GetType().Name + Color;
         }
+
+        public abstract List<Cell> Movement();
     }
 }

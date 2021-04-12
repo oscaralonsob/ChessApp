@@ -1,4 +1,5 @@
 ﻿using Chess;
+using Chess.Pieces;
 using UnityEngine;
 
 namespace Controller
@@ -8,6 +9,7 @@ namespace Controller
         public Board Board { get; set; }
         
         public GameObject cellPrefab;
+        public GameObject piecePrefab;
 
         public void Print()
         {
@@ -20,6 +22,15 @@ namespace Controller
                 CellController cellController = newCell.GetComponent<CellController>();
                 cellController.Cell = cell;
                 cellController.Print();
+            }
+            
+            foreach (Piece piece in Board.Pieces)
+            {
+                GameObject pieceObject = Instantiate(piecePrefab, transform);
+                PieceController pieceController = pieceObject.GetComponent<PieceController>();
+
+                pieceController.Piece = piece;
+                pieceController.Print();
             }
         }
     }
