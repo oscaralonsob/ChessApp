@@ -385,4 +385,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardPrefab: {fileID: 9037406108617680383, guid: 0c28a48f55df78c7baf3b4bae894fb8d, type: 3}
-  piecePrefab: {fileID: 6384114222692952992, guid: b9844b65120faa2d5b72d796d49728ea, type: 3}
