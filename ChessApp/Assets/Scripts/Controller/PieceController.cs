@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Controller
 {
-    public class PieceController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+    public class PieceController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         public Piece Piece { get; set; }
 
@@ -33,7 +33,12 @@ namespace Controller
             return null;
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
+        public void OnDrag(PointerEventData eventData)
+        {
+            transform.position += (Vector3)eventData.delta;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
         {
             List<Cell> allowedCells = Piece.Movement();
 
@@ -43,14 +48,32 @@ namespace Controller
             }
         }
 
-        public void OnDrag(PointerEventData eventData)
+        public void OnPointerUp(PointerEventData eventData)
         {
-            transform.position += (Vector3)eventData.delta;
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
+            List<Cell> allowedCells = Piece.Movement();
             
+            CellController targetCell = null;
+
+            foreach (Cell allowedCell in allowedCells)
+            {
+                RectTransform rect = allowedCell.CellController.GetComponent<RectTransform>();
+                if (RectTransformUtility.RectangleContainsScreenPoint(rect, Input.mousePosition))
+                {
+                    // If the mouse is within a valid cell, get it, and break.
+                    targetCell = allowedCell.CellController;
+                }
+
+                allowedCell.ClearHighlightCell();
+            }
+
+            if (targetCell != null)
+            {
+                transform.position = targetCell.Position;
+                Piece.Move(targetCell.Cell);
+            } else
+            {
+                transform.position = Piece.CurrentCell.CellController.Position;
+            }
         }
     }
 }

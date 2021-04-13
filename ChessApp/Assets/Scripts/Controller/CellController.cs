@@ -1,26 +1,29 @@
-﻿using System;
-using Chess;
+﻿using Chess;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 namespace Controller
 {
     public class CellController : MonoBehaviour
     {
-        private Cell _cell;
-        public Cell Cell
+        public Cell Cell { get; set; }
+        
+        public Vector3 Position
         {
-            get => _cell;
-            set { 
-                _cell = value;
-                _cell.HighlightCellEvent += HighlightCell;
-            }
+            get => gameObject.transform.position;
         }
 
-        private void HighlightCell(object sender, EventArgs e)
+        public void HighlightCell()
         {
             Transform highlightImage = transform.GetChild(0);
             highlightImage.gameObject.SetActive(true);
+        }
+        
+        public void ClearHighlightCell()
+        {
+            Transform highlightImage = transform.GetChild(0);
+            highlightImage.gameObject.SetActive(false);
         }
 
         public void Print()

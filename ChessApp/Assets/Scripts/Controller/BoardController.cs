@@ -18,9 +18,10 @@ namespace Controller
                 // Create the cell
                 GameObject newCell = Instantiate(cellPrefab, transform);
             
-                // Setup
+                // Setup    
                 CellController cellController = newCell.GetComponent<CellController>();
                 cellController.Cell = cell;
+                cell.CellController = cellController;
                 cellController.Print();
             }
             

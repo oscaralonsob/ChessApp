@@ -1,13 +1,18 @@
 ﻿using System;
+using Chess.Pieces;
+using Controller;
 
 namespace Chess
 {
     public class Cell
     {
-        public event EventHandler HighlightCellEvent;
+        //TODO: I don't like this way to handle communication between unity and logic...
+        public CellController CellController { get; set;  }
         public int X { get; }
         public int Y { get; }
         public Board Board { get; }
+        
+        public Piece CurrentPiece { get; set;  }
 
         public Cell(int x, int y, Board board)
         {
@@ -19,7 +24,19 @@ namespace Chess
         //Communication between game logic and GameEngine logic
         public void HighlightCell()
         {
-            HighlightCellEvent?.Invoke(this, EventArgs.Empty);
+            if (CellController)
+            {
+                CellController.HighlightCell();
+            }
+        }
+        
+        //Communication between game logic and GameEngine logic
+        public void ClearHighlightCell()
+        {
+            if (CellController)
+            {
+                CellController.ClearHighlightCell();
+            }
         }
     }   
 }

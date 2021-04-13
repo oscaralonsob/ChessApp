@@ -7,7 +7,8 @@ using Object = System.Object;
 namespace Chess
 {
     public class Board
-    {    
+    {
+        public int Size { get; }
         public Cell[,] Cells { get; }
 
         //TODO: I think that is better to have the pieces in the cell itself...
@@ -15,11 +16,12 @@ namespace Chess
 
         public Board()
         {
+            Size = 8;
             Pieces = new List<Piece>();
-            Cells = new Cell[8, 8];
-            for (int x = 0; x < 8; x++)
+            Cells = new Cell[Size, Size];
+            for (int x = 0; x < Size; x++)
             {
-                for (int y = 0; y < 8; y++)
+                for (int y = 0; y < Size; y++)
                 {
                    Cells[x, y] = new Cell(x, y, this);
                 }

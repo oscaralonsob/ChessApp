@@ -10,7 +10,14 @@ namespace Chess.Pieces
 
         public override List<Cell> Movement()
         {
-            throw new System.NotImplementedException();
+            List<Cell> allowedCells = new List<Cell>();
+
+            allowedCells.AddRange(StraightPath(1, 1, CurrentCell.Board.Size));
+            allowedCells.AddRange(StraightPath(1, -1, CurrentCell.Board.Size));
+            allowedCells.AddRange(StraightPath(-1, 1, CurrentCell.Board.Size));
+            allowedCells.AddRange(StraightPath(-1, -1, CurrentCell.Board.Size));
+            
+            return allowedCells;
         }
     }
 }
