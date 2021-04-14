@@ -24,14 +24,27 @@ namespace Chess.Pieces
         
         public bool Move(Cell cell)
         {
+            if (!IsMyTurn())
+            {
+                return false;
+            }
+            
             if (Movement().Contains(cell))
             {
                 SwitchCell(cell);
                 NumberMovements++;
+                CurrentCell.Board.ColorTurn = CurrentCell.Board.ColorTurn == PlayerColor.Black
+                    ? PlayerColor.White
+                    : PlayerColor.Black;
                 return true;
             }
 
             return false;
+        }
+
+        public bool IsMyTurn()
+        {
+            return CurrentCell.Board.ColorTurn == Color;
         }
 
         protected List<Cell> StraightPath(int xDirection, int yDirection, int distance)

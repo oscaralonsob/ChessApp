@@ -35,11 +35,17 @@ namespace Controller
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (!Piece.IsMyTurn()) 
+                return;
+            
             transform.position += (Vector3)eventData.delta;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!Piece.IsMyTurn()) 
+                return;
+            
             List<Cell> allowedCells = Piece.Movement();
 
             foreach (Cell allowedCell in allowedCells)
@@ -50,6 +56,9 @@ namespace Controller
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (!Piece.IsMyTurn()) 
+                return;
+            
             List<Cell> allowedCells = Piece.Movement();
             
             CellController targetCell = null;

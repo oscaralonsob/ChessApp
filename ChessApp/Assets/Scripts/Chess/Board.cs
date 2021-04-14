@@ -12,12 +12,15 @@ namespace Chess
         public Cell[,] Cells { get; }
 
         //TODO: I think that is better to have the pieces in the cell itself...
-        public List<Piece> Pieces { get; set; }
+        public List<Piece> Pieces { get; }
+
+        public PlayerColor ColorTurn;
 
         public Board()
         {
             Size = 8;
             Pieces = new List<Piece>();
+            ColorTurn = PlayerColor.White; 
             Cells = new Cell[Size, Size];
             for (int x = 0; x < Size; x++)
             {
