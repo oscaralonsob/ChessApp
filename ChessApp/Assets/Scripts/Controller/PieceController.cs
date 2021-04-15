@@ -84,5 +84,10 @@ namespace Controller
                 transform.position = Piece.CurrentCell.CellController.Position;
             }
         }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

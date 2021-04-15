@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Controller;
 using UnityEngine;
 
 namespace Chess.Pieces
@@ -7,6 +8,8 @@ namespace Chess.Pieces
     {
         public PlayerColor Color { get; }
         public Cell CurrentCell { get; private set;  }
+        
+        public PieceController PieceController { get; set; }
         
         public int NumberMovements { get; private set; }
 
@@ -31,6 +34,7 @@ namespace Chess.Pieces
             
             if (Movement().Contains(cell))
             {
+                Kill(cell);
                 SwitchCell(cell);
                 NumberMovements++;
                 CurrentCell.Board.ColorTurn = CurrentCell.Board.ColorTurn == PlayerColor.Black
@@ -108,6 +112,21 @@ namespace Chess.Pieces
             }
             CurrentCell = cell;
             CurrentCell.CurrentPiece = this;
+        }
+        
+        protected virtual void Kill(Cell cell)
+        {
+            if (EnemyTargetCell(cell.X, cell.Y))
+            {
+                cell.CurrentPiece.Destroy();
+            }
+        }
+
+        public void Destroy()
+        {
+            CurrentCell.CurrentPiece = null;
+            CurrentCell = null;
+            PieceController.Destroy();
         }
 
         public abstract List<Cell> Movement();

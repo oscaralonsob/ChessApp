@@ -112,5 +112,16 @@ namespace Chess.Pieces
                 CurrentCell.Board.Cells[x, y].CurrentPiece is Pawn &&
                 CurrentCell.Board.Cells[x, y].CurrentPiece.NumberMovements == 1;
         }
+
+        protected override void Kill(Cell cell)
+        {
+            if (EnemyTargetCell(cell.X, cell.Y))
+            {
+                cell.CurrentPiece.Destroy();
+            } else if (IsPawnEnPassant(cell.X, cell.Y - _direction))
+            {
+                cell.Board.Cells[cell.X, cell.Y - _direction].CurrentPiece.Destroy();
+            }
+        }
     }
 }
