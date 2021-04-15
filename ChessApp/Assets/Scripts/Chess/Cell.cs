@@ -11,7 +11,6 @@ namespace Chess
         public int X { get; }
         public int Y { get; }
         public Board Board { get; }
-        
         public Piece CurrentPiece { get; set;  }
 
         public Cell(int x, int y, Board board)

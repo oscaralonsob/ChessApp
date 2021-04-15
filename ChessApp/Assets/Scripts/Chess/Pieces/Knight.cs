@@ -9,23 +9,21 @@ namespace Chess.Pieces
         {
         }
 
-        public override List<Cell> Movement()
+        public override void UpdateAllowedCells()
         {
-            List<Cell> allowedCells = new List<Cell>();
+            base.UpdateAllowedCells();
             
-            allowedCells.AddRange(CreatePath(2, 1));
-            allowedCells.AddRange(CreatePath(1, 2));
-            allowedCells.AddRange(CreatePath(-2, 1));
-            allowedCells.AddRange(CreatePath(-1, 2));
+            AllowedCells.AddRange(CreatePath(2, 1));
+            AllowedCells.AddRange(CreatePath(1, 2));
+            AllowedCells.AddRange(CreatePath(-2, 1));
+            AllowedCells.AddRange(CreatePath(-1, 2));
             
-            allowedCells.AddRange(CreatePath(2, -1));
-            allowedCells.AddRange(CreatePath(1, -2));
-            allowedCells.AddRange(CreatePath(-2, -1));
-            allowedCells.AddRange(CreatePath(-1, -2));
-            
-            return allowedCells;
+            AllowedCells.AddRange(CreatePath(2, -1));
+            AllowedCells.AddRange(CreatePath(1, -2));
+            AllowedCells.AddRange(CreatePath(-2, -1));
+            AllowedCells.AddRange(CreatePath(-1, -2));
         }
-        
+
         private List<Cell> CreatePath(int x, int y)
         {
             List<Cell> allowedCells = new List<Cell>();

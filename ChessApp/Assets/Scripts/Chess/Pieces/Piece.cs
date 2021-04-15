@@ -12,12 +12,15 @@ namespace Chess.Pieces
         public PieceController PieceController { get; set; }
         
         public int NumberMovements { get; private set; }
+        
+        public List<Cell> AllowedCells { get; protected set; }
 
         protected Piece(PlayerColor playerColor, Cell currentCell)
         {
             Color = playerColor;
             SwitchCell(currentCell);
             NumberMovements = 0;
+            AllowedCells = new List<Cell>();
         }
         
         public string GetSpriteName()
@@ -32,14 +35,12 @@ namespace Chess.Pieces
                 return false;
             }
             
-            if (Movement().Contains(cell))
+            if (AllowedCells.Contains(cell))
             {
                 Kill(cell);
                 SwitchCell(cell);
                 NumberMovements++;
-                CurrentCell.Board.ColorTurn = CurrentCell.Board.ColorTurn == PlayerColor.Black
-                    ? PlayerColor.White
-                    : PlayerColor.Black;
+                CurrentCell.Board.SwitchTurn();
                 return true;
             }
 
@@ -129,6 +130,9 @@ namespace Chess.Pieces
             PieceController.Destroy();
         }
 
-        public abstract List<Cell> Movement();
+        public virtual void UpdateAllowedCells()
+        {
+            AllowedCells.Clear();
+        }
     }
 }

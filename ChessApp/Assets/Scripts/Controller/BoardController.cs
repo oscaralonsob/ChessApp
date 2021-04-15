@@ -25,6 +25,7 @@ namespace Controller
                 cellController.Print();
             }
             
+            //TODO: do this inside the cell itself
             foreach (Piece piece in Board.Pieces)
             {
                 GameObject pieceObject = Instantiate(piecePrefab, transform);

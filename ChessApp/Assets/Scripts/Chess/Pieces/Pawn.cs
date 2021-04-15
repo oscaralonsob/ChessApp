@@ -17,17 +17,16 @@ namespace Chess.Pieces
             _direction = (Color == PlayerColor.Black ? -1 : 1);
         }
 
-        public override List<Cell> Movement()
+        public override void UpdateAllowedCells()
         {
-            List<Cell> allowedCells = new List<Cell>();
-
-            allowedCells.AddRange(NormalMovement());
-            allowedCells.AddRange(FirstMovement());
-            allowedCells.AddRange(Capture());
-            allowedCells.AddRange(CaptureEnPassant());
+            base.UpdateAllowedCells();
             
-            return allowedCells;
+            AllowedCells.AddRange(NormalMovement());
+            AllowedCells.AddRange(FirstMovement());
+            AllowedCells.AddRange(Capture());
+            AllowedCells.AddRange(CaptureEnPassant());
         }
+        
 
         private List<Cell> NormalMovement()
         {

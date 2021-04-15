@@ -30,6 +30,15 @@ namespace Chess
                 }
             }
         }
+        
+        public void SwitchTurn()
+        {
+            ColorTurn = ColorTurn == PlayerColor.White
+                ? PlayerColor.Black
+                : PlayerColor.White;
+
+            UpdatePieceMovement();
+        }
 
         public void SetPieces(Dictionary<Vector2Int, Tuple<Type, PlayerColor>> pieces)
         {
@@ -39,6 +48,16 @@ namespace Chess
                 Object[] args = {pair.Value.Item2, cell};
                 Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
                 Pieces.Add(piece);
+            }
+            
+            UpdatePieceMovement();
+        }
+
+        private void UpdatePieceMovement()
+        {
+            foreach (Cell cell in Cells)
+            {
+                cell.CurrentPiece?.UpdateAllowedCells();
             }
         }
     }

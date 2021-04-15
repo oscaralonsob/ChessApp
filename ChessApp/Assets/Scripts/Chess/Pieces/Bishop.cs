@@ -7,17 +7,16 @@ namespace Chess.Pieces
         public Bishop(PlayerColor playerColor, Cell currentCell) : base(playerColor, currentCell)
         {
         }
-
-        public override List<Cell> Movement()
+        
+        
+        public override void UpdateAllowedCells()
         {
-            List<Cell> allowedCells = new List<Cell>();
-
-            allowedCells.AddRange(StraightPath(1, 1, CurrentCell.Board.Size));
-            allowedCells.AddRange(StraightPath(1, -1, CurrentCell.Board.Size));
-            allowedCells.AddRange(StraightPath(-1, 1, CurrentCell.Board.Size));
-            allowedCells.AddRange(StraightPath(-1, -1, CurrentCell.Board.Size));
+            base.UpdateAllowedCells();
             
-            return allowedCells;
+            AllowedCells.AddRange(StraightPath(1, 1, CurrentCell.Board.Size));
+            AllowedCells.AddRange(StraightPath(1, -1, CurrentCell.Board.Size));
+            AllowedCells.AddRange(StraightPath(-1, 1, CurrentCell.Board.Size));
+            AllowedCells.AddRange(StraightPath(-1, -1, CurrentCell.Board.Size));
         }
     }
 }

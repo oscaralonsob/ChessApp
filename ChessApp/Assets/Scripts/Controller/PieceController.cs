@@ -46,7 +46,7 @@ namespace Controller
             if (!Piece.IsMyTurn()) 
                 return;
             
-            List<Cell> allowedCells = Piece.Movement();
+            List<Cell> allowedCells = Piece.AllowedCells;
 
             foreach (Cell allowedCell in allowedCells)
             {
@@ -59,7 +59,7 @@ namespace Controller
             if (!Piece.IsMyTurn()) 
                 return;
             
-            List<Cell> allowedCells = Piece.Movement();
+            List<Cell> allowedCells = Piece.AllowedCells;
             
             CellController targetCell = null;
 
