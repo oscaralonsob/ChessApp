@@ -25,15 +25,18 @@ namespace Controller
                 cellController.Print();
             }
             
-            //TODO: do this inside the cell itself
-            foreach (Piece piece in Board.Pieces)
+            //TODO: see sorting order
+            foreach (Cell cell in Board.Cells)
             {
-                GameObject pieceObject = Instantiate(piecePrefab, transform);
-                PieceController pieceController = pieceObject.GetComponent<PieceController>();
+                if (cell.CurrentPiece != null)
+                {
+                    GameObject pieceObject = Instantiate(piecePrefab, transform);
+                    PieceController pieceController = pieceObject.GetComponent<PieceController>();
 
-                pieceController.Piece = piece;
-                piece.PieceController = pieceController;
-                pieceController.Print();
+                    pieceController.Piece = cell.CurrentPiece;
+                    cell.CurrentPiece.PieceController = pieceController;
+                    pieceController.Print();
+                }
             }
         }
     }

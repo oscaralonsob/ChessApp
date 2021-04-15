@@ -11,15 +11,11 @@ namespace Chess
         public int Size { get; }
         public Cell[,] Cells { get; }
 
-        //TODO: I think that is better to have the pieces in the cell itself...
-        public List<Piece> Pieces { get; }
-
         public PlayerColor ColorTurn;
 
         public Board()
         {
             Size = 8;
-            Pieces = new List<Piece>();
             ColorTurn = PlayerColor.White; 
             Cells = new Cell[Size, Size];
             for (int x = 0; x < Size; x++)
@@ -46,8 +42,7 @@ namespace Chess
             {
                 Cell cell = Cells[pair.Key.x, pair.Key.y];
                 Object[] args = {pair.Value.Item2, cell};
-                Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
-                Pieces.Add(piece);
+                Activator.CreateInstance(pair.Value.Item1, args);
             }
             
             UpdatePieceMovement();
