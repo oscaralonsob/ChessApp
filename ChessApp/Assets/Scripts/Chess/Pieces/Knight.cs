@@ -5,18 +5,12 @@ namespace Chess.Pieces
 {
     public class Knight : Piece
     {
-        //TODO: castle
         public Knight(PlayerColor playerColor, Cell currentCell) : base(playerColor, currentCell)
         {
         }
 
         public override List<Cell> Movement()
         {
-            if (!IsMyTurn())
-            {
-                return new List<Cell>();
-            }
-            
             List<Cell> allowedCells = new List<Cell>();
             
             allowedCells.AddRange(CreatePath(2, 1));
