@@ -14,6 +14,8 @@ namespace Chess.Pieces
         public int NumberMovements { get; private set; }
         
         public List<Cell> AllowedCells { get; protected set; }
+        
+        private bool IsUnderAttack { get; set; }
 
         protected Piece(PlayerColor playerColor, Cell currentCell)
         {
@@ -21,6 +23,7 @@ namespace Chess.Pieces
             SwitchCell(currentCell);
             NumberMovements = 0;
             AllowedCells = new List<Cell>();
+            IsUnderAttack = false;
         }
         
         public string GetSpriteName()
@@ -69,6 +72,11 @@ namespace Chess.Pieces
 
                 if (!EmptyTargetCell(targetX, targetY))
                 {
+                    if (EnemyTargetCell(targetX, targetY) && 
+                        CurrentCell.Board.Cells[targetX, targetY].CurrentPiece.Color != Color)
+                    {
+                        CurrentCell.Board.Cells[targetX, targetY].CurrentPiece.IsUnderAttack = true;
+                    }
                     break;
                 }
             }
