@@ -6,7 +6,6 @@ namespace Chess
 {
     public class Cell
     {
-        //TODO: I don't like this way to handle communication between unity and logic...
         public CellController CellController { get; set;  }
         public int X { get; }
         public int Y { get; }
@@ -18,6 +17,7 @@ namespace Chess
             X = x;
             Y = y;
             Board = board;
+            CurrentPiece = null;
         }
 
         //Communication between game logic and GameEngine logic
