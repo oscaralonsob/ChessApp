@@ -65,17 +65,18 @@ namespace Chess.Pieces
             {
                 targetX += xDirection;
                 targetY += yDirection;
-                if (CheckCell(targetX, targetY))
+                Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
+                if (CheckCell(targetCell))
                 {
-                    allowedCells.Add(CurrentCell.Board.Cells[targetX, targetY]);
+                    allowedCells.Add(targetCell);
                 }
 
-                if (!EmptyTargetCell(targetX, targetY))
+                if (!EmptyTargetCell(targetCell))
                 {
-                    if (EnemyTargetCell(targetX, targetY) && 
-                        CurrentCell.Board.Cells[targetX, targetY].CurrentPiece.Color != Color)
+                    if (EnemyTargetCell(targetCell) && 
+                        targetCell.CurrentPiece.Color != Color)
                     {
-                        CurrentCell.Board.Cells[targetX, targetY].CurrentPiece.IsUnderAttack = true;
+                        targetCell.CurrentPiece.IsUnderAttack = true;
                     }
                     break;
                 }
@@ -84,35 +85,21 @@ namespace Chess.Pieces
             return allowedCells;
         }
         
-        protected bool CheckCell(int x, int y)
+        protected bool CheckCell(Cell cell)
         {
-            return EmptyTargetCell(x, y) || EnemyTargetCell(x, y);
-        } 
-        
-        private bool ValidTargetCell(int x, int y)
-        {
-            return 
-                x >= 0 && 
-                y >=0 && 
-                x < CurrentCell.Board.Size && 
-                y < CurrentCell.Board.Size;
+            return EmptyTargetCell(cell) || EnemyTargetCell(cell);
         }
 
-        protected bool EmptyTargetCell(int x, int y)
+        protected bool EmptyTargetCell(Cell cell)
         {
-            return 
-                ValidTargetCell(x, y) &&
-                CurrentCell.Board.Cells[x, y].CurrentPiece == null;
+            return cell?.CurrentPiece == null;
         }
         
-        protected bool EnemyTargetCell(int x, int y)
+        protected bool EnemyTargetCell(Cell cell)
         {
-            return 
-                ValidTargetCell(x, y) &&
-                !EmptyTargetCell(x, y) &&
-                CurrentCell.Board.Cells[x, y].CurrentPiece.Color != Color;
+            return cell?.CurrentPiece.Color != Color;
         }
-
+        
         private void SwitchCell(Cell cell)
         {
             if (CurrentCell != null)
@@ -125,7 +112,7 @@ namespace Chess.Pieces
         
         protected virtual void Kill(Cell cell)
         {
-            if (EnemyTargetCell(cell.X, cell.Y))
+            if (EnemyTargetCell(cell))
             {
                 cell.CurrentPiece.Destroy();
             }

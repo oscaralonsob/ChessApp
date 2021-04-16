@@ -33,10 +33,11 @@ namespace Chess.Pieces
             List<Cell> allowedCells = new List<Cell>();
             int targetY = CurrentCell.Y + _direction;
             int targetX = CurrentCell.X;
-            
-            if (EmptyTargetCell(targetX, targetY))
+            Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
+
+            if (EmptyTargetCell(targetCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX, targetY]);
+                allowedCells.Add(targetCell);
             }
             
             return allowedCells;
@@ -48,10 +49,11 @@ namespace Chess.Pieces
             
             int targetY = CurrentCell.Y + 2 * _direction;
             int targetX = CurrentCell.X;
+            Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
             
-            if (NumberMovements == 0 && NormalMovement().Count != 0 && EmptyTargetCell(targetX, targetY))
+            if (NumberMovements == 0 && NormalMovement().Count != 0 && EmptyTargetCell(targetCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX, targetY]);
+                allowedCells.Add(targetCell);
             }
             
             return allowedCells;
@@ -62,17 +64,20 @@ namespace Chess.Pieces
             List<Cell> allowedCells = new List<Cell>();
             int targetY = CurrentCell.Y + _direction;
             int targetX = CurrentCell.X + 1;
+            Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
 
-            if (EnemyTargetCell(targetX, targetY))
+            if (EnemyTargetCell(targetCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX, targetY]);
+                allowedCells.Add(targetCell);
             }
             
             targetX = CurrentCell.X - 1;
+            targetCell = CurrentCell.Board.GetCell(targetX, targetY);
+
             
-            if (EnemyTargetCell(targetX, targetY))
+            if (EnemyTargetCell(targetCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX, targetY]);
+                allowedCells.Add(targetCell);
             }
             
             return allowedCells;
@@ -85,36 +90,43 @@ namespace Chess.Pieces
             int targetX = CurrentCell.X;
 
             //TODO: check it was previous movement not only the first one but i need to implement turns first
-            if (EmptyTargetCell(targetX + 1, targetY + _direction) && IsPawnEnPassant(targetX + 1, targetY))
+            
+            Cell targetCell = CurrentCell.Board.GetCell(targetX + 1, targetY + _direction);
+            Cell passantCell = CurrentCell.Board.GetCell(targetX + 1, targetY);
+            if (EmptyTargetCell(targetCell) && IsPawnEnPassant(passantCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX + 1, targetY + _direction]);
+                allowedCells.Add(targetCell);
             }
 
-            if (EmptyTargetCell(targetX - 1, targetY + _direction) && IsPawnEnPassant(targetX - 1, targetY))
+            targetCell = CurrentCell.Board.GetCell(targetX - 1, targetY + _direction);
+            passantCell = CurrentCell.Board.GetCell(targetX - 1, targetY);
+            if (EmptyTargetCell(targetCell) && IsPawnEnPassant(passantCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX - 1, targetY + _direction]);
+                allowedCells.Add(targetCell);
             }
             
             return allowedCells;
         }
         
                 
-        private bool IsPawnEnPassant(int x, int y)
+        private bool IsPawnEnPassant(Cell cell)
         {
             return
-                EnemyTargetCell(x, y) &&
-                CurrentCell.Board.Cells[x, y].CurrentPiece is Pawn &&
-                CurrentCell.Board.Cells[x, y].CurrentPiece.NumberMovements == 1;
+                EnemyTargetCell(cell) &&
+                cell.CurrentPiece is Pawn &&
+                cell.CurrentPiece.NumberMovements == 1;
         }
 
         protected override void Kill(Cell cell)
         {
-            if (EnemyTargetCell(cell.X, cell.Y))
+            Cell targetCell = CurrentCell.Board.GetCell(cell.X, cell.Y - _direction);
+
+            if (EnemyTargetCell(cell))
             {
                 cell.CurrentPiece.Destroy();
-            } else if (IsPawnEnPassant(cell.X, cell.Y - _direction))
+            } else if (IsPawnEnPassant(targetCell))
             {
-                cell.Board.Cells[cell.X, cell.Y - _direction].CurrentPiece.Destroy();
+                targetCell.CurrentPiece.Destroy();
             }
         }
     }

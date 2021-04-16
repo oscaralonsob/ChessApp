@@ -30,9 +30,11 @@ namespace Chess.Pieces
             int targetY = CurrentCell.Y + y;
             int targetX = CurrentCell.X + x;
 
-            if (CheckCell(targetX, targetY))
+            Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
+
+            if (CheckCell(targetCell))
             {
-                allowedCells.Add(CurrentCell.Board.Cells[targetX, targetY]);
+                allowedCells.Add(targetCell);
             }
 
             return allowedCells;

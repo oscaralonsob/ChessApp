@@ -26,6 +26,13 @@ namespace Chess
                 }
             }
         }
+
+        public Cell GetCell(int x, int y)
+        {
+            return (x >= 0 && y >=0 && x < Size && y < Size) ? 
+                    Cells[x, y] :
+                    null;
+        }
         
         public void SwitchTurn()
         {
