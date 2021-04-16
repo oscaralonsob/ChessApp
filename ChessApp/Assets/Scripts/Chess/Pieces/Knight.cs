@@ -32,7 +32,7 @@ namespace Chess.Pieces
 
             Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
 
-            if (CheckCell(targetCell))
+            if (CanMoveTo(targetCell))
             {
                 allowedCells.Add(targetCell);
             }

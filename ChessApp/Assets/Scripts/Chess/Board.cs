@@ -61,6 +61,31 @@ namespace Chess
             {
                 cell.CurrentPiece?.UpdateAllowedCells();
             }
+            
+            foreach (Piece piece in GetPieces())
+            {
+                foreach (Cell cell in piece.AllowedCells)
+                {
+                    if (cell.CurrentPiece != null && cell.CurrentPiece.Color != piece.Color)
+                    {
+                        cell.CurrentPiece.IsUnderAttack = true;
+                    }
+                }
+            }
+        }
+
+        private List<Piece> GetPieces()
+        {
+            List<Piece> pieces = new List<Piece>();
+            foreach (Cell cell in Cells)
+            {
+                if (cell.CurrentPiece != null)
+                {
+                    pieces.Add(cell.CurrentPiece);
+                }
+            }
+
+            return pieces;
         }
     }
     

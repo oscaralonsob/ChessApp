@@ -15,7 +15,7 @@ namespace Chess.Pieces
         
         public List<Cell> AllowedCells { get; protected set; }
         
-        private bool IsUnderAttack { get; set; }
+        public bool IsUnderAttack { get; set; }
 
         protected Piece(PlayerColor playerColor, Cell currentCell)
         {
@@ -31,11 +31,11 @@ namespace Chess.Pieces
             return "Chess" + GetType().Name + Color;
         }
         
-        public bool Move(Cell cell)
+        public void Move(Cell cell)
         {
             if (!IsMyTurn())
             {
-                return false;
+                return;
             }
             
             if (AllowedCells.Contains(cell))
@@ -44,10 +44,7 @@ namespace Chess.Pieces
                 SwitchCell(cell);
                 NumberMovements++;
                 CurrentCell.Board.SwitchTurn();
-                return true;
             }
-
-            return false;
         }
 
         public bool IsMyTurn()
@@ -66,18 +63,13 @@ namespace Chess.Pieces
                 targetX += xDirection;
                 targetY += yDirection;
                 Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
-                if (CheckCell(targetCell))
+                if (CanMoveTo(targetCell))
                 {
                     allowedCells.Add(targetCell);
                 }
 
                 if (!EmptyTargetCell(targetCell))
                 {
-                    if (EnemyTargetCell(targetCell) && 
-                        targetCell.CurrentPiece.Color != Color)
-                    {
-                        targetCell.CurrentPiece.IsUnderAttack = true;
-                    }
                     break;
                 }
             }
@@ -85,19 +77,23 @@ namespace Chess.Pieces
             return allowedCells;
         }
         
-        protected bool CheckCell(Cell cell)
+        protected bool CanMoveTo(Cell cell)
         {
             return EmptyTargetCell(cell) || EnemyTargetCell(cell);
         }
 
         protected bool EmptyTargetCell(Cell cell)
         {
-            return cell?.CurrentPiece == null;
+            return 
+                cell != null &&
+                cell.IsEmpty;
         }
         
         protected bool EnemyTargetCell(Cell cell)
         {
-            return cell?.CurrentPiece.Color != Color;
+            return cell != null &&
+                   !cell.IsEmpty && 
+                   cell.CurrentPiece.Color != Color;
         }
         
         private void SwitchCell(Cell cell)
@@ -128,6 +124,7 @@ namespace Chess.Pieces
         public virtual void UpdateAllowedCells()
         {
             AllowedCells.Clear();
+            IsUnderAttack = false;
         }
     }
 }

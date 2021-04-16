@@ -11,6 +11,8 @@ namespace Chess
         public int Y { get; }
         public Board Board { get; }
         public Piece CurrentPiece { get; set;  }
+        
+        public bool IsEmpty => CurrentPiece == null;
 
         public Cell(int x, int y, Board board)
         {

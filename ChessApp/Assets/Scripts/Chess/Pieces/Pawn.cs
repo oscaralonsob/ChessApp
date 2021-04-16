@@ -78,6 +78,7 @@ namespace Chess.Pieces
             if (EnemyTargetCell(targetCell))
             {
                 allowedCells.Add(targetCell);
+
             }
             
             return allowedCells;
@@ -89,7 +90,7 @@ namespace Chess.Pieces
             int targetY = CurrentCell.Y;
             int targetX = CurrentCell.X;
 
-            //TODO: check it was previous movement not only the first one but i need to implement turns first
+            //TODO: check it was previous move not only the first one but i need to implement turns first
             
             Cell targetCell = CurrentCell.Board.GetCell(targetX + 1, targetY + _direction);
             Cell passantCell = CurrentCell.Board.GetCell(targetX + 1, targetY);
