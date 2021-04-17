@@ -18,7 +18,7 @@ namespace Controller
             Image img = GetComponent<Image>();
 
             img.sprite = GetSprite();
-            rectTransform.anchoredPosition = new Vector2((Piece.CurrentCell.Position.X * 100) + 50, (Piece.CurrentCell.Position.Y * 100) + 50);
+            rectTransform.anchoredPosition = new Vector2((Piece.Position.X * 100) + 50, (Piece.Position.Y * 100) + 50);
         }
 
         private Sprite GetSprite()

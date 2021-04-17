@@ -9,15 +9,13 @@ namespace Chess
         public CellController CellController { get; set;  }
         
         public Coord Position { get; }
-        public Board Board { get; }
-        public Piece CurrentPiece { get; set;  }
+        public Piece CurrentPiece { get; set; }
         
         public bool IsEmpty => CurrentPiece == null;
 
-        public Cell(Coord coord, Board board)
+        public Cell(Coord coord)
         {
             Position = coord;
-            Board = board;
             CurrentPiece = null;
         }
 

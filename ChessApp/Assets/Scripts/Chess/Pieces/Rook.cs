@@ -4,7 +4,7 @@ namespace Chess.Pieces
 {
     public class Rook : Piece
     {
-        public Rook(PlayerColor playerColor, Cell currentCell) : base(playerColor, currentCell)
+        public Rook(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
         }
 
@@ -12,10 +12,10 @@ namespace Chess.Pieces
         {
             base.UpdateAllowedCells();
             
-            AllowedCells.AddRange(StraightPath(0, 1, CurrentCell.Board.Size));
-            AllowedCells.AddRange(StraightPath(0, -1, CurrentCell.Board.Size));
-            AllowedCells.AddRange(StraightPath(1, 0, CurrentCell.Board.Size));
-            AllowedCells.AddRange(StraightPath(-1, 0, CurrentCell.Board.Size));
+            AllowedCells.AddRange(StraightPath(0, 1, Board.Size));
+            AllowedCells.AddRange(StraightPath(0, -1, Board.Size));
+            AllowedCells.AddRange(StraightPath(1, 0, Board.Size));
+            AllowedCells.AddRange(StraightPath(-1, 0, Board.Size));
         }
     }
 }

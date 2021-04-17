@@ -25,7 +25,7 @@ namespace Chess
             {
                 for (int y = 0; y < Size; y++)
                 {
-                   Cells[x, y] = new Cell(new Coord(x, y), this);
+                   Cells[x, y] = new Cell(new Coord(x, y));
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace Chess
             foreach (KeyValuePair<Vector2Int, Tuple<Type, PlayerColor>> pair in pieces)
             {
                 Cell cell = Cells[pair.Key.x, pair.Key.y];
-                Object[] args = {pair.Value.Item2, cell};
+                Object[] args = {pair.Value.Item2, cell.Position, this};
                 Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
                 Pieces.Add(piece);
             }
@@ -61,13 +61,11 @@ namespace Chess
 
         private void UpdatePieceMovement()
         {
-            foreach (Cell cell in Cells)
-            {
-                cell.CurrentPiece?.UpdateAllowedCells();
-            }
-            
             foreach (Piece piece in Pieces)
             {
+                piece.UpdateAllowedCells();
+                
+                //TODO: I think this should be done inside the UpdateAllowedCells but for now is ok
                 foreach (Cell cell in piece.AllowedCells)
                 {
                     if (cell.CurrentPiece != null && cell.CurrentPiece.Color != piece.Color)

@@ -5,7 +5,7 @@ namespace Chess.Pieces
 {
     public class Knight : Piece
     {
-        public Knight(PlayerColor playerColor, Cell currentCell) : base(playerColor, currentCell)
+        public Knight(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Chess.Pieces
             int targetY = CurrentCell.Position.Y + y;
             int targetX = CurrentCell.Position.X + x;
 
-            Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
+            Cell targetCell = Board.GetCell(targetX, targetY);
 
             if (CanMoveTo(targetCell))
             {

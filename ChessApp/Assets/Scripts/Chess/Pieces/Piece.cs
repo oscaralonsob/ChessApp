@@ -7,20 +7,24 @@ namespace Chess.Pieces
     public abstract class Piece
     {
         public PlayerColor Color { get; }
-        public Cell CurrentCell { get; private set;  }
+        public Coord Position { get; set; }
+        public Board Board { get; }
         
         public PieceController PieceController { get; set; }
         
         public int NumberMovements { get; private set; }
         
-        public List<Cell> AllowedCells { get; protected set; }
-        
+        public List<Cell> AllowedCells { get; }
+
+        public Cell CurrentCell => Board.Cells[Position.X, Position.Y];
+
         public bool IsUnderAttack { get; set; }
 
-        protected Piece(PlayerColor playerColor, Cell currentCell)
+        protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
             Color = playerColor;
-            SwitchCell(currentCell);
+            Board = board;
+            MoveToPosition(coord);
             NumberMovements = 0;
             AllowedCells = new List<Cell>();
             IsUnderAttack = false;
@@ -41,15 +45,16 @@ namespace Chess.Pieces
             if (AllowedCells.Contains(cell))
             {
                 Kill(cell);
-                SwitchCell(cell);
+                RemoveFromCurrentCell();
+                MoveToPosition(cell.Position);
                 NumberMovements++;
-                CurrentCell.Board.SwitchTurn();
+                Board.SwitchTurn();
             }
         }
 
         public bool IsMyTurn()
         {
-            return CurrentCell.Board.ColorTurn == Color;
+            return Board.ColorTurn == Color;
         }
 
         protected List<Cell> StraightPath(int xDirection, int yDirection, int distance)
@@ -62,7 +67,7 @@ namespace Chess.Pieces
             {
                 targetX += xDirection;
                 targetY += yDirection;
-                Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
+                Cell targetCell = Board.GetCell(targetX, targetY);
                 if (CanMoveTo(targetCell))
                 {
                     allowedCells.Add(targetCell);
@@ -96,14 +101,15 @@ namespace Chess.Pieces
                    cell.CurrentPiece.Color != Color;
         }
         
-        private void SwitchCell(Cell cell)
+        private void MoveToPosition(Coord coord)
         {
-            if (CurrentCell != null)
-            {
-                CurrentCell.CurrentPiece = null;
-            }
-            CurrentCell = cell;
+            Position = coord;
             CurrentCell.CurrentPiece = this;
+        }
+        
+        private void RemoveFromCurrentCell()
+        {
+            CurrentCell.CurrentPiece = null;
         }
         
         protected virtual void Kill(Cell cell)
@@ -116,9 +122,8 @@ namespace Chess.Pieces
 
         public void Destroy()
         {
-            CurrentCell.Board.Pieces.Remove(this);
+            Board.Pieces.Remove(this);
             CurrentCell.CurrentPiece = null;
-            CurrentCell = null;
             PieceController.Destroy();
         }
 
