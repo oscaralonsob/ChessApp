@@ -6,17 +6,19 @@ namespace Chess.Pieces
 {
     public abstract class Piece
     {
-        public PlayerColor Color { get; }
-        public Coord Position { get; set; }
-        public Board Board { get; }
-        
         public PieceController PieceController { get; set; }
+        
+        public PlayerColor Color { get; }
+        
+        public Coord Position { get; private set; }
+        
+        protected Board Board { get; }
+        
+        public Cell CurrentCell => Board.Cells[Position.X, Position.Y];
         
         public int NumberMovements { get; private set; }
         
         public List<Cell> AllowedCells { get; }
-
-        public Cell CurrentCell => Board.Cells[Position.X, Position.Y];
 
         public bool IsUnderAttack { get; set; }
 
