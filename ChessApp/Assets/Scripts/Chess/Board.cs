@@ -11,11 +11,14 @@ namespace Chess
         public int Size { get; }
         public Cell[,] Cells { get; }
 
+        public List<Piece> Pieces { get; }
+
         public PlayerColor ColorTurn;
 
         public Board()
         {
             Size = 8;
+            Pieces = new List<Piece>();
             ColorTurn = PlayerColor.White; 
             Cells = new Cell[Size, Size];
             for (int x = 0; x < Size; x++)
@@ -49,7 +52,8 @@ namespace Chess
             {
                 Cell cell = Cells[pair.Key.x, pair.Key.y];
                 Object[] args = {pair.Value.Item2, cell};
-                Activator.CreateInstance(pair.Value.Item1, args);
+                Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
+                Pieces.Add(piece);
             }
             
             UpdatePieceMovement();
@@ -62,7 +66,7 @@ namespace Chess
                 cell.CurrentPiece?.UpdateAllowedCells();
             }
             
-            foreach (Piece piece in GetPieces())
+            foreach (Piece piece in Pieces)
             {
                 foreach (Cell cell in piece.AllowedCells)
                 {
@@ -72,20 +76,6 @@ namespace Chess
                     }
                 }
             }
-        }
-
-        private List<Piece> GetPieces()
-        {
-            List<Piece> pieces = new List<Piece>();
-            foreach (Cell cell in Cells)
-            {
-                if (cell.CurrentPiece != null)
-                {
-                    pieces.Add(cell.CurrentPiece);
-                }
-            }
-
-            return pieces;
         }
     }
     

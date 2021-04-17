@@ -116,6 +116,7 @@ namespace Chess.Pieces
 
         public void Destroy()
         {
+            CurrentCell.Board.Pieces.Remove(this);
             CurrentCell.CurrentPiece = null;
             CurrentCell = null;
             PieceController.Destroy();
