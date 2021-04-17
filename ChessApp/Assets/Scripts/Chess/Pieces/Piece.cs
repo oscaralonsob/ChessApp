@@ -55,8 +55,8 @@ namespace Chess.Pieces
         protected List<Cell> StraightPath(int xDirection, int yDirection, int distance)
         {
             List<Cell> allowedCells = new List<Cell>();
-            int targetY = CurrentCell.Y;
-            int targetX = CurrentCell.X;
+            int targetX = CurrentCell.Position.X;
+            int targetY = CurrentCell.Position.Y;
             
             for (int x = 1; x <= distance; x++)
             {

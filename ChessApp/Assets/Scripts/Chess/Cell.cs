@@ -7,17 +7,16 @@ namespace Chess
     public class Cell
     {
         public CellController CellController { get; set;  }
-        public int X { get; }
-        public int Y { get; }
+        
+        public Coord Position { get; }
         public Board Board { get; }
         public Piece CurrentPiece { get; set;  }
         
         public bool IsEmpty => CurrentPiece == null;
 
-        public Cell(int x, int y, Board board)
+        public Cell(Coord coord, Board board)
         {
-            X = x;
-            Y = y;
+            Position = coord;
             Board = board;
             CurrentPiece = null;
         }

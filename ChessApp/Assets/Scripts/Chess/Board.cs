@@ -25,7 +25,7 @@ namespace Chess
             {
                 for (int y = 0; y < Size; y++)
                 {
-                   Cells[x, y] = new Cell(x, y, this);
+                   Cells[x, y] = new Cell(new Coord(x, y), this);
                 }
             }
         }

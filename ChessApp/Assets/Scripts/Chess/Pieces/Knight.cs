@@ -27,8 +27,8 @@ namespace Chess.Pieces
         private List<Cell> CreatePath(int x, int y)
         {
             List<Cell> allowedCells = new List<Cell>();
-            int targetY = CurrentCell.Y + y;
-            int targetX = CurrentCell.X + x;
+            int targetY = CurrentCell.Position.Y + y;
+            int targetX = CurrentCell.Position.X + x;
 
             Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
 

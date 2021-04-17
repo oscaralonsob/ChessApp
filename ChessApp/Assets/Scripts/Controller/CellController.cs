@@ -30,10 +30,10 @@ namespace Controller
         {
             // Set position
             RectTransform rectTransform = GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2((Cell.X * 100) + 50, (Cell.Y * 100) + 50);
+            rectTransform.anchoredPosition = new Vector2((Cell.Position.X * 100) + 50, (Cell.Position.Y * 100) + 50);
         
             // Set Color
-            bool blackCell = (Cell.Y + Cell.X) % 2 == 0;
+            bool blackCell = (Cell.Position.Y + Cell.Position.X) % 2 == 0;
 
             // Color
             GetComponent<Image>().color = blackCell ?  new Color32(128, 128, 128, 255) : new Color32(230, 230, 230, 255);

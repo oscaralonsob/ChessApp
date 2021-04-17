@@ -31,8 +31,8 @@ namespace Chess.Pieces
         private List<Cell> NormalMovement()
         {
             List<Cell> allowedCells = new List<Cell>();
-            int targetY = CurrentCell.Y + _direction;
-            int targetX = CurrentCell.X;
+            int targetY = CurrentCell.Position.Y + _direction;
+            int targetX = CurrentCell.Position.X;
             Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
 
             if (EmptyTargetCell(targetCell))
@@ -47,8 +47,8 @@ namespace Chess.Pieces
         {
             List<Cell> allowedCells = new List<Cell>();
             
-            int targetY = CurrentCell.Y + 2 * _direction;
-            int targetX = CurrentCell.X;
+            int targetY = CurrentCell.Position.Y + 2 * _direction;
+            int targetX = CurrentCell.Position.X;
             Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
             
             if (NumberMovements == 0 && NormalMovement().Count != 0 && EmptyTargetCell(targetCell))
@@ -62,8 +62,8 @@ namespace Chess.Pieces
         private List<Cell> Capture()
         {
             List<Cell> allowedCells = new List<Cell>();
-            int targetY = CurrentCell.Y + _direction;
-            int targetX = CurrentCell.X + 1;
+            int targetY = CurrentCell.Position.Y + _direction;
+            int targetX = CurrentCell.Position.X + 1;
             Cell targetCell = CurrentCell.Board.GetCell(targetX, targetY);
 
             if (EnemyTargetCell(targetCell))
@@ -71,7 +71,7 @@ namespace Chess.Pieces
                 allowedCells.Add(targetCell);
             }
             
-            targetX = CurrentCell.X - 1;
+            targetX = CurrentCell.Position.X - 1;
             targetCell = CurrentCell.Board.GetCell(targetX, targetY);
 
             
@@ -87,8 +87,8 @@ namespace Chess.Pieces
         private List<Cell> CaptureEnPassant()
         {
             List<Cell> allowedCells = new List<Cell>();
-            int targetY = CurrentCell.Y;
-            int targetX = CurrentCell.X;
+            int targetY = CurrentCell.Position.Y;
+            int targetX = CurrentCell.Position.X;
 
             //TODO: check it was previous move not only the first one but i need to implement turns first
             
@@ -120,7 +120,7 @@ namespace Chess.Pieces
 
         protected override void Kill(Cell cell)
         {
-            Cell targetCell = CurrentCell.Board.GetCell(cell.X, cell.Y - _direction);
+            Cell targetCell = CurrentCell.Board.GetCell(cell.Position.X, cell.Position.Y - _direction);
 
             if (EnemyTargetCell(cell))
             {
