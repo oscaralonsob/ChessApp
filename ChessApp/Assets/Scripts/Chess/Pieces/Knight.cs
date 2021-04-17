@@ -31,6 +31,11 @@ namespace Chess.Pieces
             int targetX = CurrentCell.Position.X + x;
 
             Cell targetCell = Board.GetCell(targetX, targetY);
+            
+            if (targetCell == null)
+                return allowedCells;;
+                
+            targetCell.Meta.SetCellUnderAttack(Color);
 
             if (CanMoveTo(targetCell))
             {

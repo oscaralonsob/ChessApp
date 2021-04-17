@@ -21,6 +21,8 @@ namespace Chess.Pieces
         public List<Cell> AllowedCells { get; }
 
         public bool IsUnderAttack { get; set; }
+        
+        public bool IsPined { get; set; }
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
@@ -30,6 +32,7 @@ namespace Chess.Pieces
             NumberMovements = 0;
             AllowedCells = new List<Cell>();
             IsUnderAttack = false;
+            IsPined = false;
         }
         
         public string GetSpriteName()
@@ -70,13 +73,23 @@ namespace Chess.Pieces
                 targetX += xDirection;
                 targetY += yDirection;
                 Cell targetCell = Board.GetCell(targetX, targetY);
-                if (CanMoveTo(targetCell))
+
+                if (targetCell == null)
+                    return allowedCells;
+                
+                targetCell.Meta.SetCellUnderAttack(Color);
+                
+                if (EmptyTargetCell(targetCell))
                 {
                     allowedCells.Add(targetCell);
-                }
-
-                if (!EmptyTargetCell(targetCell))
+                } else if (EnemyTargetCell(targetCell))
                 {
+                    allowedCells.Add(targetCell);
+                    //No more allowed movements, we can stop looking
+                    break;
+                } else if (FriendlyTargetCell(targetCell))
+                {
+                    //No more allowed movements, we can stop looking
                     break;
                 }
             }
@@ -94,6 +107,13 @@ namespace Chess.Pieces
             return 
                 cell != null &&
                 cell.IsEmpty;
+        }
+        
+        protected bool FriendlyTargetCell(Cell cell)
+        {
+            return cell != null &&
+                   !cell.IsEmpty && 
+                   cell.CurrentPiece.Color == Color;
         }
         
         protected bool EnemyTargetCell(Cell cell)

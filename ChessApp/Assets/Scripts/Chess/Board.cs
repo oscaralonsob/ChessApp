@@ -61,6 +61,11 @@ namespace Chess
 
         private void UpdatePieceMovement()
         {
+            foreach (Cell cell in Cells)
+            {
+                cell.Meta.Reset();
+            }
+            
             foreach (Piece piece in Pieces)
             {
                 piece.UpdateAllowedCells();

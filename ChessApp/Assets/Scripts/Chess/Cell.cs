@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Chess.Pieces;
 using Controller;
 
@@ -13,11 +14,14 @@ namespace Chess
         public Piece CurrentPiece { get; set; }
         
         public bool IsEmpty => CurrentPiece == null;
+        
+        public MetaCell Meta { get; set; }
 
         public Cell(Coord coord)
         {
             Position = coord;
             CurrentPiece = null;
+            Meta = new MetaCell();
         }
 
         //Communication between game logic and GameEngine logic

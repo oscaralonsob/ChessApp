@@ -66,6 +66,11 @@ namespace Chess.Pieces
             int targetX = CurrentCell.Position.X + 1;
             Cell targetCell = Board.GetCell(targetX, targetY);
 
+            if (targetCell == null)
+                return allowedCells;;
+                
+            targetCell.Meta.SetCellUnderAttack(Color);
+            
             if (EnemyTargetCell(targetCell))
             {
                 allowedCells.Add(targetCell);
@@ -74,6 +79,10 @@ namespace Chess.Pieces
             targetX = CurrentCell.Position.X - 1;
             targetCell = Board.GetCell(targetX, targetY);
 
+            if (targetCell == null)
+                return allowedCells;;
+                
+            targetCell.Meta.SetCellUnderAttack(Color);
             
             if (EnemyTargetCell(targetCell))
             {
