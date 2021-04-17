@@ -69,7 +69,7 @@ namespace Chess.Pieces
             if (targetCell == null)
                 return allowedCells;;
                 
-            targetCell.Meta.SetCellUnderAttack(Color);
+            targetCell.Meta.SetUnderAttack(Color);
             
             if (EnemyTargetCell(targetCell))
             {
@@ -80,9 +80,9 @@ namespace Chess.Pieces
             targetCell = Board.GetCell(targetX, targetY);
 
             if (targetCell == null)
-                return allowedCells;;
+                return allowedCells;
                 
-            targetCell.Meta.SetCellUnderAttack(Color);
+            targetCell.Meta.SetUnderAttack(Color);
             
             if (EnemyTargetCell(targetCell))
             {

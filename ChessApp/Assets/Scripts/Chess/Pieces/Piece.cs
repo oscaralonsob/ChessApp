@@ -20,9 +20,7 @@ namespace Chess.Pieces
         
         public List<Cell> AllowedCells { get; }
 
-        public bool IsUnderAttack { get; set; }
-        
-        public bool IsPined { get; set; }
+        public bool IsUnderAttack => CurrentCell.Meta.GetUnderAttack(Color);
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
@@ -31,8 +29,6 @@ namespace Chess.Pieces
             MoveToPosition(coord);
             NumberMovements = 0;
             AllowedCells = new List<Cell>();
-            IsUnderAttack = false;
-            IsPined = false;
         }
         
         public string GetSpriteName()
@@ -77,7 +73,7 @@ namespace Chess.Pieces
                 if (targetCell == null)
                     return allowedCells;
                 
-                targetCell.Meta.SetCellUnderAttack(Color);
+                targetCell.Meta.SetUnderAttack(Color);
                 
                 if (EmptyTargetCell(targetCell))
                 {
@@ -108,8 +104,8 @@ namespace Chess.Pieces
                 cell != null &&
                 cell.IsEmpty;
         }
-        
-        protected bool FriendlyTargetCell(Cell cell)
+
+        private bool FriendlyTargetCell(Cell cell)
         {
             return cell != null &&
                    !cell.IsEmpty && 
@@ -152,7 +148,6 @@ namespace Chess.Pieces
         public virtual void UpdateAllowedCells()
         {
             AllowedCells.Clear();
-            IsUnderAttack = false;
         }
     }
 }

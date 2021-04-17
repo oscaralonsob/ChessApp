@@ -6,8 +6,8 @@ namespace Chess
 {
     public class MetaCell
     {
-        public bool IsUnderBlackAttack { get; set; }
-        public bool IsUnderWhiteAttack { get; set; }
+        private bool IsUnderBlackAttack { get; set; }
+        private bool IsUnderWhiteAttack { get; set; }
 
         public MetaCell()
         {
@@ -20,7 +20,7 @@ namespace Chess
             IsUnderWhiteAttack = false;
         }
 
-        public void SetCellUnderAttack(PlayerColor color)
+        public void SetUnderAttack(PlayerColor color)
         {
             if (color == PlayerColor.Black)
             {
@@ -29,6 +29,11 @@ namespace Chess
             {
                 IsUnderWhiteAttack = true;
             }
+        }
+        
+        public bool GetUnderAttack(PlayerColor color)
+        {
+            return color == PlayerColor.White ? IsUnderBlackAttack : IsUnderWhiteAttack;
         }
     }   
 }

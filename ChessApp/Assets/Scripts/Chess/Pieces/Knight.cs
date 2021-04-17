@@ -35,7 +35,7 @@ namespace Chess.Pieces
             if (targetCell == null)
                 return allowedCells;;
                 
-            targetCell.Meta.SetCellUnderAttack(Color);
+            targetCell.Meta.SetUnderAttack(Color);
 
             if (CanMoveTo(targetCell))
             {

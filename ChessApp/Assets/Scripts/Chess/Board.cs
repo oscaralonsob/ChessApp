@@ -69,15 +69,6 @@ namespace Chess
             foreach (Piece piece in Pieces)
             {
                 piece.UpdateAllowedCells();
-                
-                //TODO: I think this should be done inside the UpdateAllowedCells but for now is ok
-                foreach (Cell cell in piece.AllowedCells)
-                {
-                    if (cell.CurrentPiece != null && cell.CurrentPiece.Color != piece.Color)
-                    {
-                        cell.CurrentPiece.IsUnderAttack = true;
-                    }
-                }
             }
         }
     }
