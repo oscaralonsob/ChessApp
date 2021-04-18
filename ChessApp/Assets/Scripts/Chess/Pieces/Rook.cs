@@ -8,6 +8,14 @@ namespace Chess.Pieces
         {
         }
 
+        public override void GenerateAttackMap()
+        {
+            GenerateAttackMapRow(0, 1, Board.Size);
+            GenerateAttackMapRow(0, -1, Board.Size);
+            GenerateAttackMapRow(1, 0, Board.Size);
+            GenerateAttackMapRow(-1, 0, Board.Size);
+        }
+
         public override void UpdateAllowedCells()
         {
             base.UpdateAllowedCells();

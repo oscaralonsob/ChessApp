@@ -9,6 +9,19 @@ namespace Chess.Pieces
         {
         }
 
+        public override void GenerateAttackMap()
+        {
+            GenerateAttackMapCell(Position.X + 2, Position.Y + 1);
+            GenerateAttackMapCell(Position.X + 1, Position.Y + 2);
+            GenerateAttackMapCell(Position.X - 2, Position.Y + 1);
+            GenerateAttackMapCell(Position.X - 1, Position.Y + 2);
+            
+            GenerateAttackMapCell(Position.X + 2, Position.Y - 1);
+            GenerateAttackMapCell(Position.X + 1, Position.Y - 2);
+            GenerateAttackMapCell(Position.X - 2, Position.Y - 1);
+            GenerateAttackMapCell(Position.X - 1, Position.Y - 2);
+        }
+
         public override void UpdateAllowedCells()
         {
             base.UpdateAllowedCells();

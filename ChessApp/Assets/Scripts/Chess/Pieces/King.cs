@@ -10,6 +10,19 @@ namespace Chess.Pieces
         {
         }
         
+        public override void GenerateAttackMap()
+        {
+            GenerateAttackMapRow(0, 1, 1);
+            GenerateAttackMapRow(0, -1, 1);
+            GenerateAttackMapRow(1, 0, 1);
+            GenerateAttackMapRow(-1, 0, 1);
+            
+            GenerateAttackMapRow(1, 1, 1);
+            GenerateAttackMapRow(1, -1, 1);
+            GenerateAttackMapRow(-1, 1, 1);
+            GenerateAttackMapRow(-1, -1, 1);
+        }
+        
         public override void UpdateAllowedCells()
         {
             base.UpdateAllowedCells();

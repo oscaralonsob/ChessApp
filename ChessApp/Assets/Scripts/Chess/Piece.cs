@@ -56,6 +56,33 @@ namespace Chess
         public bool IsMyTurn()
         {
             return Board.ColorTurn == Color;
+        } 
+        
+        public abstract void GenerateAttackMap();
+
+        protected void GenerateAttackMapRow(int xDirection, int yDirection, int distance)
+        {
+            int targetX = CurrentCell.Position.X;
+            int targetY = CurrentCell.Position.Y;
+            for (int x = 1; x <= distance; x++)
+            {
+                targetX += xDirection;
+                targetY += yDirection;
+                GenerateAttackMapCell(targetX, targetY);
+
+                Cell targetCell = Board.GetCell(targetX, targetY);
+                if (targetCell == null || !targetCell.IsEmpty)
+                {
+                    break;
+                }
+            }
+        }
+
+        protected void GenerateAttackMapCell(int x, int y)
+        {
+            Cell targetCell = Board.GetCell(x, y);
+
+            targetCell?.SetUnderAttack(Color);
         }
 
         protected List<Cell> StraightPath(int xDirection, int yDirection, int distance)

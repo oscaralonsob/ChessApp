@@ -68,7 +68,12 @@ namespace Chess
             
             foreach (Piece piece in Pieces)
             {
-                piece.UpdateAllowedCells();
+                piece.GenerateAttackMap();
+            }
+
+            foreach (Piece piece in Pieces)
+            {
+               piece.UpdateAllowedCells();
             }
         }
     }

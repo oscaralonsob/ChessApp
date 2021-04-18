@@ -16,6 +16,12 @@ namespace Chess.Pieces
         {
             _direction = (Color == PlayerColor.Black ? -1 : 1);
         }
+        
+        public override void GenerateAttackMap()
+        {
+            GenerateAttackMapCell(Position.X + _direction, Position.Y + 1);
+            GenerateAttackMapCell(Position.X + _direction, Position.Y - 1);
+        }
 
         public override void UpdateAllowedCells()
         {
