@@ -19,8 +19,8 @@ namespace Chess.Pieces
         
         public override void GenerateAttackMap()
         {
-            GenerateAttackMapCell(Position.X + _direction, Position.Y + 1);
-            GenerateAttackMapCell(Position.X + _direction, Position.Y - 1);
+            GenerateAttackMapCell(Position.X + 1, Position.Y + _direction);
+            GenerateAttackMapCell(Position.X - 1, Position.Y + _direction);
         }
 
         public override void UpdateAllowedCells()
@@ -56,8 +56,9 @@ namespace Chess.Pieces
             int targetY = CurrentCell.Position.Y + 2 * _direction;
             int targetX = CurrentCell.Position.X;
             Cell targetCell = Board.GetCell(targetX, targetY);
+            Cell previousCell = Board.GetCell(targetX, targetY - _direction);
             
-            if (NumberMovements == 0 && NormalMovement().Count != 0 && targetCell.IsEmpty)
+            if (NumberMovements == 0 && NormalMovement().Count != 0 && targetCell.IsEmpty && previousCell.IsEmpty)
             {
                 allowedCells.Add(targetCell);
             }
