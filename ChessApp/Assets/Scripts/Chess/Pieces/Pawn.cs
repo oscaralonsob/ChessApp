@@ -35,7 +35,7 @@ namespace Chess.Pieces
             int targetX = CurrentCell.Position.X;
             Cell targetCell = Board.GetCell(targetX, targetY);
 
-            if (EmptyTargetCell(targetCell))
+            if (targetCell.IsEmpty)
             {
                 allowedCells.Add(targetCell);
             }
@@ -51,7 +51,7 @@ namespace Chess.Pieces
             int targetX = CurrentCell.Position.X;
             Cell targetCell = Board.GetCell(targetX, targetY);
             
-            if (NumberMovements == 0 && NormalMovement().Count != 0 && EmptyTargetCell(targetCell))
+            if (NumberMovements == 0 && NormalMovement().Count != 0 && targetCell.IsEmpty)
             {
                 allowedCells.Add(targetCell);
             }
@@ -69,9 +69,9 @@ namespace Chess.Pieces
             if (targetCell == null)
                 return allowedCells;;
                 
-            targetCell.Meta.SetUnderAttack(Color);
+            targetCell.SetUnderAttack(Color);
             
-            if (EnemyTargetCell(targetCell))
+            if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
             {
                 allowedCells.Add(targetCell);
             }
@@ -82,9 +82,9 @@ namespace Chess.Pieces
             if (targetCell == null)
                 return allowedCells;
                 
-            targetCell.Meta.SetUnderAttack(Color);
+            targetCell.SetUnderAttack(Color);
             
-            if (EnemyTargetCell(targetCell))
+            if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
             {
                 allowedCells.Add(targetCell);
 
@@ -103,14 +103,14 @@ namespace Chess.Pieces
             
             Cell targetCell = Board.GetCell(targetX + 1, targetY + _direction);
             Cell passantCell = Board.GetCell(targetX + 1, targetY);
-            if (EmptyTargetCell(targetCell) && IsPawnEnPassant(passantCell))
+            if (targetCell != null && targetCell.IsEmpty && IsPawnEnPassant(passantCell))
             {
                 allowedCells.Add(targetCell);
             }
 
             targetCell = Board.GetCell(targetX - 1, targetY + _direction);
             passantCell = Board.GetCell(targetX - 1, targetY);
-            if (EmptyTargetCell(targetCell) && IsPawnEnPassant(passantCell))
+            if (targetCell != null && targetCell.IsEmpty && IsPawnEnPassant(passantCell))
             {
                 allowedCells.Add(targetCell);
             }
@@ -122,7 +122,8 @@ namespace Chess.Pieces
         private bool IsPawnEnPassant(Cell cell)
         {
             return
-                EnemyTargetCell(cell) &&
+                !cell.IsEmpty && 
+                cell.CurrentPiece.Color != Color &&
                 cell.CurrentPiece is Pawn &&
                 cell.CurrentPiece.NumberMovements == 1;
         }
@@ -131,7 +132,7 @@ namespace Chess.Pieces
         {
             Cell targetCell = Board.GetCell(cell.Position.X, cell.Position.Y - _direction);
 
-            if (EnemyTargetCell(cell))
+            if (!cell.IsEmpty && cell.CurrentPiece.Color != Color)
             {
                 cell.CurrentPiece.Destroy();
             } else if (IsPawnEnPassant(targetCell))

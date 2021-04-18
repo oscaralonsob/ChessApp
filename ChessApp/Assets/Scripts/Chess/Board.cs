@@ -63,7 +63,7 @@ namespace Chess
         {
             foreach (Cell cell in Cells)
             {
-                cell.Meta.Reset();
+                cell.ResetFlags();
             }
             
             foreach (Piece piece in Pieces)

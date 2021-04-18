@@ -2,7 +2,7 @@
 using Controller;
 using UnityEngine;
 
-namespace Chess.Pieces
+namespace Chess
 {
     public abstract class Piece
     {
@@ -20,7 +20,7 @@ namespace Chess.Pieces
         
         public List<Cell> AllowedCells { get; }
 
-        public bool IsUnderAttack => CurrentCell.Meta.GetUnderAttack(Color);
+        public bool IsUnderAttack => Color == PlayerColor.White ? CurrentCell.IsUnderBlackAttack : CurrentCell.IsUnderWhiteAttack;
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
@@ -73,52 +73,25 @@ namespace Chess.Pieces
                 if (targetCell == null)
                     return allowedCells;
                 
-                targetCell.Meta.SetUnderAttack(Color);
+                targetCell.SetUnderAttack(Color);
                 
-                if (EmptyTargetCell(targetCell))
+                if (targetCell.IsEmpty)
                 {
                     allowedCells.Add(targetCell);
-                } else if (EnemyTargetCell(targetCell))
+                } else if (targetCell.CurrentPiece.Color != Color)
                 {
                     allowedCells.Add(targetCell);
                     //No more allowed movements, we can stop looking
                     break;
-                } else if (FriendlyTargetCell(targetCell))
+                } else
                 {
-                    //No more allowed movements, we can stop looking
+                    //Ally piece, no more allowed movements, we can stop looking
                     break;
                 }
             }
 
             return allowedCells;
         }
-        
-        protected bool CanMoveTo(Cell cell)
-        {
-            return EmptyTargetCell(cell) || EnemyTargetCell(cell);
-        }
-
-        protected bool EmptyTargetCell(Cell cell)
-        {
-            return 
-                cell != null &&
-                cell.IsEmpty;
-        }
-
-        private bool FriendlyTargetCell(Cell cell)
-        {
-            return cell != null &&
-                   !cell.IsEmpty && 
-                   cell.CurrentPiece.Color == Color;
-        }
-        
-        protected bool EnemyTargetCell(Cell cell)
-        {
-            return cell != null &&
-                   !cell.IsEmpty && 
-                   cell.CurrentPiece.Color != Color;
-        }
-        
         private void MoveToPosition(Coord coord)
         {
             Position = coord;
@@ -132,7 +105,7 @@ namespace Chess.Pieces
         
         protected virtual void Kill(Cell cell)
         {
-            if (EnemyTargetCell(cell))
+            if (!cell.IsEmpty && cell.CurrentPiece.Color != Color)
             {
                 cell.CurrentPiece.Destroy();
             }

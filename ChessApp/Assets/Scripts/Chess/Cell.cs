@@ -15,13 +15,13 @@ namespace Chess
         
         public bool IsEmpty => CurrentPiece == null;
         
-        public MetaCell Meta { get; set; }
+        public bool IsUnderBlackAttack { get; set; }
+        public bool IsUnderWhiteAttack { get; set; }
 
         public Cell(Coord coord)
         {
             Position = coord;
             CurrentPiece = null;
-            Meta = new MetaCell();
         }
 
         //Communication between game logic and GameEngine logic
@@ -39,6 +39,23 @@ namespace Chess
             if (CellController)
             {
                 CellController.ClearHighlightCell();
+            }
+        }
+
+        public void ResetFlags()
+        {
+            IsUnderBlackAttack = false;
+            IsUnderWhiteAttack = false;
+        }
+        
+        public void SetUnderAttack(PlayerColor color)
+        {
+            if (color == PlayerColor.Black)
+            {
+                IsUnderBlackAttack = true;
+            } else
+            {
+                IsUnderWhiteAttack = true;
             }
         }
     }   
