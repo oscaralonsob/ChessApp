@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Chess.Pieces;
 using Controller;
 using UnityEngine;
 
@@ -100,19 +101,18 @@ namespace Chess
                 if (targetCell == null)
                     return allowedCells;
                 
-                targetCell.SetUnderAttack(Color);
-                
-                if (targetCell.IsEmpty)
+                if (targetCell.IsEmpty || targetCell.CurrentPiece.Color != Color)
                 {
-                    allowedCells.Add(targetCell);
-                } else if (targetCell.CurrentPiece.Color != Color)
+                    bool targetCellUnderAttack = Color == PlayerColor.White ? targetCell.IsUnderBlackAttack : targetCell.IsUnderWhiteAttack;
+                    if (!(this is King) || !targetCellUnderAttack)
+                    {
+                        allowedCells.Add(targetCell);
+                    }
+                    
+                }
+
+                if (!targetCell.IsEmpty)
                 {
-                    allowedCells.Add(targetCell);
-                    //No more allowed movements, we can stop looking
-                    break;
-                } else
-                {
-                    //Ally piece, no more allowed movements, we can stop looking
                     break;
                 }
             }

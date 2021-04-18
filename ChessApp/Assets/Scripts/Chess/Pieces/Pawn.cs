@@ -75,8 +75,6 @@ namespace Chess.Pieces
 
             if (targetCell == null)
                 return allowedCells;;
-                
-            targetCell.SetUnderAttack(Color);
             
             if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
             {
@@ -88,8 +86,6 @@ namespace Chess.Pieces
 
             if (targetCell == null)
                 return allowedCells;
-                
-            targetCell.SetUnderAttack(Color);
             
             if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
             {
