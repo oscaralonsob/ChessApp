@@ -24,6 +24,8 @@ namespace Chess
         public bool IsUnderAttack => Color == PlayerColor.White ? CurrentCell.IsUnderBlackAttack : CurrentCell.IsUnderWhiteAttack;
 
         public bool IsMyTurn => Board.ColorTurn == Color;
+        
+        public bool IsPined { get; private set; }
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
@@ -54,18 +56,44 @@ namespace Chess
 
         protected void GenerateAttackMapRow(int xDirection, int yDirection, int distance)
         {
+            Piece enemyPieceInPath = null;
+            bool pathBlocked = false;
             int targetX = CurrentCell.Position.X;
             int targetY = CurrentCell.Position.Y;
             for (int x = 1; x <= distance; x++)
             {
                 targetX += xDirection;
                 targetY += yDirection;
-                GenerateAttackMapCell(targetX, targetY);
+                if (!pathBlocked)
+                {
+                    GenerateAttackMapCell(targetX, targetY);
+                }
 
                 Cell targetCell = Board.GetCell(targetX, targetY);
-                if (targetCell == null || !targetCell.IsEmpty)
+                if (targetCell == null)
                 {
                     break;
+                }
+
+                if (!targetCell.IsEmpty)
+                {
+                    pathBlocked = true;
+                }
+
+                if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
+                {
+                    if (enemyPieceInPath == null)
+                    {
+                        enemyPieceInPath = targetCell.CurrentPiece;
+                        targetCell.CurrentPiece.IsPined = true;
+                    } else if (targetCell.CurrentPiece is King)
+                    {
+                        break;
+                    } else
+                    {
+                        enemyPieceInPath.IsPined = false;
+                        break;
+                    }
                 }
             }
         }

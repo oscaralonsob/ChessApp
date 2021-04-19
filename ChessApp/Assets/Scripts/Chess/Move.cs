@@ -29,7 +29,7 @@ namespace Chess
         
         public bool IsLegal(Board board)
         {
-            if (!IsValid)
+            if (!IsValid || Piece.IsPined)
                 return false;
             
             if (TargetCell.IsEmpty || TargetCell.CurrentPiece.Color != Piece.Color)
