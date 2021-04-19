@@ -23,19 +23,19 @@ namespace Chess.Pieces
             GenerateAttackMapRow(-1, -1, 1);
         }
         
-        public override void UpdateAllowedCells()
+        public override void UpdateMoves()
         {
-            base.UpdateAllowedCells();
+            base.UpdateMoves();
             
-            AllowedCells.AddRange(StraightPath(0, 1, 1));
-            AllowedCells.AddRange(StraightPath(0, -1, 1));
-            AllowedCells.AddRange(StraightPath(1, 0, 1));
-            AllowedCells.AddRange(StraightPath(-1, 0, 1));
+            StraightPath(0, 1, 1);
+            StraightPath(0, -1, 1);
+            StraightPath(1, 0, 1);
+            StraightPath(-1, 0, 1);
             
-            AllowedCells.AddRange(StraightPath(1, 1, 1));
-            AllowedCells.AddRange(StraightPath(1, -1, 1));
-            AllowedCells.AddRange(StraightPath(-1, 1, 1));
-            AllowedCells.AddRange(StraightPath(-1, -1, 1));
+            StraightPath(1, 1, 1);
+            StraightPath(1, -1, 1);
+            StraightPath(-1, 1, 1);
+            StraightPath(-1, -1, 1);
         }
     }
 }

@@ -22,39 +22,32 @@ namespace Chess.Pieces
             GenerateAttackMapCell(Position.X - 1, Position.Y - 2);
         }
 
-        public override void UpdateAllowedCells()
+        public override void UpdateMoves()
         {
-            base.UpdateAllowedCells();
+            base.UpdateMoves();
             
-            AllowedCells.AddRange(CreatePath(2, 1));
-            AllowedCells.AddRange(CreatePath(1, 2));
-            AllowedCells.AddRange(CreatePath(-2, 1));
-            AllowedCells.AddRange(CreatePath(-1, 2));
+            CreatePath(2, 1);
+            CreatePath(1, 2);
+            CreatePath(-2, 1);
+            CreatePath(-1, 2);
             
-            AllowedCells.AddRange(CreatePath(2, -1));
-            AllowedCells.AddRange(CreatePath(1, -2));
-            AllowedCells.AddRange(CreatePath(-2, -1));
-            AllowedCells.AddRange(CreatePath(-1, -2));
+            CreatePath(2, -1);
+            CreatePath(1, -2);
+            CreatePath(-2, -1);
+            CreatePath(-1, -2);
         }
 
-        private List<Cell> CreatePath(int x, int y)
+        private void CreatePath(int x, int y)
         {
-            List<Cell> allowedCells = new List<Cell>();
             int targetY = CurrentCell.Position.Y + y;
             int targetX = CurrentCell.Position.X + x;
-
-            Cell targetCell = Board.GetCell(targetX, targetY);
             
-            if (targetCell == null)
-                return allowedCells;;
+            Move move = new Move(this, Board.GetCell(targetX, targetY));
             
-            if (targetCell.IsEmpty || 
-                 targetCell.CurrentPiece.Color != Color)
+            if (move.IsLegal(Board))
             {
-                allowedCells.Add(targetCell);
+                Moves.Add(move);
             }
-
-            return allowedCells;
         }
     }
 }

@@ -16,14 +16,14 @@ namespace Chess.Pieces
             GenerateAttackMapRow(-1, 0, Board.Size);
         }
 
-        public override void UpdateAllowedCells()
+        public override void UpdateMoves()
         {
-            base.UpdateAllowedCells();
+            base.UpdateMoves();
             
-            AllowedCells.AddRange(StraightPath(0, 1, Board.Size));
-            AllowedCells.AddRange(StraightPath(0, -1, Board.Size));
-            AllowedCells.AddRange(StraightPath(1, 0, Board.Size));
-            AllowedCells.AddRange(StraightPath(-1, 0, Board.Size));
+            StraightPath(0, 1, Board.Size);
+            StraightPath(0, -1, Board.Size);
+            StraightPath(1, 0, Board.Size);
+            StraightPath(-1, 0, Board.Size);
         }
     }
 }

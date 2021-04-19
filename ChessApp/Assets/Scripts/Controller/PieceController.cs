@@ -35,7 +35,7 @@ namespace Controller
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (!Piece.IsMyTurn()) 
+            if (!Piece.IsMyTurn) 
                 return;
             
             transform.position += (Vector3)eventData.delta;
@@ -43,42 +43,38 @@ namespace Controller
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!Piece.IsMyTurn()) 
+            if (!Piece.IsMyTurn) 
                 return;
             
-            List<Cell> allowedCells = Piece.AllowedCells;
-
-            foreach (Cell allowedCell in allowedCells)
+            foreach (Move move in Piece.Moves)
             {
-                allowedCell.HighlightCell();
+                move.TargetCell.HighlightCell();
             }
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!Piece.IsMyTurn()) 
+            if (!Piece.IsMyTurn) 
                 return;
-            
-            List<Cell> allowedCells = Piece.AllowedCells;
-            
-            CellController targetCell = null;
 
-            foreach (Cell allowedCell in allowedCells)
+            Move moveDone = null;
+
+            foreach (Move move in Piece.Moves)
             {
-                RectTransform rect = allowedCell.CellController.GetComponent<RectTransform>();
+                RectTransform rect = move.TargetCell.CellController.GetComponent<RectTransform>();
                 if (RectTransformUtility.RectangleContainsScreenPoint(rect, Input.mousePosition))
                 {
-                    // If the mouse is within a valid cell, get it, and break.
-                    targetCell = allowedCell.CellController;
+                    // If the mouse is within a valid cell, get it
+                    moveDone = move;
                 }
 
-                allowedCell.ClearHighlightCell();
+                move.TargetCell.ClearHighlightCell();
             }
 
-            if (targetCell != null)
+            if (moveDone != null)
             {
-                transform.position = targetCell.Position;
-                Piece.Move(targetCell.Cell);
+                transform.position = moveDone.TargetCell.CellController.Position;
+                Piece.Move(moveDone);
             } else
             {
                 transform.position = Piece.CurrentCell.CellController.Position;

@@ -11,7 +11,7 @@ namespace Chess
         
         public PlayerColor Color { get; }
         
-        public Coord Position { get; private set; }
+        public Coord Position { get; set; }
         
         protected Board Board { get; }
         
@@ -19,17 +19,20 @@ namespace Chess
         
         public int NumberMovements { get; private set; }
         
-        public List<Cell> AllowedCells { get; }
+        public List<Move> Moves { get; }
 
         public bool IsUnderAttack => Color == PlayerColor.White ? CurrentCell.IsUnderBlackAttack : CurrentCell.IsUnderWhiteAttack;
+
+        public bool IsMyTurn => Board.ColorTurn == Color;
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
             Color = playerColor;
             Board = board;
-            MoveToPosition(coord);
+            Position = coord;
+            CurrentCell.CurrentPiece = this;
             NumberMovements = 0;
-            AllowedCells = new List<Cell>();
+            Moves = new List<Move>();
         }
         
         public string GetSpriteName()
@@ -37,28 +40,16 @@ namespace Chess
             return "Chess" + GetType().Name + Color;
         }
         
-        public void Move(Cell cell)
+        public void Move(Move move)
         {
-            if (!IsMyTurn())
+            if (move.IsValid)
             {
-                return;
-            }
-            
-            if (AllowedCells.Contains(cell))
-            {
-                Kill(cell);
-                RemoveFromCurrentCell();
-                MoveToPosition(cell.Position);
+                move.Apply(Board);
                 NumberMovements++;
                 Board.SwitchTurn();
             }
         }
 
-        public bool IsMyTurn()
-        {
-            return Board.ColorTurn == Color;
-        } 
-        
         public abstract void GenerateAttackMap();
 
         protected void GenerateAttackMapRow(int xDirection, int yDirection, int distance)
@@ -86,9 +77,8 @@ namespace Chess
             targetCell?.SetUnderAttack(Color);
         }
 
-        protected List<Cell> StraightPath(int xDirection, int yDirection, int distance)
+        protected void StraightPath(int xDirection, int yDirection, int distance)
         {
-            List<Cell> allowedCells = new List<Cell>();
             int targetX = CurrentCell.Position.X;
             int targetY = CurrentCell.Position.Y;
             
@@ -96,45 +86,17 @@ namespace Chess
             {
                 targetX += xDirection;
                 targetY += yDirection;
-                Cell targetCell = Board.GetCell(targetX, targetY);
-
-                if (targetCell == null)
-                    return allowedCells;
+                Move move = new Move(this, Board.GetCell(targetX, targetY));
                 
-                if (targetCell.IsEmpty || targetCell.CurrentPiece.Color != Color)
+                if (move.IsLegal(Board))
                 {
-                    bool targetCellUnderAttack = Color == PlayerColor.White ? targetCell.IsUnderBlackAttack : targetCell.IsUnderWhiteAttack;
-                    if (!(this is King) || !targetCellUnderAttack)
-                    {
-                        allowedCells.Add(targetCell);
-                    }
-                    
+                    Moves.Add(move);
                 }
 
-                if (!targetCell.IsEmpty)
+                if (move.IsLastInPath)
                 {
                     break;
                 }
-            }
-
-            return allowedCells;
-        }
-        private void MoveToPosition(Coord coord)
-        {
-            Position = coord;
-            CurrentCell.CurrentPiece = this;
-        }
-        
-        private void RemoveFromCurrentCell()
-        {
-            CurrentCell.CurrentPiece = null;
-        }
-        
-        protected virtual void Kill(Cell cell)
-        {
-            if (!cell.IsEmpty && cell.CurrentPiece.Color != Color)
-            {
-                cell.CurrentPiece.Destroy();
             }
         }
 
@@ -145,9 +107,9 @@ namespace Chess
             PieceController.Destroy();
         }
 
-        public virtual void UpdateAllowedCells()
+        public virtual void UpdateMoves()
         {
-            AllowedCells.Clear();
+            Moves.Clear();
         }
     }
 }
