@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Chess.Pieces;
 using Controller;
-using UnityEngine;
 
-namespace Chess
+namespace Chess.Match.Pieces
 {
     public abstract class Piece
     {

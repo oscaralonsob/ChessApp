@@ -1,8 +1,4 @@
-﻿using System;
-using Chess.Pieces;
-using Controller;
-
-namespace Chess
+﻿namespace Chess.Match
 {
     public class Coord
     {

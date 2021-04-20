@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chess.Pieces
+namespace Chess.Match.Pieces
 {
     public class King : SlidingPiece
     {

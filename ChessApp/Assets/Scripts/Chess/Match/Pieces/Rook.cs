@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Chess.Pieces
+namespace Chess.Match.Pieces
 {
     public class Rook : SlidingPiece
     {

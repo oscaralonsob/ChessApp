@@ -1,5 +1,5 @@
-﻿using Chess;
-using Chess.Pieces;
+﻿using Chess.Match;
+using Chess.Match.Pieces;
 using UnityEngine;
 
 namespace Controller

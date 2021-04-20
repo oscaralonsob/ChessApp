@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Chess.Pieces;
+using Chess.Match.Pieces;
 using UnityEngine;
 using Object = System.Object;
 
-namespace Chess
+namespace Chess.Match
 {
     public class Board
     {

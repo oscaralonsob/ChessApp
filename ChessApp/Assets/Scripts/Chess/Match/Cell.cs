@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Chess.Pieces;
+using Chess.Match.Pieces;
 using Controller;
 
-namespace Chess
+namespace Chess.Match
 {
     public class Cell
     {

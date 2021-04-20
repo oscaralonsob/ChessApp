@@ -1,5 +1,4 @@
-﻿using Chess.GameMode;
-using Chess.Pieces;
+﻿using Chess.MatchMode;
 using UnityEngine;
 
 namespace Controller

@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Chess.Match;
 
-namespace Chess.GameMode
+namespace Chess.MatchMode
 {
     public interface IGameMode
     {

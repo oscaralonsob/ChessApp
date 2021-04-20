@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Chess.Pieces;
+using Chess.Match.Pieces;
+using Chess.Match;
 using UnityEngine;
 
-namespace Chess.GameMode
+namespace Chess.MatchMode
 {
     public class NormalGameMode : IGameMode
     {

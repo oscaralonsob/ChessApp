@@ -1,6 +1,5 @@
-﻿using Chess;
+﻿using Chess.Match;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 namespace Controller

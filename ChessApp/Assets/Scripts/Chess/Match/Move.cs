@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Chess.Pieces;
-using Controller;
+﻿using Chess.Match.Pieces;
 using UnityEngine;
 
-namespace Chess
+namespace Chess.Match
 {
-    //TODO: probably this class will determinate the game mode :D
     public class Move
     {
         public Piece Piece { get; }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Chess.Pieces;
-using UnityEngine;
-using Object = System.Object;
+﻿using Chess.Match;
 
-namespace Chess.GameMode
+namespace Chess.MatchMode
 {
     public class GameModeManager
     {

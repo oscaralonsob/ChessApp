@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using Chess;
-using Chess.Pieces;
+﻿using Chess.Match;
+using Chess.Match.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
