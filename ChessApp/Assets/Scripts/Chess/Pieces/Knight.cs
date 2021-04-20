@@ -36,18 +36,5 @@ namespace Chess.Pieces
             CreatePath(-2, -1);
             CreatePath(-1, -2);
         }
-
-        private void CreatePath(int x, int y)
-        {
-            int targetY = CurrentCell.Position.Y + y;
-            int targetX = CurrentCell.Position.X + x;
-            
-            Move move = new Move(this, Board.GetCell(targetX, targetY));
-            
-            if (move.IsLegal(Board))
-            {
-                Moves.Add(move);
-            }
-        }
     }
 }

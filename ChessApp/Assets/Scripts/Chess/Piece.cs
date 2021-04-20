@@ -25,7 +25,7 @@ namespace Chess
 
         public bool IsMyTurn => Board.ColorTurn == Color;
         
-        public bool IsPined { get; private set; }
+        public bool IsPined { get; set; }
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {
@@ -54,77 +54,23 @@ namespace Chess
 
         public abstract void GenerateAttackMap();
 
-        protected void GenerateAttackMapRow(int xDirection, int yDirection, int distance)
-        {
-            Piece enemyPieceInPath = null;
-            bool pathBlocked = false;
-            int targetX = CurrentCell.Position.X;
-            int targetY = CurrentCell.Position.Y;
-            for (int x = 1; x <= distance; x++)
-            {
-                targetX += xDirection;
-                targetY += yDirection;
-                if (!pathBlocked)
-                {
-                    GenerateAttackMapCell(targetX, targetY);
-                }
-
-                Cell targetCell = Board.GetCell(targetX, targetY);
-                if (targetCell == null)
-                {
-                    break;
-                }
-
-                if (!targetCell.IsEmpty)
-                {
-                    pathBlocked = true;
-                }
-
-                if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
-                {
-                    if (enemyPieceInPath == null)
-                    {
-                        enemyPieceInPath = targetCell.CurrentPiece;
-                        targetCell.CurrentPiece.IsPined = true;
-                    } else if (targetCell.CurrentPiece is King)
-                    {
-                        break;
-                    } else
-                    {
-                        enemyPieceInPath.IsPined = false;
-                        break;
-                    }
-                }
-            }
-        }
-
         protected void GenerateAttackMapCell(int x, int y)
         {
             Cell targetCell = Board.GetCell(x, y);
 
             targetCell?.SetUnderAttack(Color);
         }
-
-        protected void StraightPath(int xDirection, int yDirection, int distance)
+        
+        protected void CreatePath(int x, int y)
         {
-            int targetX = CurrentCell.Position.X;
-            int targetY = CurrentCell.Position.Y;
+            int targetY = CurrentCell.Position.Y + y;
+            int targetX = CurrentCell.Position.X + x;
             
-            for (int x = 1; x <= distance; x++)
+            Move move = new Move(this, Board.GetCell(targetX, targetY));
+            
+            if (move.IsLegal(Board))
             {
-                targetX += xDirection;
-                targetY += yDirection;
-                Move move = new Move(this, Board.GetCell(targetX, targetY));
-                
-                if (move.IsLegal(Board))
-                {
-                    Moves.Add(move);
-                }
-
-                if (move.IsLastInPath)
-                {
-                    break;
-                }
+                Moves.Add(move);
             }
         }
 

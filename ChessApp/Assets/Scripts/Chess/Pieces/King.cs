@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Chess.Pieces
 {
-    public class King : Piece
+    public class King : SlidingPiece
     {
         //TODO: castle
         public King(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)

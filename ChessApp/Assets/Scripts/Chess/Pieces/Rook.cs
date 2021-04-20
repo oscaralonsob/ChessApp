@@ -2,7 +2,7 @@
 
 namespace Chess.Pieces
 {
-    public class Rook : Piece
+    public class Rook : SlidingPiece
     {
         public Rook(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {

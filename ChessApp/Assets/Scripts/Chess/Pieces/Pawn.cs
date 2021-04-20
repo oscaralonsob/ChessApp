@@ -26,9 +26,14 @@ namespace Chess.Pieces
         {
             base.UpdateMoves();
             
-            StraightPath(0,_direction,NumberMovements == 0 ? 2 : 1);
-            StraightPath(1,_direction,1);
-            StraightPath(-1,_direction,1);
+            CreatePath(0,_direction);
+            //TODO: maybe move this to the move class?
+            if (NumberMovements == 0)
+            {
+                CreatePath(0,2 * _direction);
+            }
+            CreatePath(1,_direction);
+            CreatePath(-1,_direction);
         }
     }
 }

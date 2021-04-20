@@ -2,7 +2,7 @@
 
 namespace Chess.Pieces
 {
-    public class Bishop : Piece
+    public class Bishop : SlidingPiece
     {
         public Bishop(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
