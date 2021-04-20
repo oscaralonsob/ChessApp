@@ -9,6 +9,7 @@ namespace Controller
         public Board Board { get; set; }
         
         public GameObject cellPrefab;
+        
         public GameObject piecePrefab;
 
         public void Print()

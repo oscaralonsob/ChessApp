@@ -16,6 +16,7 @@ namespace Chess.Match
         public bool IsEmpty => CurrentPiece == null;
         
         public bool IsUnderBlackAttack { get; set; }
+        
         public bool IsUnderWhiteAttack { get; set; }
 
         public Cell(Coord coord)

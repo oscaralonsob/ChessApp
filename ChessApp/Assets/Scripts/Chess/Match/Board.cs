@@ -9,8 +9,9 @@ namespace Chess.Match
     public class Board
     {
         public int Size { get; }
+        
         public Cell[,] Cells { get; }
-
+        
         public List<Piece> Pieces { get; }
 
         public PlayerColor ColorTurn;

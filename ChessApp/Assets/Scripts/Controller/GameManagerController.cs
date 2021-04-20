@@ -6,6 +6,7 @@ namespace Controller
     public class GameManagerController : MonoBehaviour
     {
         private NormalGameMode GameMode { set; get; }
+        
         private GameModeManager GameModeManager { set; get; }
         
         public GameObject boardPrefab;
