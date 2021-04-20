@@ -45,7 +45,9 @@ namespace Controller
             bool blackCell = (Cell.Position.Y + Cell.Position.X) % 2 == 0;
 
             int red = Cell.IsUnderBlackAttack ? 128 : 0;
-            GetComponent<Image>().color = blackCell ?  new Color32((byte) (128 - red), 128, 128, 255) : new Color32((byte) (230 - red), 230, 230, 255);
+            int blue = Cell.IsUnderWhiteAttack ? 128 : 0;
+
+            GetComponent<Image>().color = blackCell ?  new Color32((byte) (128 - red), 128, (byte) (128 - blue), 255) : new Color32((byte) (230 - red), 230, (byte) (230 - blue), 255);
 
         }
     }

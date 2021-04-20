@@ -8,19 +8,22 @@ namespace Chess.Match.Pieces
         public Knight(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
         }
-
-        public override void GenerateAttackMap()
-        {
-            GenerateAttackMapCell(Position.X + 2, Position.Y + 1);
-            GenerateAttackMapCell(Position.X + 1, Position.Y + 2);
-            GenerateAttackMapCell(Position.X - 2, Position.Y + 1);
-            GenerateAttackMapCell(Position.X - 1, Position.Y + 2);
-            
-            GenerateAttackMapCell(Position.X + 2, Position.Y - 1);
-            GenerateAttackMapCell(Position.X + 1, Position.Y - 2);
-            GenerateAttackMapCell(Position.X - 2, Position.Y - 1);
-            GenerateAttackMapCell(Position.X - 1, Position.Y - 2);
-        }
+        
+        public override List<RayMove> RayMoves
+            => new List<RayMove>
+            {
+                new RayMove(Position, new Coord(2,1), 1),
+                new RayMove(Position, new Coord(1,2), 1),
+                
+                new RayMove(Position, new Coord(-2,1), 1),
+                new RayMove(Position, new Coord(-1,2), 1),
+                
+                new RayMove(Position, new Coord(2,-1), 1),
+                new RayMove(Position, new Coord(1,-2), 1),
+                
+                new RayMove(Position, new Coord(-2,-1), 1),
+                new RayMove(Position, new Coord(-1,-2), 1),
+            };
 
         public override void UpdateMoves()
         {

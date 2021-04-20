@@ -7,14 +7,15 @@ namespace Chess.Match.Pieces
         public Rook(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
         }
-
-        public override void GenerateAttackMap()
-        {
-            GenerateAttackMapRow(0, 1, Board.Size);
-            GenerateAttackMapRow(0, -1, Board.Size);
-            GenerateAttackMapRow(1, 0, Board.Size);
-            GenerateAttackMapRow(-1, 0, Board.Size);
-        }
+        
+        public override List<RayMove> RayMoves
+            => new List<RayMove>
+            {
+                new RayMove(Position, new Coord(0,1), Board.Size),
+                new RayMove(Position, new Coord(0,-1), Board.Size),
+                new RayMove(Position, new Coord(1,0), Board.Size),
+                new RayMove(Position, new Coord(-1,0), Board.Size),
+            };
 
         public override void UpdateMoves()
         {

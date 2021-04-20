@@ -11,5 +11,10 @@
             X = x;
             Y = y;
         }
+
+        public static Coord operator+(Coord a, Coord b)
+        {
+            return new Coord(a.X + b.X,a.Y + b.Y);
+        }
     }   
 }

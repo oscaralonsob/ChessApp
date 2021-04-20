@@ -10,19 +10,20 @@ namespace Chess.Match.Pieces
         {
         }
         
-        public override void GenerateAttackMap()
-        {
-            GenerateAttackMapRow(0, 1, 1);
-            GenerateAttackMapRow(0, -1, 1);
-            GenerateAttackMapRow(1, 0, 1);
-            GenerateAttackMapRow(-1, 0, 1);
-            
-            GenerateAttackMapRow(1, 1, 1);
-            GenerateAttackMapRow(1, -1, 1);
-            GenerateAttackMapRow(-1, 1, 1);
-            GenerateAttackMapRow(-1, -1, 1);
-        }
-        
+        //TODO: no castle
+        public override List<RayMove> RayMoves
+            => new List<RayMove>
+            {
+                new RayMove(Position, new Coord(0,1), 1),
+                new RayMove(Position, new Coord(0,-1), 1),
+                new RayMove(Position, new Coord(1,0), 1),
+                new RayMove(Position, new Coord(-1,0), 1),
+                new RayMove(Position, new Coord(1,1), 1),
+                new RayMove(Position, new Coord(1,-1), 1),
+                new RayMove(Position, new Coord(-1,1), 1),
+                new RayMove(Position, new Coord(-1,-1), 1),
+            };
+
         public override void UpdateMoves()
         {
             base.UpdateMoves();

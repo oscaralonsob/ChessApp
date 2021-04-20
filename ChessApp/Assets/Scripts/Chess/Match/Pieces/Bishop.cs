@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chess.Match.Pieces
 {
@@ -8,13 +9,14 @@ namespace Chess.Match.Pieces
         {
         }
 
-        public override void GenerateAttackMap()
-        {
-            GenerateAttackMapRow(1, 1, Board.Size);
-            GenerateAttackMapRow(1, -1, Board.Size);
-            GenerateAttackMapRow(-1, 1, Board.Size);
-            GenerateAttackMapRow(-1, -1, Board.Size);
-        }
+        public override List<RayMove> RayMoves
+            => new List<RayMove>
+            {
+                new RayMove(Position, new Coord(1,1), Board.Size),
+                new RayMove(Position, new Coord(1,-1), Board.Size),
+                new RayMove(Position, new Coord(-1,1), Board.Size),
+                new RayMove(Position, new Coord(-1,-1), Board.Size),
+            };
 
         public override void UpdateMoves()
         {

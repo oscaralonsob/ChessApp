@@ -38,6 +38,13 @@ namespace Chess.Match
                     null;
         }
         
+        public Cell GetCell(Coord coord)
+        {
+            return (coord.X >= 0 && coord.Y >=0 && coord.X < Size && coord.Y < Size) ? 
+                Cells[coord.X, coord.Y] :
+                null;
+        }
+        
         public void SwitchTurn()
         {
             ColorTurn = ColorTurn == PlayerColor.White
@@ -62,16 +69,9 @@ namespace Chess.Match
 
         private void UpdatePieceMovement()
         {
-            foreach (Cell cell in Cells)
-            {
-                cell.ResetFlags();
-            }
+            AttackMapGenerator amg = new AttackMapGenerator();
+            amg.Generate(this);
             
-            foreach (Piece piece in Pieces)
-            {
-                piece.GenerateAttackMap();
-            }
-
             foreach (Piece piece in Pieces)
             {
                piece.UpdateMoves();

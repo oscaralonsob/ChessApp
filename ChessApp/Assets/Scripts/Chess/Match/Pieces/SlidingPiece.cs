@@ -6,51 +6,7 @@ namespace Chess.Match.Pieces
         protected SlidingPiece(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
         }
-        
-        protected void GenerateAttackMapRow(int xDirection, int yDirection, int distance)
-        {
-            Piece enemyPieceInPath = null;
-            bool pathBlocked = false;
-            int targetX = CurrentCell.Position.X;
-            int targetY = CurrentCell.Position.Y;
-            for (int x = 1; x <= distance; x++)
-            {
-                targetX += xDirection;
-                targetY += yDirection;
-                if (!pathBlocked)
-                {
-                    GenerateAttackMapCell(targetX, targetY);
-                }
 
-                Cell targetCell = Board.GetCell(targetX, targetY);
-                if (targetCell == null)
-                {
-                    break;
-                }
-
-                if (!targetCell.IsEmpty)
-                {
-                    pathBlocked = true;
-                }
-
-                if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != Color)
-                {
-                    if (enemyPieceInPath == null)
-                    {
-                        enemyPieceInPath = targetCell.CurrentPiece;
-                        //targetCell.CurrentPiece.IsPined = true;
-                    } else if (targetCell.CurrentPiece is King)
-                    {
-                        break;
-                    } else
-                    {
-                        //enemyPieceInPath.IsPined = false;
-                        break;
-                    }
-                }
-            }
-        }
-        
         protected void StraightPath(int xDirection, int yDirection, int distance)
         {
             int targetX = CurrentCell.Position.X;

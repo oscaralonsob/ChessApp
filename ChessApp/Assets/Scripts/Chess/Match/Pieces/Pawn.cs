@@ -16,11 +16,13 @@ namespace Chess.Match.Pieces
             _direction = (Color == PlayerColor.Black ? -1 : 1);
         }
         
-        public override void GenerateAttackMap()
-        {
-            GenerateAttackMapCell(Position.X + 1, Position.Y + _direction);
-            GenerateAttackMapCell(Position.X - 1, Position.Y + _direction);
-        }
+        //TODO: Only Capture moves for now, need to add the others
+        public override List<RayMove> RayMoves
+            => new List<RayMove>
+            {
+                new RayMove(Position, new Coord(1,_direction), 1),
+                new RayMove(Position, new Coord(-1,_direction), 1),
+            };
 
         public override void UpdateMoves()
         {

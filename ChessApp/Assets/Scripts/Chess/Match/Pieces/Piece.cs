@@ -18,6 +18,8 @@ namespace Chess.Match.Pieces
         public int NumberMovements { get; private set; }
         
         public List<Move> Moves { get; }
+        
+        public abstract List<RayMove> RayMoves { get; }
 
         public bool IsUnderAttack => Color == PlayerColor.White ? CurrentCell.IsUnderBlackAttack : CurrentCell.IsUnderWhiteAttack;
 
@@ -50,15 +52,6 @@ namespace Chess.Match.Pieces
             }
         }
 
-        public abstract void GenerateAttackMap();
-
-        protected void GenerateAttackMapCell(int x, int y)
-        {
-            Cell targetCell = Board.GetCell(x, y);
-
-            targetCell?.SetUnderAttack(Color);
-        }
-        
         protected void CreatePath(int x, int y)
         {
             int targetY = CurrentCell.Position.Y + y;
