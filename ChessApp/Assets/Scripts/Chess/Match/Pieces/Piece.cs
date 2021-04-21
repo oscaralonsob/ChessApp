@@ -52,29 +52,11 @@ namespace Chess.Match.Pieces
             }
         }
 
-        protected void CreatePath(int x, int y)
-        {
-            int targetY = CurrentCell.Position.Y + y;
-            int targetX = CurrentCell.Position.X + x;
-            
-            Move move = new Move(this, Board.GetCell(targetX, targetY));
-            
-            if (move.IsLegal(Board))
-            {
-                Moves.Add(move);
-            }
-        }
-
         public void Destroy()
         {
             Board.Pieces.Remove(this);
             CurrentCell.CurrentPiece = null;
             PieceController.Destroy();
-        }
-
-        public virtual void UpdateMoves()
-        {
-            Moves.Clear();
         }
     }
 }

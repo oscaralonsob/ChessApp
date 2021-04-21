@@ -72,10 +72,8 @@ namespace Chess.Match
             AttackMapGenerator amg = new AttackMapGenerator();
             amg.Generate(this);
             
-            foreach (Piece piece in Pieces)
-            {
-               piece.UpdateMoves();
-            }
+            MoveGenerator mg = new MoveGenerator();
+            mg.Generate(this);
         }
     }
     

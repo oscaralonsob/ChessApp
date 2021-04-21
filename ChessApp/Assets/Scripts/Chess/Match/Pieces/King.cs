@@ -23,20 +23,5 @@ namespace Chess.Match.Pieces
                 new RayMove(Position, new Coord(-1,1), 1),
                 new RayMove(Position, new Coord(-1,-1), 1),
             };
-
-        public override void UpdateMoves()
-        {
-            base.UpdateMoves();
-            
-            StraightPath(0, 1, 1);
-            StraightPath(0, -1, 1);
-            StraightPath(1, 0, 1);
-            StraightPath(-1, 0, 1);
-            
-            StraightPath(1, 1, 1);
-            StraightPath(1, -1, 1);
-            StraightPath(-1, 1, 1);
-            StraightPath(-1, -1, 1);
-        }
     }
 }

@@ -22,20 +22,9 @@ namespace Chess.Match.Pieces
             {
                 new RayMove(Position, new Coord(1,_direction), 1),
                 new RayMove(Position, new Coord(-1,_direction), 1),
-            };
+                //TODO: implement something like is capture or something like that
+                new RayMove(Position, new Coord(0,_direction), NumberMovements == 0 ? 2 : 1),
 
-        public override void UpdateMoves()
-        {
-            base.UpdateMoves();
-            
-            CreatePath(0,_direction);
-            //TODO: maybe move this to the move class?
-            if (NumberMovements == 0)
-            {
-                CreatePath(0,2 * _direction);
-            }
-            CreatePath(1,_direction);
-            CreatePath(-1,_direction);
-        }
+            };
     }
 }

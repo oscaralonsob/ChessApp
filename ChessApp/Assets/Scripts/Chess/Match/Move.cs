@@ -27,11 +27,7 @@ namespace Chess.Match
         {
             if (!IsValid || Piece.IsPined)
                 return false;
-
-            if (Piece is Pawn && TargetCell.Position.X == Piece.Position.X)
-            {
-                Debug.Log(TargetCell.IsEmpty);
-            }
+            
             if (TargetCell.IsEmpty || TargetCell.CurrentPiece.Color != Piece.Color)
             {
                 if (Piece is King)

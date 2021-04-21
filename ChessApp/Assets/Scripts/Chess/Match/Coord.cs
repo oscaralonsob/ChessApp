@@ -16,5 +16,10 @@
         {
             return new Coord(a.X + b.X,a.Y + b.Y);
         }
+        
+        public static Coord operator*(int a, Coord b)
+        {
+            return new Coord(a * b.X,a * b.Y);
+        }
     }   
 }

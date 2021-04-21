@@ -42,7 +42,7 @@ namespace Chess.Match
             Cell originCell = Board.GetCell(rayMove.Origin);
             for (int x = 1; x <= rayMove.Range; x++)
             {
-                Cell targetCell = Board.GetCell(rayMove.Origin + rayMove.Vector);
+                Cell targetCell = Board.GetCell(rayMove.Origin + x * rayMove.Vector);
 
                 if (targetCell == null)
                 {
