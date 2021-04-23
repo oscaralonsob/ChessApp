@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Chess.Match.Pieces;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Chess.Match
 {
@@ -21,6 +23,11 @@ namespace Chess.Match
             {
                 cell.ResetFlags();
             }
+            
+            foreach (Piece piece in Board.Pieces)
+            {
+                piece.IsPined = false;
+            }
         }
         
         private void CalculatePieceAttackCells()
@@ -30,15 +37,33 @@ namespace Chess.Match
                 foreach (RayMove rayMove in piece.RayMoves)
                 {
                     CalculateAttackFromRayMove(rayMove);
+                    if (rayMove.IsEnemyKingInRange)
+                    {
+                        CalculatePinsFromRayMove(rayMove);
+                    }
+                }
+            }
+        }
+        
+        private void CalculateAttackFromRayMove(RayMove rayMove)
+        {
+            Cell originCell = Board.GetCell(rayMove.Origin);
+            for (int x = 1; x <= rayMove.Range; x++)
+            {
+                Cell targetCell = Board.GetCell(rayMove.Origin + x * rayMove.Vector);
+                
+                targetCell?.SetUnderAttack(originCell.CurrentPiece.Color);
+
+                if (targetCell is null || !targetCell.IsEmpty)
+                {
+                    return;
                 }
             }
         }
 
-        private void CalculateAttackFromRayMove(RayMove rayMove)
+        private void CalculatePinsFromRayMove(RayMove rayMove)
         {
             Piece enemyPieceInPath = null;
-            bool pathBlocked = false;
-            
             Cell originCell = Board.GetCell(rayMove.Origin);
             for (int x = 1; x <= rayMove.Range; x++)
             {
@@ -46,34 +71,32 @@ namespace Chess.Match
 
                 if (targetCell == null)
                 {
-                    break;
+                    return;
+                }
+
+                if (targetCell.IsEmpty) continue;
+                
+                if (targetCell.CurrentPiece.Color == originCell.CurrentPiece.Color)
+                {
+                    return;
+                }
+
+                if (targetCell.CurrentPiece is King)
+                {
+                    if (enemyPieceInPath != null)
+                    {
+                        enemyPieceInPath.IsPined = true;
+                    }
+                        
+                    return;
                 }
                 
-                if (!pathBlocked)
+                if (enemyPieceInPath != null)
                 {
-                    targetCell.SetUnderAttack(originCell.CurrentPiece.Color);
+                    return;
                 }
 
-                if (!targetCell.IsEmpty)
-                {
-                    pathBlocked = true;
-                }
-
-                if (!targetCell.IsEmpty && targetCell.CurrentPiece.Color != originCell.CurrentPiece.Color)
-                {
-                    if (enemyPieceInPath == null)
-                    {
-                        enemyPieceInPath = targetCell.CurrentPiece;
-                        //targetCell.CurrentPiece.IsPined = true;
-                    } else if (targetCell.CurrentPiece is King)
-                    {
-                        break;
-                    } else
-                    {
-                        //enemyPieceInPath.IsPined = false;
-                        break;
-                    }
-                }
+                enemyPieceInPath = targetCell.CurrentPiece;
             }
         }
     }

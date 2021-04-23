@@ -12,17 +12,17 @@ namespace Chess.Match.Pieces
         public override List<RayMove> RayMoves
             => new List<RayMove>
             {
-                new RayMove(Position, new Coord(2,1), 1),
-                new RayMove(Position, new Coord(1,2), 1),
+                new RayMove(Position, new Coord(2,1), 1, Board),
+                new RayMove(Position, new Coord(1,2), 1, Board),
                 
-                new RayMove(Position, new Coord(-2,1), 1),
-                new RayMove(Position, new Coord(-1,2), 1),
+                new RayMove(Position, new Coord(-2,1), 1, Board),
+                new RayMove(Position, new Coord(-1,2), 1, Board),
                 
-                new RayMove(Position, new Coord(2,-1), 1),
-                new RayMove(Position, new Coord(1,-2), 1),
+                new RayMove(Position, new Coord(2,-1), 1, Board),
+                new RayMove(Position, new Coord(1,-2), 1, Board),
                 
-                new RayMove(Position, new Coord(-2,-1), 1),
-                new RayMove(Position, new Coord(-1,-2), 1),
+                new RayMove(Position, new Coord(-2,-1), 1, Board),
+                new RayMove(Position, new Coord(-1,-2), 1, Board),
             };
     }
 }

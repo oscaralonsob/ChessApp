@@ -18,7 +18,6 @@ namespace Chess.Match
         public bool IsUnderBlackAttack { get; set; }
         
         public bool IsUnderWhiteAttack { get; set; }
-
         public Cell(Coord coord)
         {
             Position = coord;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Chess.Match.Pieces;
 using UnityEngine;
 using Object = System.Object;
@@ -74,6 +75,11 @@ namespace Chess.Match
             
             MoveGenerator mg = new MoveGenerator();
             mg.Generate(this);
+        }
+        
+        public Piece GetKing(PlayerColor color)
+        {
+            return Pieces.FirstOrDefault(piece => piece is King && piece.Color == color);
         }
     }
     
