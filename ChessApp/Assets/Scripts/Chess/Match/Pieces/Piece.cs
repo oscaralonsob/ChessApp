@@ -20,9 +20,7 @@ namespace Chess.Match.Pieces
         public List<Move> Moves { get; }
         
         public abstract List<RayMove> RayMoves { get; }
-
-        public bool IsUnderAttack => Color == PlayerColor.White ? CurrentCell.IsUnderBlackAttack : CurrentCell.IsUnderWhiteAttack;
-
+        
         public bool IsMyTurn => Board.ColorTurn == Color;
         
         public RayMove Pin { get; set; }

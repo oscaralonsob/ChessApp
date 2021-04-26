@@ -71,7 +71,7 @@ namespace Chess.Match
 
         public void Apply(Board board)
         {
-            if (!IsLegal(board) || !Piece.IsMyTurn)
+            if (!IsLegal(board) || Piece.Color != board.ColorTurn)
                 return;
 
             if (IsCapture)

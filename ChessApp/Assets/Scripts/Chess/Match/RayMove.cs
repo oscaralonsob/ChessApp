@@ -11,29 +11,12 @@ namespace Chess.Match
         public Coord Vector { get; }
         
         public int Range { get; }
-        
-        private Board Board { get; }
-        
-        public bool IsEnemyKingInRange { get; }
 
-        public RayMove(Coord origin, Coord vector, int range, Board board)
+        public RayMove(Coord origin, Coord vector, int range)
         {
             Origin = origin;
             Vector = vector;
             Range = range;
-            Board = board;
-
-            IsEnemyKingInRange = RayCastOverEnemyKing();
-        }
-
-        private bool RayCastOverEnemyKing()
-        {
-            
-            Cell originCell = Board.GetCell(Origin);
-            Piece piece = originCell.CurrentPiece;
-            Piece enemyKing = Board.GetKing(piece.Color == PlayerColor.Black ? PlayerColor.White : PlayerColor.Black);
-
-            return PointIsInSegment(enemyKing.Position);
         }
 
         public bool PointIsInSegment(Coord toCheck)

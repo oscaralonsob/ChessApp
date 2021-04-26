@@ -81,6 +81,12 @@ namespace Chess.Match
         {
             return Pieces.FirstOrDefault(p => p is King && p.Color == color) as King;
         }
+        
+        public Piece GetEnemyKing(PlayerColor c)
+        {
+            PlayerColor color = c == PlayerColor.Black ? PlayerColor.White : PlayerColor.Black;
+            return GetKing(color);
+        }
     }
     
 }

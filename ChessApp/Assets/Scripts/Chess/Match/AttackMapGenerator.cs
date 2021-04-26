@@ -37,7 +37,7 @@ namespace Chess.Match
                 foreach (RayMove rayMove in piece.RayMoves)
                 {
                     CalculateAttackFromRayMove(rayMove);
-                    if (rayMove.IsEnemyKingInRange)
+                    if (rayMove.PointIsInSegment(Board.GetEnemyKing(piece.Color).Position))
                     {
                         CalculatePinsFromRayMove(rayMove);
                     }
