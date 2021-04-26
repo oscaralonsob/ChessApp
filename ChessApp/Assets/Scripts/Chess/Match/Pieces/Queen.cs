@@ -2,7 +2,7 @@
 
 namespace Chess.Match.Pieces
 {
-    public class Queen : SlidingPiece
+    public class Queen : Piece
     {
         public Queen(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {

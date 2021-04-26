@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chess.Match.Pieces
 {
-    public class King : SlidingPiece
+    public class King : Piece
     {
         //TODO: castle
         public King(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)

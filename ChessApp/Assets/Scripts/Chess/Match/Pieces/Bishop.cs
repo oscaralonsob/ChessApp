@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chess.Match.Pieces
 {
-    public class Bishop : SlidingPiece
+    public class Bishop : Piece
     {
         public Bishop(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
