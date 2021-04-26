@@ -34,17 +34,11 @@ namespace Controller
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (!Piece.IsMyTurn) 
-                return;
-            
             transform.position += (Vector3)eventData.delta;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (!Piece.IsMyTurn) 
-                return;
-            
             foreach (Move move in Piece.Moves)
             {
                 move.TargetCell.HighlightCell();
@@ -53,9 +47,6 @@ namespace Controller
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (!Piece.IsMyTurn) 
-                return;
-
             Move moveDone = null;
 
             foreach (Move move in Piece.Moves)

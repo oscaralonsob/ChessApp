@@ -20,9 +20,7 @@ namespace Chess.Match.Pieces
         public List<Move> Moves { get; }
         
         public abstract List<RayMove> RayMoves { get; }
-        
-        public bool IsMyTurn => Board.ColorTurn == Color;
-        
+
         public RayMove Pin { get; set; }
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
