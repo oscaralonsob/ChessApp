@@ -28,10 +28,23 @@ namespace Chess.Match
             if (!IsValid)
                 return false;
 
-            if (Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
+            if (!(Piece is King) && Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
             {
                 return false;
-            } 
+            }
+
+            Piece king = board.GetKing(Piece.Color);
+
+            if (!(king is King))
+            {
+                //Game over
+                return false;
+            }
+
+            if (king.Pin != null && !king.Pin.PointIsInSegment(TargetCell.Position))
+            {
+                return false;
+            }
             
             if (TargetCell.IsEmpty || TargetCell.CurrentPiece.Color != Piece.Color)
             {

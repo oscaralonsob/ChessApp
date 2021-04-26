@@ -87,6 +87,10 @@ namespace Chess.Match
                     {
                         enemyPieceInPath.Pin = rayMove;
                     }
+                    else
+                    {
+                        targetCell.CurrentPiece.Pin = rayMove;
+                    }
                         
                     return;
                 }
