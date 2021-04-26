@@ -25,7 +25,7 @@ namespace Chess.Match.Pieces
 
         public bool IsMyTurn => Board.ColorTurn == Color;
         
-        public bool IsPined { get; set; }
+        public RayMove Pin { get; set; }
 
         protected Piece(PlayerColor playerColor, Coord coord, Board board)
         {

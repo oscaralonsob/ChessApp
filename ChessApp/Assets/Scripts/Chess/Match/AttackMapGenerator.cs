@@ -26,7 +26,7 @@ namespace Chess.Match
             
             foreach (Piece piece in Board.Pieces)
             {
-                piece.IsPined = false;
+                piece.Pin = null;
             }
         }
         
@@ -85,7 +85,7 @@ namespace Chess.Match
                 {
                     if (enemyPieceInPath != null)
                     {
-                        enemyPieceInPath.IsPined = true;
+                        enemyPieceInPath.Pin = rayMove;
                     }
                         
                     return;

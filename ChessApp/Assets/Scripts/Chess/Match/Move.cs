@@ -5,7 +5,7 @@ namespace Chess.Match
 {
     public class Move
     {
-        public Piece Piece { get; }
+        private Piece Piece { get; }
         
         public Cell TargetCell { get; }
 
@@ -25,8 +25,13 @@ namespace Chess.Match
         
         public bool IsLegal(Board board)
         {
-            if (!IsValid || Piece.IsPined)
+            if (!IsValid)
                 return false;
+
+            if (Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
+            {
+                return false;
+            } 
             
             if (TargetCell.IsEmpty || TargetCell.CurrentPiece.Color != Piece.Color)
             {

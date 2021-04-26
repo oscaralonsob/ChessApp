@@ -36,8 +36,7 @@ namespace Chess.Match
             return PointIsInSegment(enemyKing.Position);
         }
 
-        //TODO: probably there is a better way to do this but it works
-        private bool PointIsInSegment(Coord toCheck)
+        public bool PointIsInSegment(Coord toCheck)
         {
             Coord end = Origin + Range * Vector;
             bool collinear = (end.X - Origin.X) * (toCheck.Y - Origin.Y) == (toCheck.X - Origin.X) * (end.Y - Origin.Y);

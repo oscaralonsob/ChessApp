@@ -10,7 +10,6 @@ namespace Chess.Match.Pieces
         {
         }
         
-        //TODO: no castle
         public override List<RayMove> RayMoves
             => new List<RayMove>
             {
