@@ -8,20 +8,20 @@ namespace Chess.Match.Pieces
          * TODO:
          *     promotion
          */
-        private readonly int _direction;
+        public int Direction { get; }
 
         public Pawn(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
         {
-            _direction = (Color == PlayerColor.Black ? -1 : 1);
+            Direction = (Color == PlayerColor.Black ? -1 : 1);
         }
         
         public override List<RayMove> RayMoves
             => new List<RayMove>
             {
-                new RayMove(Position, new Coord(1,_direction), 1, Board),
-                new RayMove(Position, new Coord(-1,_direction), 1, Board),
+                new RayMove(Position, new Coord(1,Direction), 1, Board),
+                new RayMove(Position, new Coord(-1,Direction), 1, Board),
                 //TODO: implement something like is capture or something like that
-                new RayMove(Position, new Coord(0,_direction), NumberMovements == 0 ? 2 : 1, Board),
+                new RayMove(Position, new Coord(0,Direction), NumberMovements == 0 ? 2 : 1, Board),
 
             };
     }

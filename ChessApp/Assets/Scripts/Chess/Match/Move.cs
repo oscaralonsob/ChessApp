@@ -54,14 +54,12 @@ namespace Chess.Match
                     return !targetCellUnderAttack;
                 } 
                 
-                if (Piece is Pawn)
+                if (Piece is Pawn pawn)
                 {
-                    //TODO: This direction is duplicated...
-                    int direction = (Piece.Color == PlayerColor.Black ? -1 : 1);
-                    Cell auxCell = board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - direction);
+                    Cell auxCell = board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction);
                     IsCapturePassant = IsPassantLegal(auxCell);
-                    return TargetCell.Position.X == Piece.Position.X && TargetCell.IsEmpty ||
-                           TargetCell.Position.X != Piece.Position.X && !TargetCell.IsEmpty || 
+                    return TargetCell.Position.X == pawn.Position.X && TargetCell.IsEmpty ||
+                           TargetCell.Position.X != pawn.Position.X && !TargetCell.IsEmpty || 
                            IsCapturePassant;
                 }
 

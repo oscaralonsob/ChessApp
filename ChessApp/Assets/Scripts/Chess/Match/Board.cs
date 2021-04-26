@@ -79,7 +79,7 @@ namespace Chess.Match
         
         public Piece GetKing(PlayerColor color)
         {
-            return Pieces.FirstOrDefault(piece => piece is King && piece.Color == color);
+            return Pieces.FirstOrDefault(p => p is King && p.Color == color) as King;
         }
     }
     
