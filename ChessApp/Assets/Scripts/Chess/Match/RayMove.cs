@@ -11,12 +11,15 @@ namespace Chess.Match
         public Coord Vector { get; }
         
         public int Range { get; }
+        
+        public bool IsCapture { get; set; }
 
         public RayMove(Coord origin, Coord vector, int range)
         {
             Origin = origin;
             Vector = vector;
             Range = range;
+            IsCapture = true;
         }
 
         public bool PointIsInSegment(Coord toCheck)

@@ -36,6 +36,7 @@ namespace Chess.Match
             {
                 foreach (RayMove rayMove in piece.RayMoves)
                 {
+                    if (!rayMove.IsCapture) continue;
                     CalculateAttackFromRayMove(rayMove);
                     if (rayMove.PointIsInSegment(Board.GetEnemyKing(piece.Color).Position))
                     {
