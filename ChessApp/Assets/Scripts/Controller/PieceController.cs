@@ -9,14 +9,15 @@ namespace Controller
     public class PieceController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         public Piece Piece { get; set; }
-
-        public void Print()
+        
+        public void Print(float size)
         {
             RectTransform rectTransform = GetComponent<RectTransform>();
             Image img = GetComponent<Image>();
 
             img.sprite = GetSprite();
-            rectTransform.anchoredPosition = new Vector2((Piece.Position.X * 100) + 50, (Piece.Position.Y * 100) + 50);
+            rectTransform.sizeDelta = new Vector2(size, size);
+            rectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
         }
 
         private Sprite GetSprite()

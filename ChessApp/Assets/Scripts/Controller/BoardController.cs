@@ -14,6 +14,7 @@ namespace Controller
 
         public void Print()
         {
+            float size = GetCellSize();
             foreach (Cell cell in Board.Cells)
             {
                 // Create the cell
@@ -23,7 +24,7 @@ namespace Controller
                 CellController cellController = newCell.GetComponent<CellController>();
                 cellController.Cell = cell;
                 cell.CellController = cellController;
-                cellController.Print();
+                cellController.Print(size);
             }
             
             foreach (Piece piece in Board.Pieces)
@@ -33,8 +34,24 @@ namespace Controller
 
                 pieceController.Piece = piece;
                 piece.PieceController = pieceController;
-                pieceController.Print();
+                pieceController.Print(size);
             }
+        }
+
+        private float GetCellSize()
+        {
+            RectTransform rectTransform = transform as RectTransform;
+            if (rectTransform == null)
+            {
+                //TODO: throw exception?
+                return 0;
+            }
+
+            Rect rect = rectTransform.rect;
+            float size = rect.size.x < rect.size.y ? rect.size.x : rect.size.y;
+            size /= Board.Size;
+            Debug.Log(size);
+            return size;
         }
     }
 }

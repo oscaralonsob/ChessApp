@@ -8,10 +8,7 @@ namespace Controller
     {
         public Cell Cell { get; set; }
         
-        public Vector3 Position
-        {
-            get => gameObject.transform.position;
-        }
+        public Vector3 Position => gameObject.transform.position;
 
         public void HighlightCell()
         {
@@ -25,11 +22,12 @@ namespace Controller
             highlightImage.gameObject.SetActive(false);
         }
 
-        public void Print()
+        public void Print(float size)
         {
             // Set position
             RectTransform rectTransform = GetComponent<RectTransform>();
-            rectTransform.anchoredPosition = new Vector2((Cell.Position.X * 100) + 50, (Cell.Position.Y * 100) + 50);
+            rectTransform.sizeDelta = new Vector2(size, size);
+            rectTransform.anchoredPosition = new Vector2(Cell.Position.X * size, Cell.Position.Y * size);
         
             // Set Color
             bool blackCell = (Cell.Position.Y + Cell.Position.X) % 2 == 0;
