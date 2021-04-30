@@ -1,8 +1,7 @@
 ﻿using System;
-using TMPro;
+using Menu.Buttons;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 
 namespace Menu
@@ -33,9 +32,10 @@ namespace Menu
                     CreateCell(i, j);
                 }
             }
-            
-            CreateButton("New Game", 0, NewGame);
-            CreateButton("Exit", 1, ExitGame);
+
+            CreateButton(3, 3, "New Game", LoadLevel);
+            CreateButton(4, 3, "Credits", LoadCredits);
+            CreateButton(5, 2, "Exit", Exit);
         }
 
         private void CreateCell(int i, int j)
@@ -44,7 +44,7 @@ namespace Menu
             newCell.transform.parent = transform;
                     
             RectTransform rectTransform = newCell.AddComponent<RectTransform>();
-            Image Image = newCell.AddComponent<Image>();
+            Image image = newCell.AddComponent<Image>();
                     
             // Default values
             rectTransform.anchorMax = new Vector2(0, 0);
@@ -61,40 +61,22 @@ namespace Menu
             bool blackCell = (i + j) % 2 == 0;
 
             // Color
-            Image.color = blackCell ?  new Color32(128, 128, 128, 255) : new Color32(230, 230, 230, 255);
+            image.color = blackCell ?  new Color32(128, 128, 128, 255) : new Color32(230, 230, 230, 255);
 
         }
         
-        //TODO: create a class for buttons
-        private void CreateButton(string t, int order, Action func)
+        private void CreateButton(int cellStart, int cells, string text, Action action)
         {
-            // Create the cell
+            Vector2 size = new Vector2(cells * CellSize, CellSize);
+            Vector2 position = new Vector2(0, ParentSize.y - cellStart * CellSize);
+            MenuButton menuButton = new MenuButton(text, size, position, action);
+            
             GameObject newButton = Instantiate(buttonPrefab, transform);
-            RectTransform rectTransform = newButton.GetComponent<RectTransform>();
+            ButtonController buttonController = newButton.GetComponent<ButtonController>();
             
-            // Set position
-            rectTransform.sizeDelta = new Vector2((3 - order) * CellSize, CellSize);
-            rectTransform.anchoredPosition = new Vector2(0, ParentSize.y - (3 + order) * CellSize);
-            
-            // Set text
-            TextMeshProUGUI text = newButton.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = t;
-            
-            // Set Action
-            Button button = newButton.GetComponent<Button>();
-            button.onClick.AddListener(delegate { func(); });
+            buttonController.Setup(CellSize, ParentSize.y, menuButton);
         }
 
-        private void NewGame()
-        {
-            SceneManager.LoadScene("BoardScene");
-        }
-        
-        private void ExitGame()
-        {
-            Application.Quit();
-        }
-        
         private void Setup()
         {
             RectTransform rectTransform = transform as RectTransform;
@@ -106,8 +88,8 @@ namespace Menu
             
             //TODO: get correct value
             Rect rect = rectTransform.rect;
-            int xCount = 0;
-            int yCount = 0;
+            int xCount;
+            int yCount;
             ParentSize = rect.size;
             if (ParentSize.x < ParentSize.y)
             {
@@ -123,6 +105,21 @@ namespace Menu
             }
             
             CellCount = new Vector2(xCount, yCount);
+        }
+        
+        private void LoadLevel()
+        {
+            SceneManager.LoadScene("BoardScene");
+        }
+        
+        private void LoadCredits()
+        {
+            SceneManager.LoadScene("BoardScene");
+        }
+        
+        private void Exit()
+        {
+            Application.Quit();
         }
     }
 }
