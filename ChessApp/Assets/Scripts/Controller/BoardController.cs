@@ -50,7 +50,6 @@ namespace Controller
             Rect rect = rectTransform.rect;
             float size = rect.size.x < rect.size.y ? rect.size.x : rect.size.y;
             size /= Board.Size;
-            Debug.Log(size);
             return size;
         }
     }
