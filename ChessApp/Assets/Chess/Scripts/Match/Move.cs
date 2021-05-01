@@ -25,7 +25,7 @@ namespace Chess.Match
         
         public bool IsLegal(Board board)
         {
-            if (!IsValid)
+            if (!IsValid || Piece.Color != board.ColorTurn)
                 return false;
 
             if (!(Piece is King) && Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
