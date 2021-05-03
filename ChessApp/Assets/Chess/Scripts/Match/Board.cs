@@ -4,6 +4,7 @@ using System.Linq;
 using Chess.Match.Pieces;
 using UnityEngine;
 using Object = System.Object;
+using Chess.Match.AI;
 
 namespace Chess.Match
 {
@@ -53,6 +54,7 @@ namespace Chess.Match
                 : PlayerColor.White;
 
             UpdatePieceMovement();
+            UpdatePieceGUI();
         }
 
         public void SetPieces(Dictionary<Vector2Int, Tuple<Type, PlayerColor>> pieces)
@@ -75,6 +77,14 @@ namespace Chess.Match
             
             MoveGenerator mg = new MoveGenerator();
             mg.Generate(this);
+        }
+        
+        private void UpdatePieceGUI()
+        {
+            foreach (Piece piece in Pieces)
+            {
+                piece.PieceController.Print();
+            }
         }
         
         public Piece GetKing(PlayerColor color)

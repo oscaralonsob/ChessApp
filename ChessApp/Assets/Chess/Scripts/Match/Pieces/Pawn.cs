@@ -19,7 +19,10 @@ namespace Chess.Match.Pieces
         {
             new RayMove(Position, new Coord(1, Direction), 1),
             new RayMove(Position, new Coord(-1, Direction), 1),
-            new RayMove(Position, new Coord(0, Direction), NumberMovements == 0 ? 2 : 1) {IsCapture = false}
+            
+            new RayMove(Position, new Coord(0, Direction), NumberMovements == 0 ? 2 : 1) {IsCapture = false},
+            new RayMove(Position, new Coord(1, Direction), 1) {IsPassant = true},
+            new RayMove(Position, new Coord(-1, Direction), 1) {IsPassant = true},
         };
     }
 }

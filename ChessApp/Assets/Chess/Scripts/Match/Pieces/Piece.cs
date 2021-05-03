@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Controller;
+using Chess.Match.Moves;
 
 namespace Chess.Match.Pieces
 {

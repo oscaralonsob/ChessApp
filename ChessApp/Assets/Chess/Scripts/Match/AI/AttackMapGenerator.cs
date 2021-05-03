@@ -3,7 +3,7 @@ using Chess.Match.Pieces;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Chess.Match
+namespace Chess.Match.AI
 {
     public class AttackMapGenerator
     {
@@ -36,7 +36,7 @@ namespace Chess.Match
             {
                 foreach (RayMove rayMove in piece.RayMoves)
                 {
-                    if (!rayMove.IsCapture) continue;
+                    if (rayMove.IsSpecialMove) continue;
                     CalculateAttackFromRayMove(rayMove);
                     if (rayMove.PointIsInSegment(Board.GetEnemyKing(piece.Color).Position))
                     {

@@ -1,6 +1,7 @@
+using Chess.Match.Moves;
 using Chess.Match.Pieces;
 
-namespace Chess.Match
+namespace Chess.Match.AI
 {
     public class MoveGenerator
     {
@@ -30,7 +31,8 @@ namespace Chess.Match
             Piece piece = Board.GetCell(rayMove.Origin).CurrentPiece;
             for (int x = 1; x <= rayMove.Range; x++)
             {
-                Move move = new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+                
+                Move move = CreateMoveFromRayMove(piece, rayMove, x);
                 
                 if (move.IsLegal(Board))
                 {
@@ -42,6 +44,27 @@ namespace Chess.Match
                     break;
                 }
             }
+        }
+
+        //TODO: Factory?
+        private Move CreateMoveFromRayMove(Piece piece, RayMove rayMove, int x)
+        {
+            if (rayMove.IsShortCastle)
+            {
+                return new ShortCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+            } 
+            
+            if (rayMove.IsLongCastle)
+            {
+                return new LongCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+            } 
+            
+            if (rayMove.IsPassant)
+            {
+                return new Passant(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+            } 
+    
+            return new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
         }
     }
 }

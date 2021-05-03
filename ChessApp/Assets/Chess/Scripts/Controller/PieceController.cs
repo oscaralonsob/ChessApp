@@ -1,4 +1,4 @@
-﻿using Chess.Match;
+﻿using Chess.Match.Moves;
 using Chess.Match.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +17,14 @@ namespace Controller
 
             img.sprite = GetSprite();
             rectTransform.sizeDelta = new Vector2(size, size);
+            rectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
+        }
+        
+        public void Print()
+        {
+            RectTransform rectTransform = GetComponent<RectTransform>();
+
+            float size = rectTransform.sizeDelta.x;
             rectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
         }
 

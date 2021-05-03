@@ -1,8 +1,4 @@
-﻿using System;
-using Chess.Match.Pieces;
-using UnityEngine;
-
-namespace Chess.Match
+﻿namespace Chess.Match
 {
     public class RayMove
     {
@@ -11,8 +7,16 @@ namespace Chess.Match
         public Coord Vector { get; }
         
         public int Range { get; }
-        
+        //TODO: first try of special movements, needs a refactor
         public bool IsCapture { get; set; }
+        
+        public bool IsShortCastle { get; set; }
+        
+        public bool IsLongCastle { get; set; }
+
+        public bool IsPassant { get; set; }
+
+        public bool IsSpecialMove => !IsCapture || IsLongCastle || IsShortCastle || IsPassant;
 
         public RayMove(Coord origin, Coord vector, int range)
         {

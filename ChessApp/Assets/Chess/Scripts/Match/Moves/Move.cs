@@ -1,11 +1,11 @@
 ﻿using Chess.Match.Pieces;
 using UnityEngine;
 
-namespace Chess.Match
+namespace Chess.Match.Moves
 {
     public class Move
     {
-        private Piece Piece { get; }
+        protected Piece Piece { get; }
         
         public Cell TargetCell { get; }
 
@@ -15,19 +15,18 @@ namespace Chess.Match
         
         private bool IsCapture => IsValid && !TargetCell.IsEmpty && TargetCell.CurrentPiece.Color != Piece.Color;
 
-        private bool IsCapturePassant { get; set; }
-
         public Move(Piece piece, Cell targetCell)
         {
             Piece = piece;
             TargetCell = targetCell;
         }
         
-        public bool IsLegal(Board board)
+        public virtual bool IsLegal(Board board)
         {
             if (!IsValid || Piece.Color != board.ColorTurn)
                 return false;
 
+            //TODO: common method
             if (!(Piece is King) && Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
             {
                 return false;
@@ -41,7 +40,7 @@ namespace Chess.Match
                 return false;
             }
 
-            if (king.Pin != null && !king.Pin.PointIsInSegment(TargetCell.Position))
+            if (king.Pin != null && !king.Pin.PointIsInSegment(TargetCell.Position) && !(Piece is King))
             {
                 return false;
             }
@@ -56,11 +55,8 @@ namespace Chess.Match
                 
                 if (Piece is Pawn pawn)
                 {
-                    Cell auxCell = board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction);
-                    IsCapturePassant = IsPassantLegal(auxCell);
                     return TargetCell.Position.X == pawn.Position.X && TargetCell.IsEmpty ||
-                           TargetCell.Position.X != pawn.Position.X && !TargetCell.IsEmpty || 
-                           IsCapturePassant;
+                           TargetCell.Position.X != pawn.Position.X && !TargetCell.IsEmpty;
                 }
 
                 return true;
@@ -69,7 +65,7 @@ namespace Chess.Match
             return false;
         }
 
-        public void Apply(Board board)
+        public virtual void Apply(Board board)
         {
             if (!IsLegal(board) || Piece.Color != board.ColorTurn)
                 return;
@@ -77,26 +73,11 @@ namespace Chess.Match
             if (IsCapture)
             {
                 TargetCell.CurrentPiece.Destroy();
-            } else if (IsCapturePassant)
-            {
-                int direction = (Piece.Color == PlayerColor.Black ? -1 : 1);
-                board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - direction).CurrentPiece.Destroy();
-            } 
+            }
             
             Piece.CurrentCell.CurrentPiece = null;
             TargetCell.CurrentPiece = Piece;
             Piece.Position = TargetCell.Position;
-        }
-        
-        private bool IsPassantLegal(Cell previousCell)
-        {
-            //TODO: check it was the previous move not only the first one but i need to implement turns first
-            return 
-                TargetCell.IsEmpty && 
-                !previousCell.IsEmpty &&
-                previousCell.CurrentPiece.Color != Piece.Color &&
-                previousCell.CurrentPiece.NumberMovements == 1 &&
-                previousCell.CurrentPiece is Pawn;
         }
     }   
 }

@@ -20,6 +20,9 @@ namespace Chess.Match.Pieces
                 new RayMove(Position, new Coord(1,-1), 1),
                 new RayMove(Position, new Coord(-1,1), 1),
                 new RayMove(Position, new Coord(-1,-1), 1),
+                
+                new RayMove(Position, new Coord(2,0), 1) {IsShortCastle = true},
+                new RayMove(Position, new Coord(-2, 0), 1) {IsLongCastle = true}
             };
     }
 }

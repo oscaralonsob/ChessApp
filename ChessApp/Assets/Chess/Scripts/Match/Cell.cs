@@ -48,6 +48,7 @@ namespace Chess.Match
             IsUnderWhiteAttack = false;
         }
         
+        //TODO: I think I don't need this since I have this info in AttackMapGenerator now
         public void SetUnderAttack(PlayerColor color)
         {
             if (color == PlayerColor.Black)
