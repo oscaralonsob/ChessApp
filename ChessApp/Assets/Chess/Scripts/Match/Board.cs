@@ -17,6 +17,10 @@ namespace Chess.Match
         public List<Piece> Pieces { get; }
 
         public PlayerColor ColorTurn;
+        
+        private PlayerColor Winner { get; set; }
+
+        private bool Draw { get; set; } = false;
 
         public Board()
         {
@@ -49,12 +53,11 @@ namespace Chess.Match
         
         public void SwitchTurn()
         {
-            ColorTurn = ColorTurn == PlayerColor.White
-                ? PlayerColor.Black
-                : PlayerColor.White;
+            ColorTurn = ColorTurn.GetNextPlayerColor();
 
             UpdatePieceMovement();
             UpdatePieceGUI();
+            CheckGameOverCondition();
         }
 
         public void SetPieces(Dictionary<Vector2Int, Tuple<Type, PlayerColor>> pieces)
@@ -77,6 +80,22 @@ namespace Chess.Match
             
             MoveGenerator mg = new MoveGenerator();
             mg.Generate(this);
+        }
+        
+        private void CheckGameOverCondition()
+        {
+            bool hasMoves = Pieces.Any(p => p.Color == ColorTurn && p.Moves.Count != 0);
+            if (!hasMoves)
+            {
+                if (GetKing(ColorTurn).Pin != null)
+                {
+                    Winner = ColorTurn.GetNextPlayerColor();
+                }
+                else
+                {
+                    Draw = true;
+                }
+            }
         }
         
         private void UpdatePieceGUI()
