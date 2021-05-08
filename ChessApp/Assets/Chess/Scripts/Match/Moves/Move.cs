@@ -5,6 +5,8 @@ namespace Chess.Match.Moves
 {
     public class Move
     {
+        public Board Board { get; }
+        
         protected Piece Piece { get; }
         
         public Cell TargetCell { get; }
@@ -15,24 +17,24 @@ namespace Chess.Match.Moves
         
         private bool IsCapture => IsValid && !TargetCell.IsEmpty && TargetCell.CurrentPiece.Color != Piece.Color;
 
-        public Move(Piece piece, Cell targetCell)
+        public Move(Piece piece, Cell targetCell, Board board)
         {
             Piece = piece;
             TargetCell = targetCell;
+            Board = board;
         }
         
-        public virtual bool IsLegal(Board board)
+        public virtual bool IsLegal()
         {
-            if (!IsValid || Piece.Color != board.ColorTurn)
+            if (!IsValid || Piece.Color != Board.ColorTurn)
                 return false;
 
-            //TODO: common method
             if (!(Piece is King) && Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
             {
                 return false;
             }
 
-            Piece king = board.GetKing(Piece.Color);
+            Piece king = Board.GetKing(Piece.Color);
 
             if (!(king is King))
             {
@@ -65,19 +67,30 @@ namespace Chess.Match.Moves
             return false;
         }
 
-        public virtual void Apply(Board board)
+        public void Apply()
         {
-            if (!IsLegal(board) || Piece.Color != board.ColorTurn)
+            if (!IsLegal() || Piece.Color != Board.ColorTurn)
                 return;
 
-            if (IsCapture)
-            {
-                TargetCell.CurrentPiece.Destroy();
-            }
-            
+            CustomApply();
+
             Piece.CurrentCell.CurrentPiece = null;
             TargetCell.CurrentPiece = Piece;
             Piece.Position = TargetCell.Position;
+            
+            Board.SwitchTurn();
+            Piece.NumberMovements++;
+        }
+        
+        protected virtual void CustomApply()
+        {
+            if (IsCapture)
+            {
+                Piece targetPiece = TargetCell.CurrentPiece;
+                Board.Pieces.Remove(targetPiece);
+                TargetCell.CurrentPiece = null;
+                targetPiece.PieceController.Destroy();
+            }
         }
     }   
 }

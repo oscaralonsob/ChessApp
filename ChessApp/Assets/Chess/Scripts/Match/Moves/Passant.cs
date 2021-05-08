@@ -5,32 +5,28 @@ namespace Chess.Match.Moves
     public class Passant : Move
     {
 
-        public Passant(Piece piece, Cell targetCell): base(piece, targetCell)
+        public Passant(Piece piece, Cell targetCell, Board board): base(piece, targetCell, board)
         {
         }
         
-        public override bool IsLegal(Board board)
+        public override bool IsLegal()
         {
-            if (!IsValid || Piece.Color != board.ColorTurn)
+            if (!IsValid || Piece.Color != Board.ColorTurn)
                 return false;
             
-            //TODO: common method
             if (!(Piece is Pawn pawn))
-            {
                 return false;
-            }
             
-            //TODO: common method
             if (Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
-            {
                 return false;
-            }
 
-            Cell previousCell = board.GetCell(TargetCell.Position + new Coord(0, -pawn.Direction));
+
+            Cell previousCell = Board.GetCell(TargetCell.Position + new Coord(0, -pawn.Direction));
             if (TargetCell.IsEmpty &&
                 !previousCell.IsEmpty &&
                 previousCell.CurrentPiece.Color != Piece.Color &&
-                previousCell.CurrentPiece.NumberMovements == 1)
+                previousCell.CurrentPiece.NumberMovements == 1 &&
+                previousCell.CurrentPiece is Pawn)
             {
                 return true;
             }
@@ -38,22 +34,14 @@ namespace Chess.Match.Moves
             return false;
         }
         
-        public override void Apply(Board board)
+        protected override void CustomApply()
         {
-            if (!IsLegal(board) || Piece.Color != board.ColorTurn)
-                return;
-            
-            //TODO: common method
-            if (!(Piece is Pawn pawn))
-            {
-                return;
-            }
-            
-            board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction).CurrentPiece.Destroy();
-
-            Piece.CurrentCell.CurrentPiece = null;
-            TargetCell.CurrentPiece = Piece;
-            Piece.Position = TargetCell.Position;
+            //I know is a pawn in this point
+            Pawn pawn = Piece as Pawn;
+            Piece targetPiece = Board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction).CurrentPiece;
+            Board.Pieces.Remove(targetPiece);
+            TargetCell.CurrentPiece = null;
+            targetPiece.PieceController.Destroy();
         }
     }   
 }

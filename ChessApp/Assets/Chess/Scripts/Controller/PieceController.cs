@@ -1,4 +1,5 @@
-﻿using Chess.Match.Moves;
+﻿using System;
+using Chess.Match.Moves;
 using Chess.Match.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,23 +10,30 @@ namespace Controller
     public class PieceController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         public Piece Piece { get; set; }
+
+        private bool IsDragging { get; set; }
         
+        private RectTransform RectTransform { get; set; }
+        
+        private Image ImageComponent { get; set; }
+
+        private void Awake()
+        {
+            RectTransform = GetComponent<RectTransform>();
+            ImageComponent = GetComponent<Image>();
+        }
+
         public void Print(float size)
         {
-            RectTransform rectTransform = GetComponent<RectTransform>();
-            Image img = GetComponent<Image>();
-
-            img.sprite = GetSprite();
-            rectTransform.sizeDelta = new Vector2(size, size);
-            rectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
+            ImageComponent.sprite = GetSprite();
+            RectTransform.sizeDelta = new Vector2(size, size);
+            RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
         }
-        
-        public void Print()
-        {
-            RectTransform rectTransform = GetComponent<RectTransform>();
 
-            float size = rectTransform.sizeDelta.x;
-            rectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
+        public void Update()
+        {
+            if (IsDragging) return;
+            Print(RectTransform.sizeDelta.x);
         }
 
         private Sprite GetSprite()
@@ -50,8 +58,9 @@ namespace Controller
         {
             foreach (Move move in Piece.Moves)
             {
-                move.TargetCell.HighlightCell();
+                move.TargetCell.IsHighlighted = true;
             }
+            IsDragging = true;
         }
 
         public void OnPointerUp(PointerEventData eventData)
@@ -67,17 +76,18 @@ namespace Controller
                     moveDone = move;
                 }
 
-                move.TargetCell.ClearHighlightCell();
+                move.TargetCell.IsHighlighted = false;
             }
 
             if (moveDone != null)
             {
                 transform.position = moveDone.TargetCell.CellController.Position;
-                Piece.Move(moveDone);
+                moveDone.Apply();
             } else
             {
                 transform.position = Piece.CurrentCell.CellController.Position;
             }
+            IsDragging = false;
         }
 
         public void Destroy()

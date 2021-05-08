@@ -34,7 +34,7 @@ namespace Chess.Match.AI
                 
                 Move move = CreateMoveFromRayMove(piece, rayMove, x);
                 
-                if (move.IsLegal(Board))
+                if (move.IsLegal())
                 {
                     piece.Moves.Add(move);
                 }
@@ -51,20 +51,20 @@ namespace Chess.Match.AI
         {
             if (rayMove.IsShortCastle)
             {
-                return new ShortCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+                return new ShortCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
             } 
             
             if (rayMove.IsLongCastle)
             {
-                return new LongCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+                return new LongCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
             } 
             
             if (rayMove.IsPassant)
             {
-                return new Passant(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+                return new Passant(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
             } 
     
-            return new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
+            return new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
         }
     }
 }

@@ -56,7 +56,6 @@ namespace Chess.Match
             ColorTurn = ColorTurn.GetNextPlayerColor();
 
             UpdatePieceMovement();
-            UpdatePieceGUI();
             CheckGameOverCondition();
         }
 
@@ -97,15 +96,7 @@ namespace Chess.Match
                 }
             }
         }
-        
-        private void UpdatePieceGUI()
-        {
-            foreach (Piece piece in Pieces)
-            {
-                piece.PieceController.Print();
-            }
-        }
-        
+
         public Piece GetKing(PlayerColor color)
         {
             return Pieces.FirstOrDefault(p => p is King && p.Color == color) as King;

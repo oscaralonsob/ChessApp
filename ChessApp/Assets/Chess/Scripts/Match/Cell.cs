@@ -15,31 +15,16 @@ namespace Chess.Match
         
         public bool IsEmpty => CurrentPiece == null;
         
-        public bool IsUnderBlackAttack { get; set; }
+        public bool IsHighlighted { get; set; }
         
-        public bool IsUnderWhiteAttack { get; set; }
+        public bool IsUnderBlackAttack { get; private set; }
+        
+        public bool IsUnderWhiteAttack { get; private set; }
+        
         public Cell(Coord coord)
         {
             Position = coord;
             CurrentPiece = null;
-        }
-
-        //Communication between game logic and GameEngine logic
-        public void HighlightCell()
-        {
-            if (CellController)
-            {
-                CellController.HighlightCell();
-            }
-        }
-        
-        //Communication between game logic and GameEngine logic
-        public void ClearHighlightCell()
-        {
-            if (CellController)
-            {
-                CellController.ClearHighlightCell();
-            }
         }
 
         public void ResetFlags()

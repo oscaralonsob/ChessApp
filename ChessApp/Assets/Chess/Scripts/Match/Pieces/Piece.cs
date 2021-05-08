@@ -16,7 +16,7 @@ namespace Chess.Match.Pieces
         
         public Cell CurrentCell => Board.Cells[Position.X, Position.Y];
         
-        public int NumberMovements { get; private set; }
+        public int NumberMovements { get; set; }
         
         public List<Move> Moves { get; }
         
@@ -37,23 +37,6 @@ namespace Chess.Match.Pieces
         public string GetSpriteName()
         {
             return "Chess" + GetType().Name + Color;
-        }
-        
-        public void Move(Move move)
-        {
-            if (move.IsValid)
-            {
-                move.Apply(Board);
-                NumberMovements++;
-                Board.SwitchTurn();
-            }
-        }
-
-        public void Destroy()
-        {
-            Board.Pieces.Remove(this);
-            CurrentCell.CurrentPiece = null;
-            PieceController.Destroy();
         }
     }
 }
