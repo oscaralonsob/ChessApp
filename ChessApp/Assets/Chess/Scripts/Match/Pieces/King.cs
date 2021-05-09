@@ -5,7 +5,7 @@ namespace Chess.Match.Pieces
     public class King : Piece
     {
         //TODO: castle
-        public King(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
+        public King(PlayerColor playerColor, Coord coord) : base(playerColor, coord)
         {
         }
         

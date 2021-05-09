@@ -10,7 +10,7 @@ namespace Chess.Match.Pieces
          */
         public int Direction { get; }
 
-        public Pawn(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
+        public Pawn(PlayerColor playerColor, Coord coord) : base(playerColor, coord)
         {
             Direction = (Color == PlayerColor.Black ? -1 : 1);
         }

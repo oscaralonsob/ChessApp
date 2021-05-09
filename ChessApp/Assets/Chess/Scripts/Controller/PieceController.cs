@@ -27,12 +27,13 @@ namespace Controller
         {
             ImageComponent.sprite = GetSprite();
             RectTransform.sizeDelta = new Vector2(size, size);
+            
+            if (IsDragging) return;
             RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
         }
 
         public void Update()
         {
-            if (IsDragging) return;
             Print(RectTransform.sizeDelta.x);
         }
 
@@ -79,14 +80,8 @@ namespace Controller
                 move.TargetCell.IsHighlighted = false;
             }
 
-            if (moveDone != null)
-            {
-                transform.position = moveDone.TargetCell.CellController.Position;
-                moveDone.Apply();
-            } else
-            {
-                transform.position = Piece.CurrentCell.CellController.Position;
-            }
+            moveDone?.Apply();
+
             IsDragging = false;
         }
 

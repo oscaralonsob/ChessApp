@@ -74,7 +74,7 @@ namespace Chess.Match.Moves
 
             CustomApply();
 
-            Piece.CurrentCell.CurrentPiece = null;
+            Board.GetCell(Piece.Position).CurrentPiece = null;
             TargetCell.CurrentPiece = Piece;
             Piece.Position = TargetCell.Position;
             

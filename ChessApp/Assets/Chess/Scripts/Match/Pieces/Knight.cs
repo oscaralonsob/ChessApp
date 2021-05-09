@@ -4,7 +4,7 @@ namespace Chess.Match.Pieces
 {
     public class Knight : Piece
     {
-        public Knight(PlayerColor playerColor, Coord coord, Board board) : base(playerColor, coord, board)
+        public Knight(PlayerColor playerColor, Coord coord) : base(playerColor, coord)
         {
         }
         

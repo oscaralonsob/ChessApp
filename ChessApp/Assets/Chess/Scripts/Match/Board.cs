@@ -64,9 +64,10 @@ namespace Chess.Match
             foreach (KeyValuePair<Vector2Int, Tuple<Type, PlayerColor>> pair in pieces)
             {
                 Cell cell = Cells[pair.Key.x, pair.Key.y];
-                Object[] args = {pair.Value.Item2, cell.Position, this};
+                Object[] args = {pair.Value.Item2, cell.Position};
                 Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
                 Pieces.Add(piece);
+                cell.CurrentPiece = piece;
             }
             
             UpdatePieceMovement();
