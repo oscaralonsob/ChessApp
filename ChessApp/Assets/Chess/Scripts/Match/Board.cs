@@ -15,6 +15,8 @@ namespace Chess.Match
         public Cell[,] Cells { get; }
         
         public List<Piece> Pieces { get; }
+        
+        public List<Piece> CapturedPieces { get; }
 
         public PlayerColor ColorTurn;
         
@@ -26,6 +28,7 @@ namespace Chess.Match
         {
             Size = 8;
             Pieces = new List<Piece>();
+            CapturedPieces = new List<Piece>();
             ColorTurn = PlayerColor.White; 
             Cells = new Cell[Size, Size];
             for (int x = 0; x < Size; x++)

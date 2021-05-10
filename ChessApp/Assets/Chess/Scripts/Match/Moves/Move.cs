@@ -5,13 +5,13 @@ namespace Chess.Match.Moves
 {
     public class Move
     {
-        public Board Board { get; }
+        protected Board Board { get; }
         
         protected Piece Piece { get; }
         
         public Cell TargetCell { get; }
 
-        public bool IsValid => TargetCell != null;
+        protected bool IsValid => TargetCell != null;
         
         public bool IsLastInPath => !IsValid || !TargetCell.IsEmpty;
         
@@ -88,8 +88,9 @@ namespace Chess.Match.Moves
             {
                 Piece targetPiece = TargetCell.CurrentPiece;
                 Board.Pieces.Remove(targetPiece);
+                Board.CapturedPieces.Add(targetPiece);
                 TargetCell.CurrentPiece = null;
-                targetPiece.PieceController.Destroy();
+                targetPiece.IsCaptured = true;
             }
         }
     }   

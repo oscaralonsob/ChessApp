@@ -40,8 +40,9 @@ namespace Chess.Match.Moves
             Pawn pawn = Piece as Pawn;
             Piece targetPiece = Board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction).CurrentPiece;
             Board.Pieces.Remove(targetPiece);
+            Board.CapturedPieces.Add(targetPiece);
             TargetCell.CurrentPiece = null;
-            targetPiece.PieceController.Destroy();
+            targetPiece.IsCaptured = true;
         }
     }   
 }

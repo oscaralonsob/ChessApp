@@ -32,7 +32,6 @@ namespace Controller
                 PieceController pieceController = pieceObject.GetComponent<PieceController>();
 
                 pieceController.Piece = piece;
-                piece.PieceController = pieceController;
                 pieceController.Print(size);
             }
         }

@@ -37,6 +37,11 @@ namespace Controller
 
         public void Update()
         {
+            //TODO: add in another place where the captures pieces will be displayed
+            if (Piece.IsCaptured)
+            {
+                Destroy();
+            }
             Print(RectTransform.sizeDelta.x);
         }
 
