@@ -23,7 +23,6 @@ namespace Controller
                 // Setup    
                 CellController cellController = newCell.GetComponent<CellController>();
                 cellController.Cell = cell;
-                cell.CellController = cellController;
                 cellController.Print(size);
             }
             

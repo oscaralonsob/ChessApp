@@ -3,7 +3,9 @@ using Chess.Match.Moves;
 using Chess.Match.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using System.Linq;
+using System.Collections.Generic;
+using Image = UnityEngine.UI.Image;
 
 namespace Controller
 {
@@ -16,6 +18,7 @@ namespace Controller
         private RectTransform RectTransform { get; set; }
         
         private Image ImageComponent { get; set; }
+
 
         private void Awake()
         {
@@ -66,21 +69,32 @@ namespace Controller
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            Move moveDone = null;
-
+            //Remove the high
             foreach (Move move in Piece.Moves)
             {
-                RectTransform rect = move.TargetCell.CellController.GetComponent<RectTransform>();
-                if (RectTransformUtility.RectangleContainsScreenPoint(rect, Input.mousePosition))
-                {
-                    // If the mouse is within a valid cell, get it
-                    moveDone = move;
-                }
-
                 move.TargetCell.IsHighlighted = false;
+            }  
+            
+            //Create a list of Raycast Results
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+            CellController cellController = null;
+            foreach (var result in results.Where(result => result.gameObject.CompareTag("Cell")))
+            {
+                cellController = result.gameObject.GetComponent<CellController>();
             }
 
-            moveDone?.Apply();
+            if (cellController != null)
+            {
+                Move moveDone = null;
+                
+                foreach (var move in Piece.Moves.Where(move => cellController.Cell == move.TargetCell))
+                {
+                    moveDone = move;
+                }
+                
+                moveDone?.Apply();
+            }
 
             IsDragging = false;
         }

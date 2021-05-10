@@ -7,9 +7,6 @@ namespace Chess.Match
 {
     public class Cell
     {
-        //TODO: can i remove this?
-        public CellController CellController { get; set;  }
-        
         public Coord Position { get; }
         
         public Piece CurrentPiece { get; set; }
