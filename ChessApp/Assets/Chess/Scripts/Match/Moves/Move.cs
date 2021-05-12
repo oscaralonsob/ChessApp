@@ -36,9 +36,9 @@ namespace Chess.Match.Moves
 
             Piece king = Board.GetKing(Piece.Color);
 
-            if (!(king is King))
+            if (king == null)
             {
-                //Game over
+                //Throw error
                 return false;
             }
 

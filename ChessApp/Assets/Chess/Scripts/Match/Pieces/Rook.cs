@@ -11,10 +11,10 @@ namespace Chess.Match.Pieces
         public override List<RayMove> RayMoves
             => new List<RayMove>
             {
-                new RayMove(Position, new Coord(0,1), int.MaxValue),
-                new RayMove(Position, new Coord(0,-1), int.MaxValue),
-                new RayMove(Position, new Coord(1,0), int.MaxValue),
-                new RayMove(Position, new Coord(-1,0), int.MaxValue),
+                new RayMove(Position, new Coord(0,1), 8),
+                new RayMove(Position, new Coord(0,-1), 8),
+                new RayMove(Position, new Coord(1,0), 8),
+                new RayMove(Position, new Coord(-1,0), 8),
             };
     }
 }
