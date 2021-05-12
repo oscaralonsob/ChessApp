@@ -4,10 +4,7 @@ namespace Chess.Match.Pieces
 {
     public class Pawn : Piece
     {
-        /*
-         * TODO:
-         *     promotion
-         */
+
         public int Direction { get; }
 
         public Pawn(PlayerColor playerColor, Coord coord) : base(playerColor, coord)

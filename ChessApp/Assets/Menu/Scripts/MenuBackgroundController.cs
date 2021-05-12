@@ -62,7 +62,6 @@ namespace Menu
                 return;
             }
             
-            //TODO: get correct value
             Rect rect = rectTransform.rect;
             int xCount;
             int yCount;
