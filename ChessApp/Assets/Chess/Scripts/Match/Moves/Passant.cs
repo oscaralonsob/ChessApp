@@ -20,7 +20,6 @@ namespace Chess.Match.Moves
             if (Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
                 return false;
 
-
             Cell previousCell = Board.GetCell(TargetCell.Position + new Coord(0, -pawn.Direction));
             if (TargetCell.IsEmpty &&
                 !previousCell.IsEmpty &&

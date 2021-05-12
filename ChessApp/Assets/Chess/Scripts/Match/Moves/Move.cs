@@ -77,9 +77,9 @@ namespace Chess.Match.Moves
             Board.GetCell(Piece.Position).CurrentPiece = null;
             TargetCell.CurrentPiece = Piece;
             Piece.Position = TargetCell.Position;
+            Piece.NumberMovements++;
             
             Board.SwitchTurn();
-            Piece.NumberMovements++;
         }
         
         protected virtual void CustomApply()
