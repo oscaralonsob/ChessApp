@@ -5,7 +5,7 @@ using Image = UnityEngine.UI.Image;
 
 namespace Controller
 {
-    public class CellController : MonoBehaviour
+    public class CellController : MonoBehaviour, IGUIController
     {
         public Cell Cell { get; set; }
         
@@ -14,8 +14,6 @@ namespace Controller
         private Transform HighlightImage { get; set; }
         
         private Image Image { get; set; }
-        
-        public Vector3 Position => gameObject.transform.position;
 
         private void Awake()
         {
@@ -26,10 +24,10 @@ namespace Controller
         
         private void Update()
         {
-            Print(RectTransform.sizeDelta.x);
+            HighlightImage.gameObject.SetActive(Cell.IsHighlighted);
         }
 
-        public void Print(float size)
+        public void UpdateGUI(float size)
         {
             // Set position
             RectTransform.sizeDelta = new Vector2(size, size);
@@ -38,9 +36,6 @@ namespace Controller
             // Set Color
             bool blackCell = (Cell.Position.Y + Cell.Position.X) % 2 == 0;
             Image.color = blackCell ?  new Color32(128, 128, 128, 255) : new Color32(230, 230, 230, 255);
-
-            
-            HighlightImage.gameObject.SetActive(Cell.IsHighlighted);
         }
     }
 }

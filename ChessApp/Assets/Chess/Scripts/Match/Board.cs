@@ -22,7 +22,9 @@ namespace Chess.Match
         
         private PlayerColor Winner { get; set; }
 
-        private bool Draw { get; set; } = false;
+        private bool Draw { get; set; }
+
+        public event EventHandler PiecePositionsUpdated;
 
         public Board()
         {
@@ -56,6 +58,7 @@ namespace Chess.Match
         
         public void SwitchTurn()
         {
+            PiecePositionsUpdated?.Invoke(this, EventArgs.Empty);
             ColorTurn = ColorTurn.GetNextPlayerColor();
 
             UpdatePieceMovement();

@@ -12,7 +12,6 @@ namespace Controller
         public GameObject boardPrefab;
 
 
-        // Start is called before the first frame update
         void Start()
         {
             GameMode = new NormalGameMode();
@@ -27,7 +26,7 @@ namespace Controller
             BoardController boardController = boardObject.GetComponent<BoardController>();
 
             boardController.Board = GameModeManager.Board;
-            boardController.Print();
+            boardController.Init();
         }
     }
 }

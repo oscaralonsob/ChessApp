@@ -9,11 +9,9 @@ using Image = UnityEngine.UI.Image;
 
 namespace Controller
 {
-    public class PieceController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
+    public class PieceController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler, IGUIController
     {
         public Piece Piece { get; set; }
-
-        private bool IsDragging { get; set; }
         
         private RectTransform RectTransform { get; set; }
         
@@ -25,37 +23,19 @@ namespace Controller
             RectTransform = GetComponent<RectTransform>();
             ImageComponent = GetComponent<Image>();
         }
-
-        public void Print(float size)
-        {
-            ImageComponent.sprite = GetSprite();
-            RectTransform.sizeDelta = new Vector2(size, size);
-            
-            if (IsDragging) return;
-            RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
-        }
-
-        public void Update()
+        
+        public void UpdateGUI(float size)
         {
             //TODO: add in another place where the captures pieces will be displayed
             if (Piece.IsCaptured)
             {
-                Destroy();
+                gameObject.SetActive(false);
             }
-            Print(RectTransform.sizeDelta.x);
-        }
-
-        private Sprite GetSprite()
-        {
-            Sprite[] sprites  = Resources.LoadAll<Sprite>("Sprites/ChessPieces");
             
-            foreach (var s in sprites)
-            {
-                if (s.name == Piece.GetSpriteName())
-                    return s;
-            }
+            RectTransform.sizeDelta = new Vector2(size, size);
 
-            return null;
+            ImageComponent.sprite = GetSprite();
+            RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -69,12 +49,10 @@ namespace Controller
             {
                 move.TargetCell.IsHighlighted = true;
             }
-            IsDragging = true;
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            //Remove the high
             foreach (Move move in Piece.Moves)
             {
                 move.TargetCell.IsHighlighted = false;
@@ -89,24 +67,37 @@ namespace Controller
                 cellController = result.gameObject.GetComponent<CellController>();
             }
 
+            
+            Move moveDone = null;
             if (cellController != null)
             {
-                Move moveDone = null;
-                
                 foreach (var move in Piece.Moves.Where(move => cellController.Cell == move.TargetCell))
                 {
                     moveDone = move;
                 }
-                
-                moveDone?.Apply();
-            }
 
-            IsDragging = false;
+                moveDone?.Apply(); 
+            }
+            
+            
+            if (moveDone == null)
+            {
+                float size = RectTransform.sizeDelta.x;
+                RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
+            }
         }
 
-        public void Destroy()
+        private Sprite GetSprite()
         {
-            Destroy(gameObject);
+            Sprite[] sprites  = Resources.LoadAll<Sprite>("Sprites/ChessPieces");
+            
+            foreach (var s in sprites)
+            {
+                if (s.name == Piece.GetSpriteName())
+                    return s;
+            }
+
+            return null;
         }
     }
 }
