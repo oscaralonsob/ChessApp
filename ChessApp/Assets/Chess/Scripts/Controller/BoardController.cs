@@ -26,6 +26,7 @@ namespace Controller
             UpdatePiecesGUI(size);
         }
 
+        //TODO: Move this to the piece itself maybe?
         private void PiecePositionsUpdatedHandler(object sender, EventArgs e)
         {
             if (Board == null) return;
