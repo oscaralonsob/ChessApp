@@ -63,6 +63,17 @@ namespace Chess.Match.AI
             {
                 return new Passant(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
             } 
+            
+            if (piece is Pawn pawn)
+            {
+                int targetY = (rayMove.Origin + x * rayMove.Vector).Y;
+                if (pawn.Color == PlayerColor.White && targetY == Board.Size - 1||
+                    pawn.Color == PlayerColor.Black && targetY == 0)
+                {
+                    return new Promotion(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
+                }
+                
+            } 
     
             return new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
         }

@@ -7,7 +7,7 @@ namespace Chess.Match.Moves
     {
         protected Board Board { get; }
         
-        protected Piece Piece { get; }
+        protected Piece Piece { get; set; }
         
         public Cell TargetCell { get; }
 
