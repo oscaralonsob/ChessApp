@@ -26,7 +26,7 @@ namespace Chess.Match.Moves
         
         public virtual bool IsLegal()
         {
-            if (!IsValid || Piece.Color != Board.ColorTurn)
+            if (!IsValid)
                 return false;
 
             if (!(Piece is King) && Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
@@ -69,7 +69,7 @@ namespace Chess.Match.Moves
 
         public void Apply()
         {
-            if (!IsLegal() || Piece.Color != Board.ColorTurn)
+            if (!IsLegal())
                 return;
 
             CustomApply();

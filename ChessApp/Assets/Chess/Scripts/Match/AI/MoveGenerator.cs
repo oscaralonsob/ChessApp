@@ -7,18 +7,25 @@ namespace Chess.Match.AI
     {
         private Board Board { get; set; }
         
-        public void Generate(Board board)
+        public void Generate(Board board, PlayerColor color)
         {
             Board = board;
-            
-            CalculateMoveCells();
+            ClearPreCalculatedMoveCells();
+            CalculateMoveCells(color);
         }
-
-        private void CalculateMoveCells()
+        
+        private void ClearPreCalculatedMoveCells()
         {
             foreach (Piece piece in Board.Pieces)
             {
                 piece.Moves.Clear();
+            }
+        }
+
+        private void CalculateMoveCells(PlayerColor color)
+        {
+            foreach (Piece piece in Board.Pieces.FindAll(p => p.Color == color))
+            {
                 foreach (RayMove rayMove in piece.RayMoves)
                 {
                     CalculateMoveFromRayMove(rayMove);

@@ -18,7 +18,7 @@ namespace Chess.Match
         
         public List<Piece> CapturedPieces { get; }
 
-        public PlayerColor ColorTurn;
+        private PlayerColor ColorTurn { get; set; }
         
         private PlayerColor Winner { get; set; }
 
@@ -81,11 +81,12 @@ namespace Chess.Match
 
         private void UpdatePieceMovement()
         {
+            //TODO: this should be done outside, in a match/manager class
             AttackMapGenerator amg = new AttackMapGenerator();
             amg.Generate(this);
             
             MoveGenerator mg = new MoveGenerator();
-            mg.Generate(this);
+            mg.Generate(this, ColorTurn);
         }
         
         private void CheckGameOverCondition()

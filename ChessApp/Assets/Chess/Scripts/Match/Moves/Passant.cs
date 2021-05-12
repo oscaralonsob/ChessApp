@@ -11,7 +11,7 @@ namespace Chess.Match.Moves
         
         public override bool IsLegal()
         {
-            if (!IsValid || Piece.Color != Board.ColorTurn)
+            if (!IsValid)
                 return false;
             
             if (!(Piece is Pawn pawn))
