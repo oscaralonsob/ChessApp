@@ -22,11 +22,11 @@ namespace Controller
             
             UpdateCellsGUI(size);
             
-            Board.PiecePositionsUpdated += PiecePositionsUpdatedHanlder;
+            Board.PiecePositionsUpdated += PiecePositionsUpdatedHandler;
             UpdatePiecesGUI(size);
         }
 
-        private void PiecePositionsUpdatedHanlder(object sender, EventArgs e)
+        private void PiecePositionsUpdatedHandler(object sender, EventArgs e)
         {
             if (Board == null) return;
             
