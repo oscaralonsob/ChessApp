@@ -90,7 +90,7 @@ namespace Chess.Match.AI
                     }
                     else
                     {
-                        targetCell.CurrentPiece.Pin = rayMove;
+                        targetCell.CurrentPiece.Pin = new RayMove(rayMove.Origin, rayMove.Vector, x);
                     }
                         
                     return;
