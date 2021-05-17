@@ -55,7 +55,7 @@ namespace Chess.Match.AI
                 
                 targetCell?.SetUnderAttack(originCell.CurrentPiece.Color);
 
-                if (targetCell is null || !targetCell.IsEmpty)
+                if (targetCell is null || !targetCell.IsEmpty && !(targetCell.CurrentPiece is King))
                 {
                     return;
                 }
