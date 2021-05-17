@@ -17,21 +17,12 @@ namespace Chess.Match
         public List<Piece> Pieces { get; }
         
         public List<Piece> CapturedPieces { get; }
-
-        private PlayerColor ColorTurn { get; set; }
         
-        private PlayerColor Winner { get; set; }
-
-        private bool Draw { get; set; }
-
-        public event EventHandler PiecePositionsUpdated;
-
         public Board()
         {
             Size = 8;
             Pieces = new List<Piece>();
             CapturedPieces = new List<Piece>();
-            ColorTurn = PlayerColor.White; 
             Cells = new Cell[Size, Size];
             for (int x = 0; x < Size; x++)
             {
@@ -51,18 +42,7 @@ namespace Chess.Match
         
         public Cell GetCell(Coord coord)
         {
-            return (coord.X >= 0 && coord.Y >=0 && coord.X < Size && coord.Y < Size) ? 
-                Cells[coord.X, coord.Y] :
-                null;
-        }
-        
-        public void SwitchTurn()
-        {
-            PiecePositionsUpdated?.Invoke(this, EventArgs.Empty);
-            ColorTurn = ColorTurn.GetNextPlayerColor();
-
-            UpdatePieceMovement();
-            CheckGameOverCondition();
+            return GetCell(coord.X, coord.Y);
         }
 
         public void SetPieces(Dictionary<Vector2Int, Tuple<Type, PlayerColor>> pieces)
@@ -74,34 +54,6 @@ namespace Chess.Match
                 Piece piece = (Piece) Activator.CreateInstance(pair.Value.Item1, args);
                 Pieces.Add(piece);
                 cell.CurrentPiece = piece;
-            }
-            
-            UpdatePieceMovement();
-        }
-
-        private void UpdatePieceMovement()
-        {
-            //TODO: this should be done outside, in a match/manager class
-            AttackMapGenerator amg = new AttackMapGenerator();
-            amg.Generate(this);
-            
-            MoveGenerator mg = new MoveGenerator();
-            mg.Generate(this, ColorTurn);
-        }
-        
-        private void CheckGameOverCondition()
-        {
-            bool hasMoves = Pieces.Any(p => p.Color == ColorTurn && p.Moves.Count != 0);
-            if (!hasMoves)
-            {
-                if (GetKing(ColorTurn).Pin != null)
-                {
-                    Winner = ColorTurn.GetNextPlayerColor();
-                }
-                else
-                {
-                    Draw = true;
-                }
             }
         }
 
@@ -116,7 +68,6 @@ namespace Chess.Match
             return GetKing(color);
         }
     }
-    
 }
 
 

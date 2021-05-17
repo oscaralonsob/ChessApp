@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System.Collections.Generic;
+using CustomEvent;
 using Image = UnityEngine.UI.Image;
 
 namespace Controller
@@ -16,7 +17,8 @@ namespace Controller
         private RectTransform RectTransform { get; set; }
         
         private Image ImageComponent { get; set; }
-
+        
+        [SerializeField] GameEvent<Move> movementEvent;
 
         private void Awake()
         {
@@ -75,12 +77,13 @@ namespace Controller
                 {
                     moveDone = move;
                 }
-
-                moveDone?.Apply(); 
             }
-            
-            
-            if (moveDone == null)
+
+            if (moveDone != null)
+            {
+                movementEvent.Raise(moveDone);
+            }
+            else
             {
                 float size = RectTransform.sizeDelta.x;
                 RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);

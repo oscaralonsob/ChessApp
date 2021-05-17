@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Chess.Match;
 using Chess.Match.Pieces;
 using UnityEngine;
 
 namespace Controller
 {
-    public class BoardController : MonoBehaviour
+    public class BoardController : MonoBehaviour, IGUIController
     {
         public Board Board { get; set; }
 
-        private Dictionary<Piece, IGUIController> PieceGUIControllers { get; set; } = new Dictionary<Piece, IGUIController>();
+        private Dictionary<Piece, IGUIController> PieceGUIControllers { get; } = new Dictionary<Piece, IGUIController>();
         
         public GameObject cellPrefab;
         
@@ -21,16 +20,14 @@ namespace Controller
             float size = GetCellSize();
             
             UpdateCellsGUI(size);
-            
-            Board.PiecePositionsUpdated += PiecePositionsUpdatedHandler;
             UpdatePiecesGUI(size);
         }
 
-        private void PiecePositionsUpdatedHandler(object sender, EventArgs e)
+        public void UpdateGUI(float size = 0)
         {
             if (Board == null) return;
             
-            float size = GetCellSize();
+            size = size != 0 ? size : GetCellSize();
             UpdatePiecesGUI(size);
         }
         
