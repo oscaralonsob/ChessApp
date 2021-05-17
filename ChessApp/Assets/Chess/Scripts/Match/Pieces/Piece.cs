@@ -16,6 +16,7 @@ namespace Chess.Match.Pieces
         
         public abstract List<RayMove> RayMoves { get; }
 
+        //TODO: new class for pins
         public RayMove Pin { get; set; }
 
         public bool IsCaptured { get; set; }
