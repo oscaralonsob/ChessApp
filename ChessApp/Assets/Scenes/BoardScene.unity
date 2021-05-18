@@ -385,3 +385,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardPrefab: {fileID: 9037406108617680383, guid: 0c28a48f55df78c7baf3b4bae894fb8d, type: 3}
+  gameEvent: {fileID: 11400000, guid: 7006f4869593df79a8555461b3401c23, type: 2}

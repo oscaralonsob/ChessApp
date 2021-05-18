@@ -14,6 +14,7 @@ namespace Chess.Match
         
         public Cell[,] Cells { get; }
         
+        //TODO: move pieces to manager
         public List<Piece> Pieces { get; }
         
         public List<Piece> CapturedPieces { get; }

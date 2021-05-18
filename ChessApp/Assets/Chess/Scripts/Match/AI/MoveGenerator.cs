@@ -3,7 +3,7 @@ using Chess.Match.Pieces;
 
 namespace Chess.Match.AI
 {
-    public class MoveGenerator
+    public class MoveGenerator : IMoveGenerator
     {
         private Board Board { get; set; }
         
@@ -41,7 +41,7 @@ namespace Chess.Match.AI
                 
                 Move move = CreateMoveFromRayMove(piece, rayMove, x);
                 
-                if (move.IsLegal())
+                if (move.IsLegal(Board))
                 {
                     piece.Moves.Add(move);
                 }
@@ -58,17 +58,17 @@ namespace Chess.Match.AI
         {
             if (rayMove.IsShortCastle)
             {
-                return new ShortCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
+                return new ShortCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
             } 
             
             if (rayMove.IsLongCastle)
             {
-                return new LongCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
+                return new LongCastle(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
             } 
             
             if (rayMove.IsPassant)
             {
-                return new Passant(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
+                return new Passant(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
             } 
             
             if (piece is Pawn pawn)
@@ -77,12 +77,12 @@ namespace Chess.Match.AI
                 if (pawn.Color == PlayerColor.White && targetY == Board.Size - 1||
                     pawn.Color == PlayerColor.Black && targetY == 0)
                 {
-                    return new Promotion(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
+                    return new Promotion(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
                 }
                 
             } 
     
-            return new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector), Board);
+            return new Move(piece, Board.GetCell(rayMove.Origin + x * rayMove.Vector));
         }
     }
 }

@@ -5,11 +5,11 @@ namespace Chess.Match.Moves
     public class LongCastle : Move
     {
 
-        public LongCastle(Piece piece, Cell targetCell, Board board): base(piece, targetCell, board)
+        public LongCastle(Piece piece, Cell targetCell): base(piece, targetCell)
         {
         }
         
-        public override bool IsLegal()
+        public override bool IsLegal(Board board)
         {
             if (!IsValid)
                 return false;
@@ -24,21 +24,21 @@ namespace Chess.Match.Moves
                 return false;
             }
             
-            Cell middleCell = Board.GetCell(TargetCell.Position + new Coord(1, 0));
-            Cell outerCell = Board.GetCell(TargetCell.Position + new Coord(-1, 0));
+            Cell middleCell = board.GetCell(TargetCell.Position + new Coord(1, 0));
+            Cell outerCell = board.GetCell(TargetCell.Position + new Coord(-1, 0));
             if (!FreeCell(TargetCell) || !FreeCell(middleCell) || !FreeCell(outerCell))
             {
                 return false;
             }
 
-            Cell rockCell = Board.GetCell(TargetCell.Position + new Coord(-2, 0));
+            Cell rockCell = board.GetCell(TargetCell.Position + new Coord(-2, 0));
             return rockCell?.CurrentPiece is Rook && rockCell.CurrentPiece.NumberMovements == 0;
         }
         
-        protected override void CustomApply()
+        protected override void CustomApply(Board board)
         {
-            Cell rockCell = Board.GetCell(TargetCell.Position + new Coord(-2, 0));
-            Cell rockTargetCell = Board.GetCell(TargetCell.Position + new Coord(+1, 0));
+            Cell rockCell = board.GetCell(TargetCell.Position + new Coord(-2, 0));
+            Cell rockTargetCell = board.GetCell(TargetCell.Position + new Coord(+1, 0));
 
             
             rockTargetCell.CurrentPiece = rockCell.CurrentPiece;

@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Chess.Match.AI
 {
-    public class AttackMapGenerator
+    public class AttackMapGenerator: IAttackMapGenerator
     {
         private Board Board { get; set; }
         

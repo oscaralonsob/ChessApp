@@ -28,14 +28,14 @@ namespace Chess.Match
 
         private void Init()
         {
-            Board.SetPieces(GameMode.PiecePlacement());
+            Board.SetPieces(GameMode.PiecePlacement);
             UpdatePieceMovement();
             CheckGameOverCondition();
         }
 
         public void ApplyMove(Move move)
         {
-            move.Apply();
+            move.Apply(Board);
             SwitchTurn();
             UpdatePieceMovement();
             CheckGameOverCondition();
@@ -48,11 +48,8 @@ namespace Chess.Match
         
         private void UpdatePieceMovement()
         {
-            AttackMapGenerator amg = new AttackMapGenerator();
-            amg.Generate(Board);
-            
-            MoveGenerator mg = new MoveGenerator();
-            mg.Generate(Board, ColorTurn);
+            GameMode.AttackMapGenerator.Generate(Board);
+            GameMode.MoveGenerator.Generate(Board, ColorTurn);
         }
         
         private void CheckGameOverCondition()

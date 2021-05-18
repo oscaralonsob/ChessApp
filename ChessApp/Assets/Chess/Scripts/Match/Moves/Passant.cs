@@ -5,11 +5,11 @@ namespace Chess.Match.Moves
     public class Passant : Move
     {
 
-        public Passant(Piece piece, Cell targetCell, Board board): base(piece, targetCell, board)
+        public Passant(Piece piece, Cell targetCell): base(piece, targetCell)
         {
         }
         
-        public override bool IsLegal()
+        public override bool IsLegal(Board board)
         {
             if (!IsValid)
                 return false;
@@ -20,7 +20,7 @@ namespace Chess.Match.Moves
             if (Piece.Pin != null && !Piece.Pin.PointIsInSegment(TargetCell.Position))
                 return false;
 
-            Cell previousCell = Board.GetCell(TargetCell.Position + new Coord(0, -pawn.Direction));
+            Cell previousCell = board.GetCell(TargetCell.Position + new Coord(0, -pawn.Direction));
             if (TargetCell.IsEmpty &&
                 !previousCell.IsEmpty &&
                 previousCell.CurrentPiece.Color != Piece.Color &&
@@ -33,13 +33,13 @@ namespace Chess.Match.Moves
             return false;
         }
         
-        protected override void CustomApply()
+        protected override void CustomApply(Board board)
         {
             //I know is a pawn in this point
             Pawn pawn = Piece as Pawn;
-            Piece targetPiece = Board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction).CurrentPiece;
-            Board.Pieces.Remove(targetPiece);
-            Board.CapturedPieces.Add(targetPiece);
+            Piece targetPiece = board.GetCell(TargetCell.Position.X, TargetCell.Position.Y - pawn.Direction).CurrentPiece;
+            board.Pieces.Remove(targetPiece);
+            board.CapturedPieces.Add(targetPiece);
             TargetCell.CurrentPiece = null;
             targetPiece.IsCaptured = true;
         }

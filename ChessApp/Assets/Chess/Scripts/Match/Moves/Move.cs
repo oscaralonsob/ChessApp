@@ -5,8 +5,7 @@ namespace Chess.Match.Moves
 {
     public class Move
     {
-        protected Board Board { get; }
-        
+
         protected Piece Piece { get; set; }
         
         public Cell TargetCell { get; }
@@ -17,14 +16,13 @@ namespace Chess.Match.Moves
         
         private bool IsCapture => IsValid && !TargetCell.IsEmpty && TargetCell.CurrentPiece.Color != Piece.Color;
 
-        public Move(Piece piece, Cell targetCell, Board board)
+        public Move(Piece piece, Cell targetCell)
         {
             Piece = piece;
             TargetCell = targetCell;
-            Board = board;
         }
         
-        public virtual bool IsLegal()
+        public virtual bool IsLegal(Board board)
         {
             if (!IsValid)
                 return false;
@@ -34,7 +32,7 @@ namespace Chess.Match.Moves
                 return false;
             }
 
-            Piece king = Board.GetKing(Piece.Color);
+            Piece king = board.GetKing(Piece.Color);
 
             if (king == null)
             {
@@ -67,27 +65,24 @@ namespace Chess.Match.Moves
             return false;
         }
 
-        public void Apply()
+        public void Apply(Board board)
         {
-            if (!IsLegal())
-                return;
+            CustomApply(board);
 
-            CustomApply();
-
-            Board.GetCell(Piece.Position).CurrentPiece = null;
+            board.GetCell(Piece.Position).CurrentPiece = null;
             TargetCell.CurrentPiece = Piece;
             //Move to piece
             Piece.Position = TargetCell.Position;
             Piece.NumberMovements++;
         }
         
-        protected virtual void CustomApply()
+        protected virtual void CustomApply(Board board)
         {
             if (IsCapture)
             {
                 Piece targetPiece = TargetCell.CurrentPiece;
-                Board.Pieces.Remove(targetPiece);
-                Board.CapturedPieces.Add(targetPiece);
+                board.Pieces.Remove(targetPiece);
+                board.CapturedPieces.Add(targetPiece);
                 TargetCell.CurrentPiece = null;
                 targetPiece.IsCaptured = true;
             }
