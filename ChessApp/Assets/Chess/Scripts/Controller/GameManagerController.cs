@@ -4,7 +4,7 @@ using Chess.MatchMode;
 using CustomEvent;
 using UnityEngine;
 
-namespace Controller
+namespace Chess.Controller
 {
     public class GameManagerController : MonoBehaviour, IGUIController
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Chess.Match.Pieces;
-using Controller;
+﻿using Chess.Match.Pieces;
 
 namespace Chess.Match
 {

@@ -3,7 +3,7 @@ using Chess.Match;
 using UnityEngine;
 using Image = UnityEngine.UI.Image;
 
-namespace Controller
+namespace Chess.Controller
 {
     public class CellController : MonoBehaviour, IGUIController
     {

@@ -1,8 +1,4 @@
-﻿using Chess.Match;
-using Chess.Match.Pieces;
-using UnityEngine;
-
-namespace Controller
+﻿namespace Chess.Controller
 {
     public interface IGUIController
     {

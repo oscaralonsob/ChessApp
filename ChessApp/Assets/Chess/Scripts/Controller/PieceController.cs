@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using CustomEvent;
 using Image = UnityEngine.UI.Image;
 
-namespace Controller
+namespace Chess.Controller
 {
     public class PieceController : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler, IGUIController
     {

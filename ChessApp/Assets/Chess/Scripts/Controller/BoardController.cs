@@ -3,7 +3,7 @@ using Chess.Match;
 using Chess.Match.Pieces;
 using UnityEngine;
 
-namespace Controller
+namespace Chess.Controller
 {
     public class BoardController : MonoBehaviour, IGUIController
     {
