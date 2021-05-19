@@ -9,10 +9,6 @@ namespace Chess.Match
     public class MatchManager
     {
         private PlayerColor ColorTurn { get; set; }
-        
-        private PlayerColor Winner { get; set; }
-
-        private bool Draw { get; set; }
 
         public Board Board { get; }
         
