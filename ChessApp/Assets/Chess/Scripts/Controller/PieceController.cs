@@ -1,11 +1,10 @@
-﻿using System;
-using Chess.Match.Moves;
+﻿using Chess.Match.Moves;
 using Chess.Match.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System.Collections.Generic;
-using CustomEvent;
+using Chess.CustomEvent;
 using Image = UnityEngine.UI.Image;
 
 namespace Chess.Controller
@@ -18,7 +17,7 @@ namespace Chess.Controller
         
         private Image ImageComponent { get; set; }
         
-        [SerializeField] GameEvent<Move> movementEvent;
+        [SerializeField] private MovementEvent movementEvent;
 
         private void Awake()
         {

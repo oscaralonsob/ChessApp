@@ -1,7 +1,7 @@
 ﻿using Chess.Match;
 using Chess.Match.Moves;
 using Chess.MatchMode;
-using CustomEvent;
+using Chess.CustomEvent;
 using UnityEngine;
 
 namespace Chess.Controller
@@ -18,12 +18,14 @@ namespace Chess.Controller
 
         [SerializeField] private GameObject boardPrefab;
 
-        [SerializeField] private GameEvent<Move> gameEvent;
+        [SerializeField] private MovementEvent gameEvent;
+        
+        [SerializeField] private GameOverEvent gameOverEvent;
 
         void Start()
         {
             GameMode = new NormalGameMode();
-            MatchManager = new MatchManager(GameMode);
+            MatchManager = new MatchManager(GameMode) {GameOverEvent = gameOverEvent};
             EventListener = new GameEventListener<Move>(gameEvent);
 
             EventListener.Handler += MovementDoneHandler;
@@ -32,7 +34,7 @@ namespace Chess.Controller
         }
         public void UpdateGUI(float size = 0)
         {
-            GameObject boardObject = Instantiate(boardPrefab, transform);
+            GameObject boardObject = Instantiate(boardPrefab, transform.GetChild(0));
             BoardController = boardObject.GetComponent<BoardController>();
             
             BoardController.Board = MatchManager.Board;

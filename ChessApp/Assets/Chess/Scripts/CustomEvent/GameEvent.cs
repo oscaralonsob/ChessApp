@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Chess.Match.Moves;
 using UnityEngine;
 
 
-namespace CustomEvent
+namespace Chess.CustomEvent
 {
     
     [CreateAssetMenu]

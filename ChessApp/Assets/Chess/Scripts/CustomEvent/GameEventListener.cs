@@ -1,7 +1,6 @@
 ﻿using System;
-using UnityEngine;
 
-namespace CustomEvent
+namespace Chess.CustomEvent
 {
     public class GameEventListener<T>
     {

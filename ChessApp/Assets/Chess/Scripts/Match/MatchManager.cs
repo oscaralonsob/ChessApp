@@ -2,6 +2,7 @@
 using Chess.Match.AI;
 using Chess.Match.Moves;
 using Chess.MatchMode;
+using Chess.CustomEvent;
 
 namespace Chess.Match
 {
@@ -15,7 +16,9 @@ namespace Chess.Match
 
         public Board Board { get; }
         
-        private IGameMode GameMode { get;  }
+        private IGameMode GameMode { get; }
+        
+        public GameOverEvent GameOverEvent { get; set; }
         
         public MatchManager(IGameMode gameMode)
         {
@@ -59,11 +62,11 @@ namespace Chess.Match
             {
                 if (Board.GetKing(ColorTurn).Pin != null)
                 {
-                    Winner = ColorTurn.GetNextPlayerColor();
+                    GameOverEvent.Raise(ColorTurn.GetNextPlayerColor());
                 }
                 else
                 {
-                    Draw = true;
+                    GameOverEvent.Raise(null);
                 }
             }
         }
