@@ -24,7 +24,7 @@ namespace Chess.Controller
         void Start()
         {
             GameMode = new NormalGameMode();
-            MatchManager = new MatchManager(GameMode) {/*GameOverEvent = gameOverEvent*/};
+            MatchManager = new MatchManager(GameMode);
 
             Init();
         }
@@ -54,7 +54,6 @@ namespace Chess.Controller
                     gameOverEvent.Raise(MatchManager.ColorTurn.GetNextPlayerColor());
                 }
             }
-            
         }
     }
 }
