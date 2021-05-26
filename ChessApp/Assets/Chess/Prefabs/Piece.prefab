@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9211314408845604864}
   - component: {fileID: 1300794188979000227}
   - component: {fileID: 1283389265767780464}
+  - component: {fileID: 7105899890435569642}
   - component: {fileID: 6098637008021973161}
   m_Layer: 5
   m_Name: Piece
@@ -58,7 +59,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16926c1018738fe5a8ff5cca10e07d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementEvent: {fileID: 11400000, guid: b18dd7706e9c4771a20ecc658e7728b4, type: 2}
+  selectedMovementEvent: {fileID: 11400000, guid: 861076fa5284c5ede88a2cd7623a1531, type: 2}
+--- !u!114 &7105899890435569642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6384114222692952992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ecd7939c97e45b69b4cdf1fc6bddd14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 068154e0cdbbd1c859355aa8ce8145e7, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1283389265767780464}
+        m_TargetAssemblyTypeName: Chess.Controller.PieceController, Assembly-CSharp
+        m_MethodName: UpdatedBoardHandler
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: b7cfd6665011790b59b443fc27c5a0e3, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Chess.CustomEvent.FloatReference, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6098637008021973161
 MonoBehaviour:
   m_ObjectHideFlags: 0

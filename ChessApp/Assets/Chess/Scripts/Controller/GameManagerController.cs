@@ -1,12 +1,13 @@
-﻿using Chess.Match;
+﻿using Chess.CustomEvent;
+using Chess.Match;
 using Chess.Match.Moves;
 using Chess.MatchMode;
-using Chess.CustomEvent;
 using UnityEngine;
+using Event = Chess.CustomEvent.Event;
 
 namespace Chess.Controller
 {
-    public class GameManagerController : MonoBehaviour, IGUIController
+    public class GameManagerController : MonoBehaviour
     {
         private NormalGameMode GameMode { set; get; }
         
@@ -14,38 +15,46 @@ namespace Chess.Controller
 
         private BoardController BoardController { get; set; }
 
-        private GameEventListener<Move> EventListener { get; set; }
-
         [SerializeField] private GameObject boardPrefab;
 
-        [SerializeField] private MovementEvent gameEvent;
+        [SerializeField] private Event updatedBoardEvent;
         
-        [SerializeField] private GameOverEvent gameOverEvent;
+        [SerializeField] private PlayerColorGameEvent gameOverEvent;
 
         void Start()
         {
             GameMode = new NormalGameMode();
-            MatchManager = new MatchManager(GameMode) {GameOverEvent = gameOverEvent};
-            EventListener = new GameEventListener<Move>(gameEvent);
+            MatchManager = new MatchManager(GameMode) {/*GameOverEvent = gameOverEvent*/};
 
-            EventListener.Handler += MovementDoneHandler;
-
-            UpdateGUI();
+            Init();
         }
-        public void UpdateGUI(float size = 0)
+        
+        private void Init()
         {
             GameObject boardObject = Instantiate(boardPrefab, transform.GetChild(0));
             BoardController = boardObject.GetComponent<BoardController>();
             
             BoardController.Board = MatchManager.Board;
             BoardController.Init();
+            updatedBoardEvent.Raise();
         }
 
-        private void MovementDoneHandler(object sender, Move move)
+        public void MovementDoneHandler(Move move)
         {
             MatchManager.ApplyMove(move);
-            //menu if is over
-            BoardController.UpdateGUI();
+            updatedBoardEvent.Raise();
+            if (MatchManager.GameOver())
+            {
+                if (MatchManager.IsDraw())
+                {
+                    gameOverEvent.Raise(null);
+                }
+                else
+                {
+                    gameOverEvent.Raise(MatchManager.ColorTurn.GetNextPlayerColor());
+                }
+            }
+            
         }
     }
 }

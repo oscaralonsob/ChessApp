@@ -1,7 +1,9 @@
-﻿namespace Chess.Controller
+﻿using Chess.CustomEvent;
+
+namespace Chess.Controller
 {
     public interface IGUIController
     {
-        public void UpdateGUI(float size = 0);
+        public void UpdatedBoardHandler(FloatReference size);
     }
 }

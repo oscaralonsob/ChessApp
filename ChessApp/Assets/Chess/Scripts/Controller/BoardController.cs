@@ -1,37 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Chess.Match;
 using Chess.Match.Pieces;
 using UnityEngine;
+using Chess.CustomEvent;
 
 namespace Chess.Controller
 {
-    public class BoardController : MonoBehaviour, IGUIController
+    public class BoardController : MonoBehaviour
     {
         public Board Board { get; set; }
-
-        private Dictionary<Piece, IGUIController> PieceGUIControllers { get; } = new Dictionary<Piece, IGUIController>();
         
         public GameObject cellPrefab;
         
         public GameObject piecePrefab;
+        
+        [SerializeField] private FloatReference sizeBoardReference;
+
+        public void Start()
+        {
+            GetCellSize();
+        }
 
         public void Init()
         {
-            float size = GetCellSize();
-            
-            UpdateCellsGUI(size);
-            UpdatePiecesGUI(size);
+            CreateCells();
+            CreatePieces();
         }
 
-        public void UpdateGUI(float size = 0)
-        {
-            if (Board == null) return;
-            
-            size = size != 0 ? size : GetCellSize();
-            UpdatePiecesGUI(size);
-        }
-        
-        private void UpdateCellsGUI(float size)
+        private void CreateCells()
         {
             foreach (Cell cell in Board.Cells)
             {
@@ -39,11 +36,10 @@ namespace Chess.Controller
             
                 CellController cellController = newCell.GetComponent<CellController>();
                 cellController.Cell = cell;
-                cellController.UpdateGUI(size);
             }
         }
 
-        private void UpdatePiecesGUI(float size)
+        private void CreatePieces()
         {
             List<Piece> allPieces = new List<Piece>();
             
@@ -52,32 +48,24 @@ namespace Chess.Controller
             
             foreach (Piece piece in allPieces)
             {
-                if (!PieceGUIControllers.ContainsKey(piece))
-                {
-                    GameObject pieceObject = Instantiate(piecePrefab, transform);
-                    PieceController pieceController = pieceObject.GetComponent<PieceController>();
+                GameObject pieceObject = Instantiate(piecePrefab, transform);
+                PieceController pieceController = pieceObject.GetComponent<PieceController>();
 
-                    pieceController.Piece = piece;
-                    PieceGUIControllers.Add(piece, pieceController);
-                }
-                
-                PieceGUIControllers[piece].UpdateGUI(size);
+                pieceController.Piece = piece;
             }
         }
 
-        private float GetCellSize()
+        private void GetCellSize()
         {
+            sizeBoardReference.value = 0;
             RectTransform rectTransform = transform as RectTransform;
-            if (rectTransform == null)
+            if (rectTransform is { })
             {
-                //TODO: throw exception?
-                return 0;
+                Rect rect = rectTransform.rect;
+                float size = rect.size.x < rect.size.y ? rect.size.x : rect.size.y;
+                size /= Board.Size;
+                sizeBoardReference.value = size;
             }
-
-            Rect rect = rectTransform.rect;
-            float size = rect.size.x < rect.size.y ? rect.size.x : rect.size.y;
-            size /= Board.Size;
-            return size;
         }
     }
 }

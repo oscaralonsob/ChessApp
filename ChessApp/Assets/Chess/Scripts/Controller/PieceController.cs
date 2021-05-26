@@ -16,8 +16,8 @@ namespace Chess.Controller
         private RectTransform RectTransform { get; set; }
         
         private Image ImageComponent { get; set; }
-        
-        [SerializeField] private MovementEvent movementEvent;
+
+        [SerializeField] private MoveGameEvent selectedMovementEvent;
 
         private void Awake()
         {
@@ -25,7 +25,7 @@ namespace Chess.Controller
             ImageComponent = GetComponent<Image>();
         }
         
-        public void UpdateGUI(float size)
+        public void UpdatedBoardHandler(FloatReference size)
         {
             //TODO: add in another place where the captures pieces will be displayed
             if (Piece.IsCaptured)
@@ -33,10 +33,10 @@ namespace Chess.Controller
                 gameObject.SetActive(false);
             }
             
-            RectTransform.sizeDelta = new Vector2(size, size);
+            RectTransform.sizeDelta = new Vector2(size.value, size.value);
 
             ImageComponent.sprite = GetSprite();
-            RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size, Piece.Position.Y * size);
+            RectTransform.anchoredPosition = new Vector2(Piece.Position.X * size.value, Piece.Position.Y * size.value);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -69,18 +69,18 @@ namespace Chess.Controller
             }
 
             
-            Move moveDone = null;
+            Move moveSelected = null;
             if (cellController != null)
             {
                 foreach (var move in Piece.Moves.Where(move => cellController.Cell == move.TargetCell))
                 {
-                    moveDone = move;
+                    moveSelected = move;
                 }
             }
 
-            if (moveDone != null)
+            if (moveSelected != null)
             {
-                movementEvent.Raise(moveDone);
+                selectedMovementEvent.Raise(moveSelected);
             }
             else
             {

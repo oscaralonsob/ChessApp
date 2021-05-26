@@ -74,6 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 5852455201928098411, guid: 83f0292928adaf012b8cedfb70bc99ee, type: 3}
   piecePrefab: {fileID: 6384114222692952992, guid: b9844b65120faa2d5b72d796d49728ea, type: 3}
+  sizeBoardReference: {fileID: 11400000, guid: b7cfd6665011790b59b443fc27c5a0e3, type: 2}
 --- !u!114 &817132735549591373
 MonoBehaviour:
   m_ObjectHideFlags: 0

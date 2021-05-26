@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce8133c446c64fed9bac26e3d9da2103, type: 3}
-  m_Name: GameOverEvent
+  m_Script: {fileID: 11500000, guid: c0b59ffc9d4f402199c3ce44318f3f33, type: 3}
+  m_Name: UpdatedBoardEvent
   m_EditorClassIdentifier: 
